@@ -1,11 +1,214 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <title>NoomFuu Home</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <%- include import%>
+    <style>
+      body {
+          font-family: 'Kanit', sans-serif;
+      }
+
+      h1 {
+          color: #223E63;
+          font-weight: 800;
+          font-size: 35px;
+      }
+
+      h2 {
+          color: #223E63;
+          font-size: 27px;
+      }
+
+      a {
+          text-decoration: none;
+      }
+
+      /*Style of Contact List*/
+      .contact_header {
+          color: #786EEA;
+          text-align: center;
+          font-size: 26px;
+          padding: 3%;
+      }
+
+      .contact_list {
+          color: #786EEA;
+          font-size: 20px;
+          text-align: center;
+          background-color: #EBE9FD;
+          font-weight: 200;
+          padding: 3%;
+      }
+
+      a.contact_username {
+          color: #786EEA;
+          font-size: 20px;
+          text-align: center;
+          font-weight: 200;
+      }
+
+      /*Style of Appointment card*/
+      .state_online {
+          color: #2ABD4A;
+          font-weight: 700;
+      }
+
+      .state_on_site {
+          color: #DAAA00;
+          font-weight: 700;
+      }
+
+      .appoint_date {
+          color: #223E63;
+          font-weight: 500;
+      }
+
+      .appoint_time {
+          color: #223E63;
+          font-weight: 300;
+      }
+
+      .appoint_user {
+          color: #223E63;
+          font-weight: 300;
+      }
+
+      .risk_card {
+          margin: 5%;
+          padding:3%;
+          background-color: #C9E8FF;
+          border: none;
+      }
+  </style>
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <%- include navbar%>
+    <div class="container-fluid">
+      <div class="row">
+         <%- include contactList%>
+
+          <div class="col-md-9">
+              <h1>Up Coming Appointment</h1>
+              <hr>
+              <!--Appointment Card-->
+              <a href="#">
+                  <div class="card shadow-sm"
+                      style="margin: 3%; padding: 2%; background-color: #C9E8FF; border: none;">
+                      <Table style="width: 100%;">
+                          <tr>
+                              <td class="state_online">
+                                  ONLINE
+                              </td>
+                              <td class="appoint_date" style="text-align: right;">
+                                  23/03/2021
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="appoint_user">
+                                  Nattawanee Srikoseat (Lineusername)
+                              </td>
+                              <td class="appoint_time" style="text-align: right;">
+                                  12.30
+                              </td>
+                          </tr>
+                      </Table>
+                  </div>
+              </a>
+
+              <a href="#">
+                  <div class="card shadow-sm"
+                      style="margin: 3%; padding: 2%; background-color: #C9E8FF; border: none;">
+                      <Table style="width: 100%;">
+                          <tr>
+                              <td class="state_on_site">
+                                  ON SITE
+                              </td>
+                              <td class="appoint_date" style="text-align: right;">
+                                  24/03/2021
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="appoint_user">
+                                  Thananan Jomtrirat (Lineusername)
+                              </td>
+                              <td class="appoint_time" style="text-align: right;">
+                                  14.00
+                              </td>
+                          </tr>
+                      </Table>
+                  </div>
+              </a>
+
+              <a href="#">
+                  <div class="card shadow-sm"
+                      style="margin: 3%; padding: 2%; background-color: #C9E8FF; border: none;">
+                      <Table style="width: 100%;">
+                          <tr>
+                              <td class="state_online">
+                                  ONLINE
+                              </td>
+                              <td class="appoint_date" style="text-align: right;">
+                                  24/03/2021
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="appoint_user">
+                                  Thanakorn Sutad (Lineusername)
+                              </td>
+                              <td class="appoint_time" style="text-align: right;">
+                                  15.30
+                              </td>
+                          </tr>
+                      </Table>
+                  </div>
+              </a>
+              <!--End of Appointment Card-->
+
+
+              <h1>Risk User</h1>
+              <hr>
+              <div class="row">
+                  <div class="col-md-6">
+                      <h2>Feeling Down</h2>
+                      <div class="card shadow-sm risk_card">
+                          <div class="row" style="font-size: 20px;">
+                              <div class="col-md-10 appoint_user">
+                                  Pang
+                              </div>
+                              <div class="col-md-2 text-danger" style="font-weight: 600;">
+                                  -20
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                      <h2>Risk assessment result</h2>
+                      <div class="card shadow-sm risk_card">
+                          <div class="row" style="font-size: 20px;">
+                              <div class="col-md-10 appoint_user">
+                                  Plai
+                              </div>
+                              <div class="col-md-2 text-danger" style="font-weight: 600;">
+                                  38
+                              </div>
+                          </div>
+                      </div>
+                      <div class="card shadow-sm risk_card">
+                          <div class="row" style="font-size: 20px;">
+                              <div class="col-md-10 appoint_user">
+                                  Oat
+                              </div>
+                              <div class="col-md-2 text-danger" style="font-weight: 600;">
+                                  30
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+                    integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+                    crossorigin="anonymous"></script>
   </body>
 </html>
