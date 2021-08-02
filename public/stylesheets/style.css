@@ -1,7 +1,29 @@
-body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+@import "https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap";
+
+
+
+/*Style of Contact List*/
+.contact_header {
+  color: #786EEA;
+  text-align: center;
+  font-size: 26px;
+  padding: 3%;
 }
 
-a {
-  color: #00b7ff;
+.contact_list {
+  color: #786EEA;
+  font-size: 20px;
+  text-align: center;
+  background-color: #EBE9FD;
+  font-weight: 200;
+  padding: 3%;
 }
+
+a.contact_username {
+  color: #786EEA;
+  font-size: 20px;
+  text-align: center;
+  font-weight: 200;
+}
+
+
