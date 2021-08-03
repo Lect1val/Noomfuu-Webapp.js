@@ -38,6 +38,20 @@ a.contact_username {
   font-weight: 200;
 }
 
+.search_contact{
+  border-top-style: none;
+  border-right-style: none;
+  border-left-style: none;
+  border-bottom-color: #0275d8;
+  width: 100%;
+}
+
+::placeholder{
+  color: #6face0;
+}
+
+
+
 /*user menu link*/
 
 a.user_menu {
