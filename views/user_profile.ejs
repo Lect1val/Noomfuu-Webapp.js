@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include import%>
+    <style>
+        body {
+            font-family: 'Kanit', sans-serif;
+        }
+
+        h1 {
+            color: #223E63;
+            font-weight: 800;
+            font-size: 35px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /*Style of Contact List*/
+        .contact_header {
+            color: #786EEA;
+            text-align: center;
+            font-size: 26px;
+            padding: 3%;
+        }
+
+        .contact_list {
+            text-align: center;
+            background-color: #EBE9FD;
+            padding: 3%;
+        }
+
+        a.contact_username {
+            color: #786EEA;
+            font-size: 20px;
+            text-align: center;
+            font-weight: 200;
+        }
+
+        /*user menu link*/
+        a.user_menu {
+            color: #786EEA;
+        }
+
+        a.user_menu:hover {
+            color: #223E63;
+        }
+
+        /*chat history table*/
+        .chat_history_table {
+            background-color: #EBE9FD;
+            font-weight: 200;
+            color: black;
+            width: 100%;
+            text-align: center;
+        }
+
+        .chat_list {
+            padding: 1%;
+        }
+
+        /*chat history state style*/
+        .btn_negative {
+            background-color: #E34545;
+            color: white;
+            font-weight: bold;
+        }
+
+        .btn_positive {
+            background-color: #2ABD4A;
+            color: white;
+            font-weight: bold;
+        }
+
+        .btn_neutral {
+            background-color: #FFCE22;
+            color: white;
+            font-weight: bold;
+        }
+
+        .profile_crop {
+            width: 65%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .textbox {
+            background-color: #EBE9FD;
+            padding: 2%;
+            font-size: 16px;
+            margin: 1%;
+        }
+
+        .data_head {
+            font-weight: 200;
+            font-size: 20px;
+            color: #6E89EA;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            /* Could be more or less, depending on screen size */
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .text_field {
+            width: 90%;
+            margin: 1%;
+            margin-left: 3%;
+            padding: 1%;
+            background-color: #EFF3F9;
+            border: none;
+        }
+
+        .appoint_date {
+            color: #223E63;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .appoint_time {
+            color: #223E63;
+            font-weight: 300;
+            font-size: 16px;
+        }
+
+        .appoint_place {
+            color: #223E63;
+            font-weight: 300;
+            font-size: 16px;
+        }
+
+        .appoint_online {
+            color: #2ABD4A;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .appoint_ongoing,
+        .appoint_onsite {
+            color: #DAAA00;
+            font-weight: 500;
+            font-size: 16px;
+        }
+    </style>
+  </head>
+  <body>
+    <%- include navbar%>
+    <div class="container-fluid">
+        <div class="row">
+            <%- include contactList%>
+
+            <div class="col-md-9">
+                <!--User Menu-->
+                <table class="table" style="text-align: center;">
+                    <tr>
+                        <td style="width: 25%;"><a href="/profile" class="user_menu">User Profile</a></td>
+                        <td style="width: 30%;"><a href="/analytic" class="user_menu">Chat History and Analytic</a></td>
+                        <td style="width: 25%;"><a href="#" class="user_menu">Appointment</a></td>
+                        <td style="width: 20%;"><a href="#" class="user_menu">Note</a></td>
+                    </tr>
+                </table>
+                <!--End of User Menu-->
+
+                <div style="font-size: 32px; font-weight: 700; color: #6E89EA;">Username</div>
+                <hr>
+                <!--Profile Data-->
+                <table style="width: 100%;">
+                    <tr>
+                        <td rowspan="4" style="text-align: center;width: 30%;">
+                            <img src="/images/ProfilePic.jpg" class="profile_crop">
+                        </td>
+                        <td style="width: 15%;" class="data_head">Fullname : </td>
+                        <td>
+                            <div class="textbox shadow-sm">Thananan Jomtrirat</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="data_head">Tel : </td>
+                        <td>
+                            <div class="textbox shadow-sm">0949862220</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="data_head">Email : </td>
+                        <td>
+                            <div class="textbox shadow-sm">Thananan.J@gmail.com</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="data_head">Additional Information : </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td colspan="2" class="textbox shadow-sm" style="height: 150px; vertical-align: top;">
+                            61130500022 เครียดเรื่องเรียน มีปัญหากับที่บ้าน</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="text-align: right; padding: 2%;">
+                            <button id="myBtn" class="btn btn-outline-primary">
+                                <img src="/images/Edit.png"> Edit Profile
+                            </button>
+                            <div id="myModal" class="modal">
+
+                                <!-- Modal content -->
+                                <div class="modal-content">
+                                    <span class="close">&times;</span>
+                                    <h3 style="text-align: center;">Edit Profile</h3>
+                                    <hr>
+                                    <form id="editProfile">
+                                        <table style="width: 100%;">
+                                            <tr>
+                                                <td class="data_head">Full Name</td>
+                                                <td style="width:75%"><input type="text" class="text_field"
+                                                        value="old value"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="data_head">Tel</td>
+                                                <td style="width:75%"><input type="text" class="text_field shadow-sm"
+                                                        value="old value"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="data_head">Email</td>
+                                                <td style="width:75%"><input type="text" class="text_field shadow-sm"
+                                                        value="old value"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="data_head">Additional Information</td>
+                                                <td style="width:75%"><input type="text" class="text_field shadow-sm"
+                                                        value="old value"></td>
+                                            </tr>
+                                        </table>
+                                        <div class="d-grid gap-2" style="margin:3%;">
+                                            <button type="submit" form="editProfile" class="btn btn-outline-success">
+                                                Save
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <script>
+                                // Get the modal
+                                var modal = document.getElementById("myModal");
+
+                                // Get the button that opens the modal
+                                var btn = document.getElementById("myBtn");
+
+                                // Get the <span> element that closes the modal
+                                var span = document.getElementsByClassName("close")[0];
+
+                                // When the user clicks on the button, open the modal
+                                btn.onclick = function () {
+                                    modal.style.display = "block";
+                                }
+
+                                // When the user clicks on <span> (x), close the modal
+                                span.onclick = function () {
+                                    modal.style.display = "none";
+                                }
+
+                                // When the user clicks anywhere outside of the modal, close it
+                                window.onclick = function (event) {
+                                    if (event.target == modal) {
+                                        modal.style.display = "none";
+                                    }
+                                }
+                            </script>
+                        </td>
+                    </tr>
+                </table>
+                <!--End of Profile Data-->
+
+                <table>
+                    <tr style="font-weight: 600; font-size: 24px; color: #786EEA;">
+                        <td>Emotion Summary</td>
+                        <td>Appointment Card</td>
+                    </tr>
+                    <tr>
+                        <!--Emotion Graph-->
+                        <td style="vertical-align: top;">
+                            <div>
+                                <canvas id="myChart" style="height:40vh; width:30vw"></canvas>
+                                <script>
+                                    var ctx = document.getElementById('myChart').getContext('2d');
+                                    var myChart = new Chart(ctx, {
+                                        type: 'line',
+                                        data: {
+                                            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                                            datasets: [{
+                                                label: 'scale of user feeling',
+                                                data: [12, 19, -3, 5, 2, -3],
+                                                borderColor: [
+                                                    'rgba(191, 186, 255, 1)'
+                                                ],
+                                                borderWidth: 1.5,
+                                                tension: 0.3
+
+                                            }]
+                                        },
+                                        options: {
+
+                                        },
+                                    });
+                                </script>
+                            </div>
+                        </td>
+                        <!--End of Emotion Graph-->
+
+                        <!--Appointment Card-->
+                        <td style="width: 55%; text-align: center;">
+                            <!--Card 1-->
+                            <a href="#">
+                                <div class="card shadow-sm"
+                                    style="margin: 3%; padding: 2%; background-color: #C9E8FF; border: none;">
+                                    <Table style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
+                                        <tr>
+                                            <td class="appoint_date">23/03/2021</td>
+                                            <td class="appoint_online" style="text-align: right;">ONLINE</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="appoint_time">13:00 น.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="appoint_ongoing">On going</td>
+                                            <td style="text-align: right;"><button type="button" class="btn btn-light">Enter Meeting</button></td>
+                                        </tr>
+                                    </Table>
+                                </div>
+                            </a>
+
+                            <!--Card 2-->
+                            <a href="#">
+                                <div class="card shadow-sm"
+                                    style="margin: 3%; padding: 2%; background-color: #C9E8FF; border: none;">
+                                    <Table style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
+                                        <tr>
+                                            <td class="appoint_date">23/03/2021</td>
+                                            <td class="appoint_online" style="text-align: right;">ONLINE</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="appoint_time">13:00 น.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="appoint_ongoing">On going</td>
+                                            <td style="text-align: right;"><button type="button" class="btn btn-light">Enter Meeting</button></td>
+                                        </tr>
+                                    </Table>
+                                </div>
+                            </a>
+
+                            <!--Card 3-->
+                            <a href="#">
+                                <div class="card shadow-sm"
+                                    style="margin: 3%; padding: 2%; background-color: #C9E8FF; border: none;">
+                                    <Table style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
+                                        <tr>
+                                            <td class="appoint_date">23/03/2021</td>
+                                            <td class="appoint_online" style="text-align: right;">ONLINE</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="appoint_time">13:00 น.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="appoint_ongoing">On going</td>
+                                            <td style="text-align: right;"><button type="button" class="btn btn-light">Enter Meeting</button></td>
+                                        </tr>
+                                    </Table>
+                                </div>
+                            </a>
+                        </td>
+                        <!--End of Appointent Card-->
+                    </tr>
+                </table>
+            </div>
+  </body>
+</html>
