@@ -51,6 +51,9 @@ a.contact_username {
   color: #a8bcce;
 }
 
+textarea:focus, input:focus{
+  outline: none;
+}
 
 
 /*user menu link*/
