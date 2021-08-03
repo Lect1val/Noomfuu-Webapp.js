@@ -1,8 +1,20 @@
 @import "https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap";
+body {
+  font-family: 'Kanit', sans-serif;
+}
 
+h1 {
+  color: #223E63;
+  font-weight: 800;
+  font-size: 35px;
+}
 
+a {
+  text-decoration: none;
+}
 
 /*Style of Contact List*/
+
 .contact_header {
   color: #786EEA;
   text-align: center;
@@ -26,4 +38,127 @@ a.contact_username {
   font-weight: 200;
 }
 
+/*user menu link*/
 
+a.user_menu {
+  color: #786EEA;
+}
+
+a.user_menu:hover {
+  color: #223E63;
+}
+
+/*chat history table*/
+
+.chat_history_table {
+  background-color: #EBE9FD;
+  font-weight: 200;
+  color: black;
+  width: 100%;
+  text-align: center;
+}
+
+.chat_list {
+  padding: 1%;
+}
+
+/*chat history state style*/
+
+.btn_negative {
+  background-color: #E34545;
+  color: white;
+  font-weight: bold;
+}
+
+.btn_positive {
+  background-color: #2ABD4A;
+  color: white;
+  font-weight: bold;
+}
+
+.btn_neutral {
+  background-color: #FFCE22;
+  color: white;
+  font-weight: bold;
+}
+
+/* The Modal (background) */
+
+.modal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover, .close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.text_field {
+  width: 90%;
+  margin: 1%;
+  margin-left: 3%;
+  padding: 1%;
+  background-color: #EFF3F9;
+  border: none;
+}
+
+/*Profile data Style*/
+
+.profile_crop {
+  width: 65%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.textbox {
+  background-color: #EBE9FD;
+  padding: 2%;
+  font-size: 16px;
+  margin: 1%;
+}
+
+.data_head {
+  font-weight: 200;
+  font-size: 20px;
+  color: #6E89EA;
+}
