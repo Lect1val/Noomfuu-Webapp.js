@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include import%>
+    <style>
+        body {
+            font-family: 'Kanit', sans-serif;
+        }
+
+        h1 {
+            color: #223E63;
+            font-weight: 800;
+            font-size: 35px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /*Style of Contact List*/
+        .contact_header {
+            color: #786EEA;
+            text-align: center;
+            font-size: 26px;
+            padding: 3%;
+        }
+
+        .contact_list {
+            text-align: center;
+            background-color: #EBE9FD;
+            padding: 3%;
+        }
+
+        a.contact_username{
+            color: #786EEA;
+            font-size: 20px;
+            text-align: center;
+            font-weight: 200;
+        }
+
+        /*user menu link*/
+        a.user_menu{
+            color: #786EEA;
+        }
+
+        a.user_menu:hover{
+            color: #223E63;
+        }
+
+        /*chat history table*/
+        .chat_history_table{
+            background-color: #EBE9FD;
+            font-weight: 200;
+            color: black;
+            width: 100%;
+            text-align: center;
+        }
+
+        .chat_list{
+            padding: 1%;
+        }
+
+        /*chat history state style*/
+        .btn_negative{
+            background-color: #E34545;
+            color: white;
+            font-weight: bold; 
+        }
+
+        .btn_positive{
+            background-color: #2ABD4A;
+            color: white;
+            font-weight: bold; 
+        }
+
+        .btn_neutral{
+            background-color: #FFCE22;
+            color: white;
+            font-weight: bold;
+        }
+
+    </style>
+  </head>
+  <body>
+    <%- include navbar%>
+        <div class="container-fluid">
+            <div class="row">
+                <%- include contactList%>
+                <div class="col-md-9">
+                    <!--User Menu-->
+                    <table class="table" style="text-align: center;">
+                        <tr>
+                            <td style="width: 25%;"><a href="/profile" class="user_menu">User Profile</a></td>
+                            <td style="width: 30%;"><a href="/analytic" class="user_menu">Chat History and Analytic</a></td>
+                            <td style="width: 25%;"><a href="#" class="user_menu">Appointment</a></td>
+                            <td style="width: 20%;"><a href="#" class="user_menu">Note</a></td>
+                        </tr> 
+                    </table>
+                    <!--End of User Menu-->
+    
+    
+                    <h1>Feeling Graph</h1>
+                    <hr>
+                    <div>
+                        <canvas id="myChart" style="height:50vh; width:80vw"></canvas>
+                        <script>
+                            var ctx = document.getElementById('myChart').getContext('2d');
+                            var myChart = new Chart(ctx, {
+                                type: 'line',
+                                data: {
+                                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                                    datasets: [{
+                                        label: 'scale of user feeling',
+                                        data: [12, 19, -3, 5, 2, -3],
+                                        borderColor: [
+                                            'rgba(191, 186, 255, 1)'
+                                        ],
+                                        borderWidth: 1.5,
+                                        tension: 0.3
+                                        
+                                    }]
+                                },
+                                options: {
+    
+                                },
+                            });
+                        </script>
+                    </div>
+    
+                    <h1>Chat History</h1>
+                    <hr>
+                    <table class="chat_history_table">
+                        <tr style="color: #786EEA; background-color: #E3E1F7; font-size: 24px;">
+                            <th>Date</th>
+                            <th>Content</th>
+                            <th>State</th>
+                        </tr>
+                        <!--Begining of Chat Loop-->
+                        <tr>
+                            <td id="chat_date">22-03-2021</td>
+                            <td id="chat_content" style="text-align: left;">รู้สึกไม่ดีเลย เพื่อนไม่ยอมทำงานที่ตกลงกันไว้ พอเตือนก็ชักสีหน้า เสียสุขภาพจิตมาก ๆ</td>
+                            <td id="chat_state" class="chat_list"><button type="button" class="btn btn_negative">Negative</button></td>
+                        </tr>
+                        <tr>
+                            <td id="chat_date"> </td> <!--If same date with above not show date-->
+                            <td id="chat_content" style="text-align: left;">ให้งานอะไรไปทำก็ทำไม่ถูก ทั้งกลุ่มต้องหยุดงานมาทำแทน น่าหงุดหงิดมาก</td>
+                            <td id="chat_state" class="chat_list"><button type="button" class="btn btn_negative">Negative</button></td>
+                        </tr>
+    
+                        <tr>
+                            <td id="chat_date">22-03-2021</td>
+                            <td id="chat_content" style="text-align: left;">ดีขึ้นบ้างละ ดีนะที่บอกแล้วยังฟังกันบ้าง</td>
+                            <td id="chat_state" class="chat_list"><button type="button" class="btn btn_positive">Positive</button></td>
+                        </tr>
+                        <!--Ending of chat Loop-->
+                    </table>
+                    
+        </div>
+  </body>
+</html>
