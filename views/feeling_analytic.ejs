@@ -1,73 +1,83 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <%- include import%>
-  </head>
-  <body>
+</head>
+
+<body>
     <%- include navbar%>
         <div class="container-fluid">
             <div class="row">
                 <%- include contactList%>
-                <div class="col-md-9">
-                    <% include profileNav%>
-    
-    
-                    <h1>Feeling Graph</h1>
-                    <hr>
-                    <div>
-                        <canvas id="myChart" style="height:50vh; width:80vw"></canvas>
-                        <script>
-                            var ctx = document.getElementById('myChart').getContext('2d');
-                            var myChart = new Chart(ctx, {
-                                type: 'line',
-                                data: {
-                                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                                    datasets: [{
-                                        label: 'scale of user feeling',
-                                        data: [12, 19, -3, 5, 2, -3],
-                                        borderColor: [
-                                            'rgba(191, 186, 255, 1)'
-                                        ],
-                                        borderWidth: 1.5,
-                                        tension: 0.3
-                                        
-                                    }]
-                                },
-                                options: {
-    
-                                },
-                            });
-                        </script>
+                    <div class="col-md-9">
+                        <% include profileNav%>
+
+                            <div style="font-size: 32px; font-weight: 700; color: #6E89EA;">Username</div>
+                            <hr>
+
+                            <div>
+                                <canvas id="myChart" style="height:50vh; width:80vw"></canvas>
+                                <script>
+                                    var ctx = document.getElementById('myChart').getContext('2d');
+                                    var myChart = new Chart(ctx, {
+                                        type: 'line',
+                                        data: {
+                                            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                                            datasets: [{
+                                                label: 'scale of user feeling',
+                                                data: [12, 19, -3, 5, 2, -3],
+                                                borderColor: [
+                                                    'rgba(191, 186, 255, 1)'
+                                                ],
+                                                borderWidth: 1.5,
+                                                tension: 0.3
+
+                                            }]
+                                        },
+                                        options: {
+
+                                        },
+                                    });
+                                </script>
+                            </div>
+
+                            <h1>Chat History</h1>
+                            <hr>
+                            <table class="chat_history_table">
+                                <tr style="color: #786EEA; background-color: #E3E1F7; font-size: 24px;">
+                                    <th>Date</th>
+                                    <th>Content</th>
+                                    <th>State</th>
+                                </tr>
+                                <!--Begining of Chat Loop-->
+                                <tr>
+                                    <td id="chat_date">22-03-2021</td>
+                                    <td id="chat_content" style="text-align: left;">รู้สึกไม่ดีเลย
+                                        เพื่อนไม่ยอมทำงานที่ตกลงกันไว้ พอเตือนก็ชักสีหน้า เสียสุขภาพจิตมาก ๆ</td>
+                                    <td id="chat_state" class="chat_list"><button type="button"
+                                            class="btn btn_negative">Negative</button></td>
+                                </tr>
+                                <tr>
+                                    <td id="chat_date"> </td>
+                                    <!--If same date with above not show date-->
+                                    <td id="chat_content" style="text-align: left;">ให้งานอะไรไปทำก็ทำไม่ถูก
+                                        ทั้งกลุ่มต้องหยุดงานมาทำแทน น่าหงุดหงิดมาก</td>
+                                    <td id="chat_state" class="chat_list"><button type="button"
+                                            class="btn btn_negative">Negative</button></td>
+                                </tr>
+
+                                <tr>
+                                    <td id="chat_date">22-03-2021</td>
+                                    <td id="chat_content" style="text-align: left;">ดีขึ้นบ้างละ
+                                        ดีนะที่บอกแล้วยังฟังกันบ้าง</td>
+                                    <td id="chat_state" class="chat_list"><button type="button"
+                                            class="btn btn_positive">Positive</button></td>
+                                </tr>
+                                <!--Ending of chat Loop-->
+                            </table>
+
                     </div>
-    
-                    <h1>Chat History</h1>
-                    <hr>
-                    <table class="chat_history_table">
-                        <tr style="color: #786EEA; background-color: #E3E1F7; font-size: 24px;">
-                            <th>Date</th>
-                            <th>Content</th>
-                            <th>State</th>
-                        </tr>
-                        <!--Begining of Chat Loop-->
-                        <tr>
-                            <td id="chat_date">22-03-2021</td>
-                            <td id="chat_content" style="text-align: left;">รู้สึกไม่ดีเลย เพื่อนไม่ยอมทำงานที่ตกลงกันไว้ พอเตือนก็ชักสีหน้า เสียสุขภาพจิตมาก ๆ</td>
-                            <td id="chat_state" class="chat_list"><button type="button" class="btn btn_negative">Negative</button></td>
-                        </tr>
-                        <tr>
-                            <td id="chat_date"> </td> <!--If same date with above not show date-->
-                            <td id="chat_content" style="text-align: left;">ให้งานอะไรไปทำก็ทำไม่ถูก ทั้งกลุ่มต้องหยุดงานมาทำแทน น่าหงุดหงิดมาก</td>
-                            <td id="chat_state" class="chat_list"><button type="button" class="btn btn_negative">Negative</button></td>
-                        </tr>
-    
-                        <tr>
-                            <td id="chat_date">22-03-2021</td>
-                            <td id="chat_content" style="text-align: left;">ดีขึ้นบ้างละ ดีนะที่บอกแล้วยังฟังกันบ้าง</td>
-                            <td id="chat_state" class="chat_list"><button type="button" class="btn btn_positive">Positive</button></td>
-                        </tr>
-                        <!--Ending of chat Loop-->
-                    </table>
-                    
-        </div>
-  </body>
+</body>
+
 </html>

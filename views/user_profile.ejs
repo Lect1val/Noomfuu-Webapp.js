@@ -1,259 +1,273 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <%- include import%>
-    <style>
-        .appoint_date {
-            color: #223E63;
-            font-weight: 600;
-            font-size: 18px;
-        }
+        <style>
+            .appoint_date {
+                color: #223E63;
+                font-weight: 600;
+                font-size: 18px;
+            }
 
-        .appoint_time {
-            color: #223E63;
-            font-weight: 300;
-            font-size: 16px;
-        }
+            .appoint_time {
+                color: #223E63;
+                font-weight: 300;
+                font-size: 16px;
+            }
 
-        .appoint_place {
-            color: #223E63;
-            font-weight: 300;
-            font-size: 16px;
-        }
+            .appoint_place {
+                color: #223E63;
+                font-weight: 300;
+                font-size: 16px;
+            }
 
-        .appoint_online {
-            color: #2ABD4A;
-            font-weight: 700;
-            font-size: 18px;
-        }
+            .appoint_online {
+                color: #2ABD4A;
+                font-weight: 700;
+                font-size: 18px;
+            }
 
-        .appoint_ongoing,
-        .appoint_onsite {
-            color: #DAAA00;
-            font-weight: 500;
-            font-size: 16px;
-        }
-    </style>
-  </head>
-  <body>
+            .appoint_ongoing,
+            .appoint_onsite {
+                color: #DAAA00;
+                font-weight: 500;
+                font-size: 16px;
+            }
+        </style>
+</head>
+
+<body>
     <%- include navbar%>
-    <div class="container-fluid">
-        <div class="row">
-            <%- include contactList%>
+        <div class="container-fluid">
+            <div class="row">
+                <%- include contactList%>
 
-            <div class="col-md-9">
-                <% include profileNav%>
+                    <div class="col-md-9">
+                        <% include profileNav%>
 
-                <div style="font-size: 32px; font-weight: 700; color: #6E89EA;">Username</div>
-                <hr>
-                <!--Profile Data-->
-                <table style="width: 100%;">
-                    <tr>
-                        <td rowspan="4" style="text-align: center;width: 30%;">
-                            <img src="/images/ProfilePic.jpg" class="profile_crop">
-                        </td>
-                        <td style="width: 15%;" class="data_head">Fullname : </td>
-                        <td>
-                            <div class="textbox shadow-sm">Thananan Jomtrirat</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="data_head">Tel : </td>
-                        <td>
-                            <div class="textbox shadow-sm">0949862220</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="data_head">Email : </td>
-                        <td>
-                            <div class="textbox shadow-sm">Thananan.J@gmail.com</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="data_head">Additional Information : </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td colspan="2" class="textbox shadow-sm" style="height: 150px; vertical-align: top;">
-                            61130500022 เครียดเรื่องเรียน มีปัญหากับที่บ้าน</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" style="text-align: right; padding: 2%;">
-                            <button id="myBtn" class="btn btn-outline-primary">
-                                <img src="/images/Edit.png"> Edit Profile
-                            </button>
-                            <div id="myModal" class="modal">
+                            <div style="font-size: 32px; font-weight: 700; color: #6E89EA;">Username</div>
+                            <hr>
+                            <!--Profile Data-->
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td rowspan="4" style="text-align: center;width: 30%;">
+                                        <img src="/images/ProfilePic.jpg" class="profile_crop">
+                                    </td>
+                                    <td style="width: 15%;" class="data_head">Fullname : </td>
+                                    <td>
+                                        <div class="textbox shadow-sm">Thananan Jomtrirat</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="data_head">Tel : </td>
+                                    <td>
+                                        <div class="textbox shadow-sm">0949862220</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="data_head">Email : </td>
+                                    <td>
+                                        <div class="textbox shadow-sm">Thananan.J@gmail.com</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="data_head">Additional Information : </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td colspan="2" class="textbox shadow-sm"
+                                        style="height: 150px; vertical-align: top;">
+                                        61130500022 เครียดเรื่องเรียน มีปัญหากับที่บ้าน</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="text-align: right; padding: 2%;">
+                                        <button id="myBtn" class="btn btn-outline-primary">
+                                            <img src="/images/Edit.png"> Edit Profile
+                                        </button>
+                                        <div id="myModal" class="modal">
 
-                                <!-- Modal content -->
-                                <div class="modal-content">
-                                    <span class="close">&times;</span>
-                                    <h3 style="text-align: center;">Edit Profile</h3>
-                                    <hr>
-                                    <form id="editProfile">
-                                        <table style="width: 100%;">
-                                            <tr>
-                                                <td class="data_head">Full Name</td>
-                                                <td style="width:75%"><input type="text" class="text_field"
-                                                        value="old value"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="data_head">Tel</td>
-                                                <td style="width:75%"><input type="text" class="text_field shadow-sm"
-                                                        value="old value"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="data_head">Email</td>
-                                                <td style="width:75%"><input type="text" class="text_field shadow-sm"
-                                                        value="old value"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="data_head">Additional Information</td>
-                                                <td style="width:75%"><input type="text" class="text_field shadow-sm"
-                                                        value="old value"></td>
-                                            </tr>
-                                        </table>
-                                        <div class="d-grid gap-2" style="margin:3%;">
-                                            <button type="submit" form="editProfile" class="btn btn-outline-success">
-                                                Save
-                                            </button>
+                                            <!-- Modal content -->
+                                            <div class="modal-content">
+                                                <span class="close">&times;</span>
+                                                <h3 style="text-align: center;">Edit Profile</h3>
+                                                <hr>
+                                                <form id="editProfile">
+                                                    <table style="width: 100%;">
+                                                        <tr>
+                                                            <td class="data_head">Full Name</td>
+                                                            <td style="width:75%"><input type="text" class="text_field"
+                                                                    value="old value"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="data_head">Tel</td>
+                                                            <td style="width:75%"><input type="text"
+                                                                    class="text_field shadow-sm" value="old value"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="data_head">Email</td>
+                                                            <td style="width:75%"><input type="text"
+                                                                    class="text_field shadow-sm" value="old value"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="data_head">Additional Information</td>
+                                                            <td style="width:75%"><input type="text"
+                                                                    class="text_field shadow-sm" value="old value"></td>
+                                                        </tr>
+                                                    </table>
+                                                    <div class="d-grid gap-2" style="margin:3%;">
+                                                        <button type="submit" form="editProfile"
+                                                            class="btn btn-outline-success">
+                                                            Save
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
-                                    </form>
-                                </div>
-                            </div>
 
-                            <script>
-                                // Get the modal
-                                var modal = document.getElementById("myModal");
+                                        <script>
+                                            // Get the modal
+                                            var modal = document.getElementById("myModal");
 
-                                // Get the button that opens the modal
-                                var btn = document.getElementById("myBtn");
+                                            // Get the button that opens the modal
+                                            var btn = document.getElementById("myBtn");
 
-                                // Get the <span> element that closes the modal
-                                var span = document.getElementsByClassName("close")[0];
+                                            // Get the <span> element that closes the modal
+                                            var span = document.getElementsByClassName("close")[0];
 
-                                // When the user clicks on the button, open the modal
-                                btn.onclick = function () {
-                                    modal.style.display = "block";
-                                }
+                                            // When the user clicks on the button, open the modal
+                                            btn.onclick = function () {
+                                                modal.style.display = "block";
+                                            }
 
-                                // When the user clicks on <span> (x), close the modal
-                                span.onclick = function () {
-                                    modal.style.display = "none";
-                                }
+                                            // When the user clicks on <span> (x), close the modal
+                                            span.onclick = function () {
+                                                modal.style.display = "none";
+                                            }
 
-                                // When the user clicks anywhere outside of the modal, close it
-                                window.onclick = function (event) {
-                                    if (event.target == modal) {
-                                        modal.style.display = "none";
-                                    }
-                                }
-                            </script>
-                        </td>
-                    </tr>
-                </table>
-                <!--End of Profile Data-->
+                                            // When the user clicks anywhere outside of the modal, close it
+                                            window.onclick = function (event) {
+                                                if (event.target == modal) {
+                                                    modal.style.display = "none";
+                                                }
+                                            }
+                                        </script>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!--End of Profile Data-->
 
-                <table>
-                    <tr style="font-weight: 600; font-size: 24px; color: #786EEA;">
-                        <td>Emotion Summary</td>
-                        <td>Appointment Card</td>
-                    </tr>
-                    <tr>
-                        <!--Emotion Graph-->
-                        <td style="vertical-align: top;">
-                            <div>
-                                <canvas id="myChart" style="height:40vh; width:30vw"></canvas>
-                                <script>
-                                    var ctx = document.getElementById('myChart').getContext('2d');
-                                    var myChart = new Chart(ctx, {
-                                        type: 'line',
-                                        data: {
-                                            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                                            datasets: [{
-                                                label: 'scale of user feeling',
-                                                data: [12, 19, -3, 5, 2, -3],
-                                                borderColor: [
-                                                    'rgba(191, 186, 255, 1)'
-                                                ],
-                                                borderWidth: 1.5,
-                                                tension: 0.3
+                            <table>
+                                <tr style="font-weight: 600; font-size: 24px; color: #786EEA;">
+                                    <td>Emotion Summary</td>
+                                    <td>Appointment Card</td>
+                                </tr>
+                                <tr>
+                                    <!--Emotion Graph-->
+                                    <td style="vertical-align: top;">
+                                        <div>
+                                            <canvas id="myChart" style="height:40vh; width:30vw"></canvas>
+                                            <script>
+                                                var ctx = document.getElementById('myChart').getContext('2d');
+                                                var myChart = new Chart(ctx, {
+                                                    type: 'line',
+                                                    data: {
+                                                        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                                                        datasets: [{
+                                                            label: 'scale of user feeling',
+                                                            data: [12, 19, -3, 5, 2, -3],
+                                                            borderColor: [
+                                                                'rgba(191, 186, 255, 1)'
+                                                            ],
+                                                            borderWidth: 1.5,
+                                                            tension: 0.3
 
-                                            }]
-                                        },
-                                        options: {
+                                                        }]
+                                                    },
+                                                    options: {
 
-                                        },
-                                    });
-                                </script>
-                            </div>
-                        </td>
-                        <!--End of Emotion Graph-->
+                                                    },
+                                                });
+                                            </script>
+                                        </div>
+                                    </td>
+                                    <!--End of Emotion Graph-->
 
-                        <!--Appointment Card-->
-                        <td style="width: 55%; text-align: center;">
-                            <!--Card 1-->
-                            <a href="#">
-                                <div class="card shadow-sm"
-                                    style="margin: 3%; padding: 2%; background-color: #C9E8FF; border: none;">
-                                    <Table style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
-                                        <tr>
-                                            <td class="appoint_date">23/03/2021</td>
-                                            <td class="appoint_online" style="text-align: right;">ONLINE</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="appoint_time">13:00 น.</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="appoint_ongoing">On going</td>
-                                            <td style="text-align: right;"><button type="button" class="btn btn-light">Enter Meeting</button></td>
-                                        </tr>
-                                    </Table>
-                                </div>
-                            </a>
+                                    <!--Appointment Card-->
+                                    <td style="width: 55%; text-align: center;">
+                                        <!--Card 1-->
+                                        <a href="#">
+                                            <div class="card shadow-sm"
+                                                style="margin: 3%; padding: 2%; background-color: #C9E8FF; border: none;">
+                                                <Table
+                                                    style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
+                                                    <tr>
+                                                        <td class="appoint_date">23/03/2021</td>
+                                                        <td class="appoint_online" style="text-align: right;">ONLINE
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="appoint_time">13:00 น.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="appoint_ongoing">On going</td>
+                                                        <td style="text-align: right;"><button type="button"
+                                                                class="btn btn-light">Enter Meeting</button></td>
+                                                    </tr>
+                                                </Table>
+                                            </div>
+                                        </a>
 
-                            <!--Card 2-->
-                            <a href="#">
-                                <div class="card shadow-sm"
-                                    style="margin: 3%; padding: 2%; background-color: #C9E8FF; border: none;">
-                                    <Table style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
-                                        <tr>
-                                            <td class="appoint_date">23/03/2021</td>
-                                            <td class="appoint_online" style="text-align: right;">ONLINE</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="appoint_time">13:00 น.</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="appoint_ongoing">On going</td>
-                                            <td style="text-align: right;"><button type="button" class="btn btn-light">Enter Meeting</button></td>
-                                        </tr>
-                                    </Table>
-                                </div>
-                            </a>
+                                        <!--Card 2-->
+                                        <a href="#">
+                                            <div class="card shadow-sm"
+                                                style="margin: 3%; padding: 2%; background-color: #C9E8FF; border: none;">
+                                                <Table
+                                                    style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
+                                                    <tr>
+                                                        <td class="appoint_date">23/03/2021</td>
+                                                        <td class="appoint_online" style="text-align: right;">ONLINE
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="appoint_time">13:00 น.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="appoint_ongoing">On going</td>
+                                                        <td style="text-align: right;"><button type="button"
+                                                                class="btn btn-light">Enter Meeting</button></td>
+                                                    </tr>
+                                                </Table>
+                                            </div>
+                                        </a>
 
-                            <!--Card 3-->
-                            <a href="#">
-                                <div class="card shadow-sm"
-                                    style="margin: 3%; padding: 2%; background-color: #C9E8FF; border: none;">
-                                    <Table style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
-                                        <tr>
-                                            <td class="appoint_date">23/03/2021</td>
-                                            <td class="appoint_online" style="text-align: right;">ONLINE</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="appoint_time">13:00 น.</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="appoint_ongoing">On going</td>
-                                            <td style="text-align: right;"><button type="button" class="btn btn-light">Enter Meeting</button></td>
-                                        </tr>
-                                    </Table>
-                                </div>
-                            </a>
-                        </td>
-                        <!--End of Appointent Card-->
-                    </tr>
-                </table>
-            </div>
-  </body>
+                                        <!--Card 3-->
+                                        <a href="#">
+                                            <div class="card shadow-sm"
+                                                style="margin: 3%; padding: 2%; background-color: #C9E8FF; border: none;">
+                                                <Table
+                                                    style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
+                                                    <tr>
+                                                        <td class="appoint_date">23/03/2021</td>
+                                                        <td class="appoint_online" style="text-align: right;">ONLINE
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="appoint_time">13:00 น.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="appoint_ongoing">On going</td>
+                                                        <td style="text-align: right;"><button type="button"
+                                                                class="btn btn-light">Enter Meeting</button></td>
+                                                    </tr>
+                                                </Table>
+                                            </div>
+                                        </a>
+                                    </td>
+                                    <!--End of Appointent Card-->
+                                </tr>
+                            </table>
+                    </div>
+</body>
+
 </html>
