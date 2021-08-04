@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include import%>
+        <style>
+            .note_header {
+                color: #223E63;
+                font-size: 32px;
+                font-weight: 600;
+            }
+
+            .note_content {
+                color: #223E63;
+                font-size: 16px;
+                font-weight: 300;
+            }
+
+            .add_card {
+                border-color: #C9E8FF;
+                background-color: #E2F3FF;
+                margin: 3%;
+                padding-top: 30%;
+                padding-bottom: 30%;
+            }
+        </style>
+</head>
+
+<body>
+    <%- include navbar%>
+        <div class="container-fluid">
+            <div class="row">
+                <%- include contactList%>
+
+                    <div class="col-md-9">
+                        <% include profileNav%>
+
+                            <div style="font-size: 32px; font-weight: 700; color: #6E89EA;">Username</div>
+                            <hr>
+
+                            <!-- 1 Row 3 Cards-->
+                            <div class="row">
+
+                                <!--Card 1-->
+                                <div class="col-md-4">
+                                    <a href="#">
+                                        <div class="card shadow-sm card_style">
+                                            <div style="padding:3%;">
+                                                <div class="note_header">Card Header</div>
+                                                <p class="note_content">Lorem ipsum dolor sit amet, consectetur
+                                                    adipiscing elit. Nulla
+                                                    sollicitudin dolor sit amet sem dignissim, placerat sollicitudin
+                                                    nibh eleifend. Praesent ultricies iaculis congue....</p>
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        See more
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <p style="color: #3378FF;"> <img src="/images/Edit.png"
+                                                                style="height: 20px;">Edit</p>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <p style="color: red;"> <img src="/images/delete.png"
+                                                                style="height: 20px;"> Delete</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!--Card 2-->
+                                <div class="col-md-4">
+                                    <a href="#">
+                                        <div class="card shadow-sm card_style">
+                                            <div style="padding:3%;">
+                                                <div class="note_header">Card Header</div>
+                                                <p class="note_content">Lorem ipsum dolor sit amet, consectetur
+                                                    adipiscing elit. Nulla
+                                                    sollicitudin dolor sit amet sem dignissim, placerat sollicitudin
+                                                    nibh eleifend. Praesent ultricies iaculis congue....</p>
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        See more
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <p style="color: #3378FF;"> <img src="/images/Edit.png"
+                                                                style="height: 20px;">Edit</p>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <p style="color: red;"> <img src="/images/delete.png"
+                                                                style="height: 20px;"> Delete</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!--Card 3-->
+                                <div class="col-md-4">
+                                    <a href="#">
+                                        <div class="card shadow-sm card_style">
+                                            <div style="padding:3%;">
+                                                <div class="note_header">Card Header</div>
+                                                <p class="note_content">Lorem ipsum dolor sit amet, consectetur
+                                                    adipiscing elit. Nulla
+                                                    sollicitudin dolor sit amet sem dignissim, placerat sollicitudin
+                                                    nibh eleifend. Praesent ultricies iaculis congue....</p>
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        See more
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <p style="color: #3378FF;"> <img src="/images/Edit.png"
+                                                                style="height: 20px;">Edit</p>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <p style="color: red;"> <img src="/images/delete.png"
+                                                                style="height: 20px;"> Delete</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="card shadow-sm add_card">
+                                        <img src="/images/addCard.png" style="height: 70px; width: 70px; align-self: center;">
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+
+
+            </div>
+        </div>
+</body>
+
+</html>
