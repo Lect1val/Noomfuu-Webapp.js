@@ -38,7 +38,7 @@ a.contact_username {
   font-weight: 200;
 }
 
-.search_contact{
+.search_contact {
   border-top-style: none;
   border-right-style: none;
   border-left-style: none;
@@ -47,14 +47,9 @@ a.contact_username {
   width: 100%;
 }
 
-::placeholder{
+::placeholder {
   color: #a8bcce;
 }
-
-textarea:focus, input:focus{
-  outline: none;
-}
-
 
 /*user menu link*/
 
@@ -179,4 +174,11 @@ a.user_menu:hover {
   font-weight: 200;
   font-size: 20px;
   color: #6E89EA;
+}
+
+.card_style {
+  margin: 3%;
+  padding: 2%;
+  background-color: #C9E8FF;
+  border: none;
 }
