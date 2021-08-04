@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include import%>
+        <style>
+            .note_header {
+                color: #223E63;
+                font-size: 32px;
+                font-weight: 600;
+            }
+
+            .note_content {
+                color: #223E63;
+                font-size: 16px;
+                font-weight: 300;
+            }
+
+            .add_card {
+                border-color: #C9E8FF;
+                background-color: #E2F3FF;
+                margin: 3%;
+                padding-top: 30%;
+                padding-bottom: 30%;
+            }
+        </style>
+</head>
+
+<body>
+    <%- include navbar%>
+        <div class="container-fluid">
+            <div class="row">
+                <%- include contactList%>
+
+                    <div class="col-md-9">
+                        <% include profileNav%>
+
+                            <div style="font-size: 32px; font-weight: 700; color: #6E89EA;">Username</div>
+                            <hr>
+
+                            
+                    </div>
+
+
+            </div>
+        </div>
+</body>
+
+</html>
