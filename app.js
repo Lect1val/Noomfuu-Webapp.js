@@ -9,6 +9,7 @@ var usersRouter = require("./routes/users");
 var analyticRouter = require("./routes/feeling_analytic");
 var noteRouter = require("./routes/note");
 var noteContentRouter = require("./routes/note_content");
+var noteEditRouter = require("./routes/note_edit");
 
 var app = express();
 
@@ -27,6 +28,7 @@ app.use("/profile", usersRouter);
 app.use("/profile/analytic", analyticRouter);
 app.use("/profile/note", noteRouter);
 app.use("/profile/note/content", noteContentRouter);
+app.use("/profile/note/content/edit", noteEditRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
