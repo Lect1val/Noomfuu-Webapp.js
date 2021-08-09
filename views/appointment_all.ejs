@@ -3,6 +3,16 @@
 
 <head>
     <%- include import%>
+        <style>
+            .st-bg {
+                border-left: none;
+            }
+
+            .st-dtitle {
+                border: none;
+                background: white;
+            }
+        </style>
 </head>
 
 <body>
@@ -12,8 +22,11 @@
                 <%- include contactList%>
                     <div class="col-md-9">
                         <% include profileNav%>
+                        <div id='loading'>loading...</div>
+                        <div id='calendar'></div>
                     </div>
             </div>
         </div>>
 </body>
+
 </html>
