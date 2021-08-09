@@ -10,6 +10,7 @@ var analyticRouter = require("./routes/feeling_analytic");
 var noteRouter = require("./routes/note");
 var noteContentRouter = require("./routes/note_content");
 var noteEditRouter = require("./routes/note_edit");
+var appointmentRouter = require("./routes/appointment_all");
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use("/profile/analytic", analyticRouter);
 app.use("/profile/note", noteRouter);
 app.use("/profile/note/content", noteContentRouter);
 app.use("/profile/note/content/edit", noteEditRouter);
+app.use("/profile/appointment", appointmentRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
