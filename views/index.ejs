@@ -44,10 +44,23 @@
         <div class="container-fluid">
             <div class="row">
                 <%- include contactList%>
-
                     <div class="col-md-9">
+
                         <h1>Up Coming Appointment</h1>
                         <hr>
+                        
+                        <div id='loading'>loading...</div>
+                        <div id='calendar'></div>
+                        
+                        <!--download .ics button-->
+                        <div style="text-align: right;">
+                            <form
+                                action="https://calendar.google.com/calendar/ical/en.th%23holiday%40group.v.calendar.google.com/public/basic.ics">
+                                <button class="download_ics" type="submit" value="sync">sync with your
+                                    calendar</button>
+                            </form>
+                        </div>
+
                         <!--Appointment Card-->
                         <a href="#">
                             <div class="card shadow-sm card_style">
@@ -119,6 +132,13 @@
                         </a>
                         <!--End of Appointment Card-->
 
+                        <!--google carlendar-->
+                        <!--<span>
+                            <iframe
+                                src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=Asia%2FBangkok&src=bmF0dGF3YW5lZS5za3NAbWFpbC5rbXV0dC5hYy50aA&src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=bWFpbC5rbXV0dC5hYy50aF9jbGFzc3Jvb21hNGU1MzY0MEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4udGgjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&src=bWFpbC5rbXV0dC5hYy50aF9jbGFzc3Jvb20xMDFhZjc4MUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=bWFpbC5rbXV0dC5hYy50aF9jbGFzc3Jvb204OTNiYzg2NUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=bWFpbC5rbXV0dC5hYy50aF9jbGFzc3Jvb20wZTIzYzIzMkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=bWFpbC5rbXV0dC5hYy50aF9jbGFzc3Jvb21iYjk4MWVjM0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZXRia2VqY2Vhbms4NjhyOWp0M3JqaGk0OG1ia2ozMmtAaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039BE5&color=%2333B679&color=%237627bb&color=%230B8043&color=%231c3aa9&color=%231c3aa9&color=%23c26401&color=%23c26401&color=%23F09300&showTitle=0&showNav=1&showTz=0&showCalendars=0&showPrint=0&showTabs=1&showDate=1"
+                                style="border-width:0 ;" width="100%" height="600" frameborder="0"
+                                scrolling="no"></iframe>
+                        </span>-->
 
                         <h1>Risk User</h1>
                         <hr>
