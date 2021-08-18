@@ -15,7 +15,7 @@ router.get("/", async (req, res, next) => {
     await contactListRef.get().then((snapshot) => {
       snapshot.forEach((doc) => {
         contactlists.push({
-          id: doc.data().id,
+          userID: doc.data().userID,
           nickName: doc.data().nickName,
         });
       });
