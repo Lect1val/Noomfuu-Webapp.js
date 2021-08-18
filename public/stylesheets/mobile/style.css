@@ -1,0 +1,239 @@
+@import "https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap";
+@import "https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap%27";
+body {
+  font-family: 'Kanit', sans-serif;
+}
+
+h1 {
+  color: #223E63;
+  font-weight: 800;
+  font-size: 35px;
+}
+
+a {
+  text-decoration: none;
+}
+
+/*Style of Contact List*/
+
+.contact_header {
+  color: #786EEA;
+  text-align: center;
+  font-size: 26px;
+  padding: 3%;
+}
+
+.contact_list {
+  color: #786EEA;
+  font-size: 20px;
+  text-align: center;
+  background-color: #EBE9FD;
+  font-weight: 200;
+  padding: 3%;
+}
+
+a.contact_username {
+  color: #786EEA;
+  font-size: 20px;
+  text-align: center;
+  font-weight: 200;
+}
+
+.search_contact {
+  border-top-style: none;
+  border-right-style: none;
+  border-left-style: none;
+  border-bottom-color: #0275d8;
+  border-bottom-width: 1px;
+  width: 100%;
+}
+
+::placeholder {
+  color: #a8bcce;
+}
+
+textarea {
+  /* box-sizing: padding-box; */
+  overflow: hidden;
+  /* demo only: */
+  padding: 10px;
+  width: 250px;
+  margin: 50px auto;
+  display: block;
+  border: none;
+}
+
+textarea:focus, input:focus {
+  outline: none;
+}
+
+/*user menu link*/
+
+a.user_menu {
+  color: #786EEA;
+}
+
+a.user_menu:hover {
+  color: #223E63;
+}
+
+/*chat history table*/
+
+.chat_history_table {
+  background-color: #EBE9FD;
+  font-weight: 200;
+  color: black;
+  width: 100%;
+  text-align: center;
+}
+
+.chat_list {
+  padding: 1%;
+}
+
+/*chat history state style*/
+
+.btn_negative {
+  background-color: #E34545;
+  color: white;
+  font-weight: bold;
+}
+
+.btn_positive {
+  background-color: #2ABD4A;
+  color: white;
+  font-weight: bold;
+}
+
+.btn_neutral {
+  background-color: #FFCE22;
+  color: white;
+  font-weight: bold;
+}
+
+/* The Modal (background) */
+
+.modal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  /* Could be more or less, depending on screen size */
+}
+
+.modal-close-note {
+  background-color: #fefefe;
+  margin: 15% auto;
+  /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover, .close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.text_field {
+  width: 90%;
+  margin: 1%;
+  margin-left: 3%;
+  padding: 1%;
+  background-color: #EFF3F9;
+  border: none;
+}
+
+/*Profile data Style*/
+
+.profile_crop {
+  width: 65%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.textbox {
+  background-color: #EBE9FD;
+  padding: 2%;
+  font-size: 16px;
+  margin: 1%;
+}
+
+.data_head {
+  font-weight: 200;
+  font-size: 20px;
+  color: #6E89EA;
+}
+
+.card_style {
+  margin: 3%;
+  padding: 2%;
+  background-color: #C9E8FF;
+  border: none;
+}
+
+/*Pop up เตือนยังไม่เซฟ*/
+
+.sure_btn {
+  margin-top: 5%;
+  margin-right: 2%;
+  margin-left: 2%;
+  margin-bottom: 1%;
+  width: 100%;
+  padding: 1%;
+}
+
+.not_sure_btn {
+  width: 100%;
+  margin-top: 5%;
+  margin-right: 2%;
+  margin-left: 2%;
+  margin-bottom: 1%;
+  padding: 1%;
+}
+
+.download_ics {
+  background: #E3E1F7;
+  border-radius: 10px;
+  border: none;
+  padding: 1% 2% 1% 2%;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.25));
+  margin-right: 1%;
+}
