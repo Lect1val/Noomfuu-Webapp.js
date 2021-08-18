@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
-const contactListController = require("../controller/contactlist");
-const { db } = require("../Database/database");
+const contactListController = require("../../controller/contactlist");
+const { db } = require("../../Database/database");
 
 /* GET home page. */
 // router.route("/").get((req, res, next) => {
@@ -30,12 +30,13 @@ router.get("/", async (req, res, next) => {
     await contactListRef.get().then((snapshot) => {
       snapshot.forEach((doc) => {
         contactlists.push({
+          id: doc.data().id,
           nickName: doc.data().nickName,
         });
       });
     });
 
-    res.render("index", {
+    res.render("desktop/index", {
       contactlists,
     });
   } catch (error) {
