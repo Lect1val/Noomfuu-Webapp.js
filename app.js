@@ -17,6 +17,8 @@ var appointmentRouter = require("./routes/desktop/appointment_all");
 // *Route Mobile*
 var assessment2QRouter = require("./routes/mobile/assessment2Q");
 var assessment9QRouter = require("./routes/mobile/assessment9Q");
+var assessmentWarning = require("./routes/mobile/warning");
+var assessmentResult = require("./routes/mobile/assessmentResult");
 
 var app = express();
 
@@ -43,6 +45,8 @@ app.use("/profile/appointment", appointmentRouter);
 // *App.use Mobile*
 app.use("/assessment/2Q", assessment2QRouter);
 app.use("/assessment/9Q", assessment9QRouter);
+app.use("/assessment/warning", assessmentWarning);
+app.use("/assessment/Qresult", assessmentResult);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

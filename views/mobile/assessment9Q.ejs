@@ -79,7 +79,38 @@
           2 สัปดาห์มานี้<br />
           มีความรู้สึกแบบนี้บ่อยแค่ไหน
         </h4>
-        <h2>รู้สึกไม่สบายใจ ซึมเศร้าหรือท้อแท้</h2>
+        <h2 id="9Q">รู้สึกเบื่อ ไม่สนใจอยากทำอะไร</h2>
+
+        <script>
+          var questionLoop = [
+            "รู้สึกเบื่อ ไม่สนใจอยากทำอะไร",
+            "ไม่สบายใจ ซึมเศร้าหรือว่าท้อแท้",
+            "อาการการนอนผิดปกติ เช่น หลับยาก ไม่ก็หลับ ๆ ตื่น ๆ หรือนอนหลับมากไป",
+            "เหนื่อยง่าย ไม่ค่อยมีแรง",
+            "กินผิดปกติ เช่น รู้สึกเบื่ออาหาร หรือกินมากเกินไป",
+            "รู้สึกไม่ดีกับตัวเองเท่าไร เช่น คิดว่าตัวเองล้มเหลว ทำให้คนอื่นผิดหวัง",
+            "รู้สึกไม่ค่อยมีสมาธิ ทำงานที่ต้องใช้ความตั้งใจไม่ค่อยได้",
+            "พูดช้า ทำอะไรช้าลง หรือไม่ก็กระสับกระส่ายผิดปกติ",
+            "เคยคิดจะทำร้ายตัวเองบ้างไหม หรือไม่ก็คิดว่า ถ้าตายไปคงจะดี"
+          ];
+
+          var curNum = 0; //curNum means 'current number'
+          x = document.getElementById("9Q");
+
+          function nextFunction() {
+            if (curNum === 8) {
+              // curNum = 0;
+              window.location.href = "./Qresult";
+            } else {
+              curNum++;
+            }
+            console.log(curNum);
+
+            x.innerHTML = questionLoop[curNum];
+            console.log(questionLoop[curNum]);
+          }
+        </script>
+
         <div style="text-align: right">
           <button style="border: none; background-color: transparent">
             <img
@@ -91,14 +122,42 @@
           </button>
         </div>
         <div>
-          <form>
-            <button class="answer_box" id="never">ไม่มีเลย</button>
-            <br />
-            <button class="answer_box" id="sometimes">เป็นบางวัน</button>
-            <button class="answer_box" id="usually">บ่อย ๆ นะ</button>
-            <br />
-            <button class="answer_box" id="always">ทุกวันเลย</button>
-          </form>
+          <button
+            class="answer_box"
+            id="myButton"
+            onclick="nextFunction()"
+            name="user_ans"
+            value="yes"
+          >
+            ไม่มีเลย
+          </button>
+          <button
+            class="answer_box"
+            id="myButton"
+            onclick="nextFunction()"
+            name="user_ans"
+            value="yes"
+          >
+            เป็นบางวัน
+          </button>
+          <button
+            class="answer_box"
+            id="myButton"
+            onclick="nextFunction()"
+            name="user_ans"
+            value="yes"
+          >
+            บ่อย ๆ นะ
+          </button>
+          <button
+            class="answer_box"
+            id="myButton"
+            onclick="nextFunction()"
+            name="user_ans"
+            value="yes"
+          >
+            ทุกวันเลย
+          </button>
         </div>
       </div>
     </div>
