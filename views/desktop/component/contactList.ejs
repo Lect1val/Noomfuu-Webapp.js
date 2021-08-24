@@ -34,16 +34,21 @@
       </td>
     </tr>
     <!--have to be loop of getUsername-->
-
-    <% for(let i = 0 ; i< contactlists.length;i++) {%>
-    <tr>
-      <td class="contact_list">
-        <a href="/profile" class="contact_username">
-          <%= contactlists[i].nickName%>
-        </a>
-      </td>
-    </tr>
-    <%} %>
+    <form action="/profile" method="POST"></form>
+      <% for(let i = 0 ; i< contactlists.length;i++) {%>
+      <tr>
+        <td class="contact_list">
+          <a
+            href="/profile/<%= contactlists[i].userID %>"
+            
+            class="contact_username"
+          >
+            <%= contactlists[i].nickName%>
+          </a>
+        </td>
+      </tr>
+      <%} %>
+    </form>
     <!--ending loop-->
   </table>
 </div>
