@@ -78,6 +78,7 @@ router.get("/:userID", async (req, res, next) => {
             lastName: doc.data().lastName,
             TelNo: doc.data().TelNo,
             Email: doc.data().Email,
+            contactNote: doc.data().contactNote,
           });
         }
       });
