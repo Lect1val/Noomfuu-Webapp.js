@@ -43,10 +43,10 @@ app.use("/profile/appointment", appointmentRouter);
 // app.use(contactList);
 
 // *App.use Mobile*
-app.use("/assessment/2Q", assessment2QRouter);
-app.use("/assessment/9Q", assessment9QRouter);
-app.use("/assessment/warning", assessmentWarning);
-app.use("/assessment/Qresult", assessmentResult);
+app.use("/assessment/depress", assessmentWarning);
+app.use("/assessment/depress/2Q", assessment2QRouter);
+app.use("/assessment/depress/9Q", assessment9QRouter);
+app.use("/assessment/depress/Qresult", assessmentResult);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
