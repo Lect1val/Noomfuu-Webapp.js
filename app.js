@@ -19,6 +19,9 @@ var assessment2QRouter = require("./routes/mobile/assessment2Q");
 var assessment9QRouter = require("./routes/mobile/assessment9Q");
 var assessmentWarning = require("./routes/mobile/warning");
 var assessmentResult = require("./routes/mobile/assessmentResult");
+var DASSwarning = require("./routes/mobile/DASSwarning");
+var DASSQuestion = require("./routes/mobile/DASSQ");
+var DASSResult = require("./routes/mobile/DASSresult");
 
 var app = express();
 
@@ -47,6 +50,10 @@ app.use("/assessment/depress", assessmentWarning);
 app.use("/assessment/depress/2Q", assessment2QRouter);
 app.use("/assessment/depress/9Q", assessment9QRouter);
 app.use("/assessment/depress/Qresult", assessmentResult);
+app.use("/assessment/dass", DASSwarning);
+app.use("/assessment/dass/q", DASSQuestion);
+app.use("/assessment/dass/result", DASSResult);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
