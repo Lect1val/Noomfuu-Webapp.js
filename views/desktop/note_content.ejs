@@ -101,7 +101,7 @@
           <div class="footer mt-auto py-3">
             <div class="row">
               <div class="col-sm-8">
-                <a href="/profile/note" style="color: #223e63">
+                <a href="/profile/<%= getUserID %>/note" style="color: #223e63">
                   <img src="/images/backArrow.png" style="width: 30px" /> Back
                 </a>
               </div>
@@ -109,7 +109,10 @@
                 class="col-sm-2"
                 style="text-align: right; padding-right: 3%"
               >
-                <a href="/profile/note/content/edit" style="color: #223e63">
+                <a
+                  href="/profile/<%= getUserID %>/note/content/edit"
+                  style="color: #223e63"
+                >
                   <p style="color: #3378ff">
                     <img src="/images/Edit.png" style="height: 20px" />Edit
                   </p>
@@ -119,7 +122,7 @@
                 class="col-sm-2"
                 style="text-align: right; padding-right: 3%"
               >
-                <a href="/profile/note" style="color: #223e63">
+                <a href="/profile/<%= getUserID %>/note" style="color: #223e63">
                   <p style="color: red">
                     <img src="/images/delete.png" style="height: 20px" /> Delete
                   </p>

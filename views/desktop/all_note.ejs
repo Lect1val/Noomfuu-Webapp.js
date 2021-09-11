@@ -43,7 +43,7 @@
           <div class="row">
             <!--Card 1-->
             <div class="col-md-4">
-              <a href="/profile/note/content">
+              <a href="/profile/<%= getUserID %>/note/content">
                 <div class="card shadow-sm card_style">
                   <div style="padding: 3%">
                     <div class="note_header">Card Header</div>
@@ -55,10 +55,12 @@
                     </p>
                     <div class="row">
                       <div class="col-sm-4">
-                        <a href="/profile/note/content">See more</a>
+                        <a href="/profile/<%= getUserID %>/note/content"
+                          >See more</a
+                        >
                       </div>
                       <div class="col-sm-4">
-                        <a href="/profile/note/content/edit">
+                        <a href="/profile/<%= getUserID %>/note/content/edit">
                           <p style="color: #3378ff">
                             <img
                               src="/images/Edit.png"
