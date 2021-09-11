@@ -3,8 +3,9 @@ var router = express.Router();
 const { db } = require("../../Database/database");
 
 router.get("/", (req, res, next) => {
-  var assessmentScore = req.query.score;
+  var assessmentScore = parseInt(req.query.score);
   const data = {
+    type: "depress",
     score: assessmentScore
   };
   //db.collection('Assessment').add(data);

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DASS Assessment</title>
+
+    <style>
+        html {
+            background: url(/images/BG-375-667.png) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        body {
+            font-family: "Kanit", sans-serif;
+        }
+
+        h1 {
+            color: #223e63;
+            font-weight: 800;
+            font-size: 35px;
+            line-height: 80%;
+        }
+
+        h2 {
+            color: #223e63;
+            font-weight: 600;
+            font-size: 20px;
+        }
+
+        h3 {
+            color: #223e63;
+            font-weight: 300;
+            font-size: 20px;
+        }
+
+        h4 {
+            color: #223e63;
+            font-weight: 300;
+            font-size: 14px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .assess_content {
+            text-align: center;
+        }
+
+        .question {
+            margin: 10% 5% 10% 5%;
+        }
+
+        .answer_box {
+            background-color: white;
+            border: none;
+            width: 100%;
+            padding: 3%;
+            margin-top: 3%;
+            margin-bottom: 3%;
+            box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+            border-radius: 20px;
+            font-family: "Kanit", sans-serif;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="assess_content">
+        <h1 style="margin-top: 20%">แบบทดสอบ</h1>
+        <h3>แบบประเมินภาวะสุขภาพจิต</h3>
+        <div class="question">
+            <h4>
+                2 สัปดาห์มานี้<br />
+                มีอาการ/ความคิดแบบนี้บ่อยแค่ไหน
+            </h4>
+            <h2 id="9Q">ยากที่จะสงบจิตใจ</h2>
+
+            <script>
+                var questionLoop = [
+                    "ยากที่จะสงบจิตใจ",
+                    "รู้สึกปากแห้ง คอแห้ง",
+                    "แทบไม่รู้สึกอะไรดี ๆ เลย",
+                    "มีอาการหายใจผิดปกติ เช่น หายใจเร็วเกินไป หายใจไม่ทันแม้จะไม่ได้ออกแรงอยู่",
+                    "ฉันรู้สึกว่ามันยากที่จะคิดริเริ่มทำอะไรใหม่ ๆ",
+                    "มีแนวโน้มที่จะตอบสนองเกินต่อสถานการณ์",
+                    "ร่างกายบางส่วนสั่นกว่าปกติ เช่น มือสั่น",
+                    "รู้สึกเสียพลังงานไปมากกับการคิด กังวล",
+                    "ฉันรู้สึกกังวลกับเหตุการณ์ที่อาจทำให้ฉันรู้สึกตื่นกลัวและการกระทำบางสิ่งที่น่าอับอาย",
+                    "รู้สึกไม่มีเป้าหมายชีวิต",
+                    "รู้สึกกระวนกระวายใจ",
+                    "รู้สึกยากที่เธอจะผ่อนคลายตัวเอง",
+                    "รู้สึกจิตใจเหงาหงอย เศร้าซึม",
+                    "รู้สึกทนไม่ได้เวลามีอะไรมาขัดขวางสิ่งที่ฉันกำลังทำอยู่",
+                    "รู้สึกคล้ายว่าจะมีอาการตื่นตระหนก",
+                    "ไม่มีความกระตือรือร้นต่อสิ่งใด",
+                    "รู้สึกว่าตัวเองไม่มีคุณค่า",
+                    "รู้สึกว่าเป็นคนฉุนเฉียวง่าย",
+                    "รับรู้ถึงการทำงานของหัวใจแม้ในตอนที่ไม่ได้ออกแรง เช่นรู้สึกว่าหัวใจเต้นเร็วหรือไม่เป็นจังหวะ",
+                    "กลัวโดยไม่มีเหตุผล",
+                    "ชีวิตไม่มีความหมาย"
+                ];
+
+                var curNum = 0; //curNum means 'current number'
+                x = document.getElementById("9Q");
+
+                var d = 0;
+                var a = 0;
+                var s = 0;
+
+                function nextNever() {
+
+                    if (curNum === 20) {
+                        // curNum = 0;
+                        window.location.href = "./result?d=" + d + "&a=" + a + "&s=" + s;
+                    } else {
+                        curNum++;
+                    }
+                    console.log(curNum);
+                    console.log("d = " + d + "; a = " + a + "; s = " + s);
+
+                    x.innerHTML = questionLoop[curNum];
+                    console.log(questionLoop[curNum]);
+                }
+
+                function nextSometimes() {
+
+                    // Stress
+                    if (curNum === 0 || curNum === 5 || curNum === 7 || curNum === 10 || curNum === 11 || curNum === 13 || curNum === 17) {
+                        s += 1;
+                    }
+                    // Anxiety
+                    if (curNum === 1 || curNum === 3 || curNum === 6 || curNum === 8 || curNum === 14 || curNum === 18 || curNum === 19) {
+                        a += 1;
+                    }
+
+                    // Depress
+                    if (curNum === 2 || curNum === 4 || curNum === 9 || curNum === 12 || curNum === 15 || curNum === 16 || curNum === 20) {
+                        d += 1;
+                    }
+
+                    if (curNum === 20) {
+                        // curNum = 0;
+                        window.location.href = "./result?d=" + d + "&a=" + a + "&s=" + s;
+                    } else {
+                        curNum++;
+                    }
+                    console.log(curNum);
+                    console.log("d = " + d + "; a = " + a + "; s = " + s);
+
+                    x.innerHTML = questionLoop[curNum];
+                    console.log(questionLoop[curNum]);
+                }
+
+                function nextUsually() {
+
+                    // Stress
+                    if (curNum === 0 || curNum === 5 || curNum === 7 || curNum === 10 || curNum === 11 || curNum === 13 || curNum === 17) {
+                        s += 2;
+                    }
+                    // Anxiety
+                    if (curNum === 1 || curNum === 3 || curNum === 6 || curNum === 8 || curNum === 14 || curNum === 18 || curNum === 19) {
+                        a += 2;
+                    }
+
+                    // Depress
+                    if (curNum === 2 || curNum === 4 || curNum === 9 || curNum === 12 || curNum === 15 || curNum === 16 || curNum === 20) {
+                        d += 2;
+                    }
+
+                    if (curNum === 20) {
+                        // curNum = 0;
+                        window.location.href = "./result?d=" + d + "&a=" + a + "&s=" + s;
+                    } else {
+                        curNum++;
+                    }
+                    console.log(curNum);
+                    console.log("d = " + d + "; a = " + a + "; s = " + s);
+
+                    x.innerHTML = questionLoop[curNum];
+                    console.log(questionLoop[curNum]);
+                }
+
+                function nextAlways() {
+
+                    // Stress
+                    if (curNum === 0 || curNum === 5 || curNum === 7 || curNum === 10 || curNum === 11 || curNum === 13 || curNum === 17) {
+                        s += 3;
+                    }
+                    // Anxiety
+                    if (curNum === 1 || curNum === 3 || curNum === 6 || curNum === 8 || curNum === 14 || curNum === 18 || curNum === 19) {
+                        a += 3;
+                    }
+
+                    // Depress
+                    if (curNum === 2 || curNum === 4 || curNum === 9 || curNum === 12 || curNum === 15 || curNum === 16 || curNum === 20) {
+                        d += 3;
+                    }
+
+                    if (curNum === 20) {
+                        // curNum = 0;
+                        window.location.href = "./result?d=" + d + "&a=" + a + "&s=" + s;
+                    } else {
+                        curNum++;
+                    }
+                    console.log(curNum);
+                    console.log("d = " + d + "; a = " + a + "; s = " + s);
+
+                    x.innerHTML = questionLoop[curNum];
+                    console.log(questionLoop[curNum]);
+                }
+            </script>
+
+            <div style="text-align: right">
+            </div>
+            <div>
+                <button class="answer_box" id="myButton" onclick="nextNever()" name="user_ans" value="0">
+                    ไม่มีเลย
+                </button>
+                <button class="answer_box" id="myButton" onclick="nextSometimes()" name="user_ans" value="1">
+                    เป็นบางวัน
+                </button>
+                <button class="answer_box" id="myButton" onclick="nextUsually()" name="user_ans" value="2">
+                    บ่อย ๆ นะ
+                </button>
+                <button class="answer_box" id="myButton" onclick="nextAlways()" name="user_ans" value="3">
+                    ทุกวันเลย
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
