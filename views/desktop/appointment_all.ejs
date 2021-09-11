@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include component/import%>
+        <style>
+            .st-bg {
+                border-left: none;
+            }
+
+            .st-dtitle {
+                border: none;
+                background: white;
+            }
+
+            .appoint_date {
+                color: #223E63;
+                font-weight: 600;
+                font-size: 18px;
+            }
+
+            .appoint_time {
+                color: #223E63;
+                font-weight: 300;
+                font-size: 16px;
+            }
+
+            .appoint_place {
+                color: #223E63;
+                font-weight: 300;
+                font-size: 16px;
+            }
+
+            .appoint_online {
+                color: #2ABD4A;
+                font-weight: 700;
+                font-size: 18px;
+            }
+
+            .appoint_onsite {
+                color: #DAAA00;
+                font-weight: 700;
+                font-size: 18px;
+            }
+
+            .appoint_ongoing {
+                color: #DAAA00;
+                font-weight: 500;
+                font-size: 16px;
+            }
+
+            .appoint_done {
+                color: #2ABD4A;
+                font-weight: 500;
+                font-size: 16px;
+            }
+
+            .appoint_canceled {
+                color: #E34545;
+                font-weight: 500;
+                font-size: 16px;
+            }
+
+            
+        </style>
+</head>
+
+<body>
+    <%- include component/navbar%>
+        <div class="container-fluid">
+            <div class="row">
+                <%- include component/contactList%>
+                    <div class="col-md-9">
+                        <% include component/profileNav%>
+                            <div id='loading'>loading...</div>
+                            <div id='calendar'></div>
+
+                            <!--download .ics button-->
+                            <div style="text-align: right; margin-top: 1%;">
+                                <form
+                                    action="https://calendar.google.com/calendar/ical/en.th%23holiday%40group.v.calendar.google.com/public/basic.ics">
+                                    <button class="download_ics" type="submit" value="sync">sync with your
+                                        calendar</button>
+                                </form>
+                            </div>
+
+                            <h1>Appointment</h1>
+                            <hr>
+
+                            <!--Appointment row 1-->
+                            <div class="row">
+                                <!--Appointment Card 1-->
+                                <div class="col-md-6">
+                                    <a href="#">
+                                        <div class="card shadow-sm card_style">
+                                            <Table
+                                                style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
+                                                <tr>
+                                                    <td class="appoint_date">23/03/2021</td>
+                                                    <td class="appoint_online" style="text-align: right;">ONLINE
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="appoint_time">13:00 น.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="appoint_ongoing">On going</td>
+                                                    <td style="text-align: right;"><button type="button"
+                                                            class="btn btn-light">Enter Meeting</button></td>
+                                                </tr>
+                                            </Table>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!--Appointment Card 2-->
+                                <div class="col-md-6">
+                                    <a href="#">
+                                        <div class="card shadow-sm card_style">
+                                            <Table
+                                                style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
+                                                <tr>
+                                                    <td class="appoint_date">23/03/2021</td>
+                                                    <td class="appoint_online" style="text-align: right;">ONLINE
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="appoint_time">13:00 น.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="appoint_ongoing">On going</td>
+                                                    <td style="text-align: right;"><button type="button"
+                                                            class="btn btn-light">Enter Meeting</button></td>
+                                                </tr>
+                                            </Table>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <!--Ending of Appointment row 1-->
+
+                            <!--Appointment row 2-->
+                            <div class="row">
+                                <!--Appointment Card 3-->
+                                <div class="col-md-6">
+                                    <a href="#">
+                                        <div class="card shadow-sm card_style">
+                                            <Table
+                                                style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
+                                                <tr>
+                                                    <td class="appoint_date">23/03/2021</td>
+                                                    <td class="appoint_onsite" style="text-align: right;">ON SITE
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="appoint_time">13:00 น.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="appoint_ongoing">On going</td>
+                                                    <td class="appoint_place" style="text-align: right;">ห้องพยาบาล อาคารเรียนรวม 2<br>
+                                                        มจธ. บางมด</td>
+                                                </tr>
+                                            </Table>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <!--Ending of Appointment row 2-->
+
+                            <h1>Appointment History</h1>
+                            <hr>
+
+                            <!--Appointment row 1-->
+                            <div class="row">
+                                <!--Appointment Card 1-->
+                                <div class="col-md-6">
+                                    <a href="#">
+                                        <div class="card shadow-sm card_style">
+                                            <Table
+                                                style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
+                                                <tr>
+                                                    <td class="appoint_date">23/03/2021</td>
+                                                    <td class="appoint_online" style="text-align: right;">ONLINE
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="appoint_time">13:00 น.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="appoint_done" style="padding-top: 10px;">Done</td>
+                                                </tr>
+                                            </Table>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!--Appointment Card 2-->
+                                <div class="col-md-6">
+                                    <a href="#">
+                                        <div class="card shadow-sm card_style">
+                                            <Table
+                                                style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
+                                                <tr>
+                                                    <td class="appoint_date">23/03/2021</td>
+                                                    <td class="appoint_online" style="text-align: right;">ONLINE
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="appoint_time">13:00 น.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="appoint_canceled" style="padding-top: 10px;">Canceled</td>
+                                                </tr>
+                                            </Table>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <!--Ending of Appointment row 1-->
+                    </div>
+                    
+
+                    
+            </div>
+
+        </div>
+        </div>>
+</body>
+
+</html>

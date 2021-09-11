@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include component/import%>
+    <style>
+      .note_header {
+        font-size: 32px;
+        font-weight: 700;
+        color: #6e89ea;
+      }
+
+      .note_content {
+        padding: 1%;
+        font-weight: 300;
+        color: #223e63;
+        font-size: 18px;
+        font-family: "Sarabun", sans-serif;
+      }
+
+      .add_card {
+        border-color: #c9e8ff;
+        background-color: #e2f3ff;
+        margin: 3%;
+        padding-top: 30%;
+        padding-bottom: 30%;
+      }
+
+      .note_owner {
+        padding: 2%;
+        font-weight: 600;
+        color: #2f4e77;
+        font-size: 22px;
+      }
+
+      .modify_status {
+        padding: 2%;
+        font-weight: 400;
+        color: #2f4e77;
+        text-align: right;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <%- include component/navbar%>
+    <div class="container-fluid">
+      <div class="row">
+        <%- include component/contactList%>
+
+        <div class="col-md-9">
+          <% include component/profileNav%>
+          <div class="row">
+            <div class="col-md-6 note_header">Content Header</div>
+            <div
+              class="col-md-6"
+              style="
+                font-size: 32px;
+                font-weight: 700;
+                color: #6e89ea;
+                text-align: right;
+                padding-right: 3%;
+              "
+            >
+              Username
+            </div>
+          </div>
+          <hr />
+          <div class="row note_content">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
+              sollicitudin dolor sit amet sem dignissim, placerat sollicitudin
+              nibh eleifend. Praesent ultricies iaculis congue. Sed aliquet
+              felis et ullamcorper vehicula. Vestibulum sed nulla cursus,
+              vestibulum velit at, condimentum massa. Mauris sodales ornare
+              elit, vitae mollis magna finibus ac. Fusce in faucibus ex. Cras et
+              lobortis dolor. Aenean ligula urna, mattis non mi eget, interdum
+              euismod orci.
+            </p>
+            <p>
+              Praesent neque nunc, viverra nec blandit et, congue quis sem. Nam
+              rutrum sed magna ut aliquam. Vivamus finibus mi in pharetra
+              vehicula. Vestibulum varius tortor sed aliquam convallis. Donec
+              tellus nisl, facilisis at ligula et, placerat maximus est. Nullam
+              vehicula neque non risus euismod, sed hendrerit eros scelerisque.
+              Vivamus a nulla porttitor ligula ultricies euismod. Vivamus porta
+              eros sapien, sit amet rhoncus eros aliquet aliquam. Donec in nisi
+              diam. Praesent sagittis mauris ut libero efficitur pretium. Duis
+              ligula orci, vehicula vitae nulla fringilla, convallis pulvinar
+              lorem. Nunc non pellentesque dui.
+            </p>
+          </div>
+          <div class="row">
+            <div class="col-md-6 note_owner">
+              Created by Nattawanee Srikoseat
+            </div>
+            <div class="col-md-6 modify_status">
+              Last Modify: 24 MAR 2021 12:30 PM
+            </div>
+          </div>
+          <div class="footer mt-auto py-3">
+            <div class="row">
+              <div class="col-sm-8">
+                <a href="/profile/<%= getUserID %>/note" style="color: #223e63">
+                  <img src="/images/backArrow.png" style="width: 30px" /> Back
+                </a>
+              </div>
+              <div
+                class="col-sm-2"
+                style="text-align: right; padding-right: 3%"
+              >
+                <a
+                  href="/profile/<%= getUserID %>/note/content/edit"
+                  style="color: #223e63"
+                >
+                  <p style="color: #3378ff">
+                    <img src="/images/Edit.png" style="height: 20px" />Edit
+                  </p>
+                </a>
+              </div>
+              <div
+                class="col-sm-2"
+                style="text-align: right; padding-right: 3%"
+              >
+                <a href="/profile/<%= getUserID %>/note" style="color: #223e63">
+                  <p style="color: red">
+                    <img src="/images/delete.png" style="height: 20px" /> Delete
+                  </p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
