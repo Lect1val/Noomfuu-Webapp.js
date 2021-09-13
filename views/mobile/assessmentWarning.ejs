@@ -70,10 +70,10 @@
     <script>
         function runApp() {
             liff.getProfile().then(profile => {
-                const userProfile = profile.userId;
-                const displayName = profile.displayName;
-                const statusMessage = profile.statusMessage;
-                const pictureUrl = profile.pictureUrl;
+                var userProfile = profile.userId;
+                var displayName = profile.displayName;
+                var statusMessage = profile.statusMessage;
+                var pictureUrl = profile.pictureUrl;
             }).catch(
                 err => console.error(err)
             );
@@ -88,7 +88,7 @@
         }, err => console.error(err.code, error.message));
 
         function nextPage(){
-            window.location.href='/assessment/depress/2Q?id='+ userProfile
+            window.location.href='/assessment/depress/2Q?id='+ userProfile;
         }
     </script>
     <div class="assess_content">
