@@ -83,6 +83,26 @@
       <h2 id="9Q">รู้สึกเบื่อ ไม่สนใจอยากทำอะไร</h2>
 
       <script>
+
+        function runApp() {
+            liff.getProfile().then(profile => {
+                const userProfile = profile.userId;
+                const displayName = profile.displayName;
+                const statusMessage = profile.statusMessage;
+                const pictureUrl = profile.pictureUrl;
+            }).catch(
+                err => console.error(err)
+            );
+        }
+
+        liff.init({ liffId: "1655710592-RN7GEeaL" }, () => {
+            if (liff.isLoggedIn()) {
+                runApp;
+            } else {
+                liff.login();
+            }
+        }, err => console.error(err.code, error.message));
+
         var questionLoop = [
           "รู้สึกเบื่อ ไม่สนใจอยากทำอะไร",
           "ไม่สบายใจ ซึมเศร้าหรือว่าท้อแท้",
@@ -102,7 +122,7 @@
         function nextNever() {
           if (curNum === 8) {
             // curNum = 0;
-              window.location.href = "./Qresult?score=" + score;
+              window.location.href = "./Qresult?score=" + score + "&id=" + userProfile;
           } else {
             curNum++;
           }
@@ -116,7 +136,7 @@
           score += 1;
           if (curNum === 8) {
             // curNum = 0;
-            window.location.href = "./Qresult?score=" + score;
+            window.location.href = "./Qresult?score=" + score + "&id=" + userProfile;
           } else {
             curNum++;
           }
@@ -131,7 +151,7 @@
           if (curNum === 8) {
             // curNum = 0;
             score += 5;
-            window.location.href = "./Qresult?score=" + score;
+            window.location.href = "./Qresult?score=" + score + "&id=" + userProfile;
           } else {
             curNum++;
           }
@@ -146,7 +166,7 @@
           if (curNum === 8) {
             score += 5;
             // curNum = 0;
-            window.location.href = "./Qresult?score=" + score;
+            window.location.href = "./Qresult?score=" + score + "&id=" + userProfile;
           } else {
             curNum++;
           }

@@ -7,15 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ประเมินโรคซึมเศร้า</title>
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-    <script>
-        liff.init({ liffId: "1655710592-RN7GEeaL" }, () => {
-            if (liff.isLoggedIn()) {
-                // ขั้นตอน 4.4 รออยู่
-            } else {
-                liff.login();
-            }
-        }, err => console.error(err.code, error.message));
-    </script>
     <style>
         html {
             background: url(/images/BG-375-667.png) no-repeat center center fixed;
@@ -77,28 +68,35 @@
 
 <body>
     <script>
-        liff.getProfile().then(profile => {
-            const userProfile = profile.userId;
-            const displayName = profile.displayName;
-            const statusMessage = profile.statusMessage;
-            const pictureUrl = profile.pictureUrl;
+        // function runApp() {
+        //     liff.getProfile().then(profile => {
+        //         const userProfile = profile.userId;
+        //         const displayName = profile.displayName;
+        //         const statusMessage = profile.statusMessage;
+        //         const pictureUrl = profile.pictureUrl;
+        //     }).catch(
+        //         err => console.error(err)
+        //     );
+        // }
 
-            document.getElementById("userId").innerHTML = '<b>UserId:</b> ' + userProfile;
-        }).catch(
-            err => console.error(err)
-        );
+        // liff.init({ liffId: "1655710592-RN7GEeaL" }, () => {
+        //     if (liff.isLoggedIn()) {
+        //         runApp;
+        //     } else {
+        //         liff.login();
+        //     }
+        // }, err => console.error(err.code, error.message));
     </script>
     <div class="assess_content">
         <h1 style="margin-top: 20%">แบบทดสอบ</h1>
         <h3>ความเสี่ยงการเป็นโรคซึมเศร้า</h3>
-        <h3 id="userId"></h3>
 
         <p style="color: #E34545; font-weight: 600;
         font-size: 20px;">คำเตือน</p>
         <h2>บางคำถามอาจทำให้รู้สึกไม่ดีหรือไม่สบายใจได้ <br>ถ้ารู้สึกว่าไม่อยากทำต่อไม่ต้องห่วง
             <br>เธอกดปิดได้เลยทันที<br>และระบบจะไม่คำนวณและบันทึกผลใด ๆ ในครั้งนี้
         </h2>
-        <button class="answer_box" onclick="window.location.href='/assessment/depress/2Q'">
+        <button class="answer_box" onclick="window.location.href='/assessment/depress/2Q?id=userProfile'">
             ฉันรับรู้และต้องการประเมินต่อ
         </button>
     </div>

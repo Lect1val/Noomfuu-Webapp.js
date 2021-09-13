@@ -4,11 +4,15 @@ const { db } = require("../../Database/database");
 
 router.get("/", (req, res, next) => {
   var assessmentScore = parseInt(req.query.score);
+  var timestamp = new Date(Date.now()).toString()
+  console.log(timestamp)
   const data = {
     type: "depress",
-    score: assessmentScore
+    score: assessmentScore,
+    //timestamp: firebase.firestore.Timestamp.fromDate(timestamp)
+    //timestamp: timestamp
   };
-  //db.collection('Assessment').add(data);
+  
   db.collection('User').doc('user2').collection('assessment').add(data);
 
   var status = "";
