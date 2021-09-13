@@ -84,25 +84,6 @@
 
       <script>
 
-        function runApp() {
-            liff.getProfile().then(profile => {
-                const userProfile = profile.userId;
-                const displayName = profile.displayName;
-                const statusMessage = profile.statusMessage;
-                const pictureUrl = profile.pictureUrl;
-            }).catch(
-                err => console.error(err)
-            );
-        }
-
-        liff.init({ liffId: "1655710592-RN7GEeaL" }, () => {
-            if (liff.isLoggedIn()) {
-                runApp;
-            } else {
-                liff.login();
-            }
-        }, err => console.error(err.code, error.message));
-
         var questionLoop = [
           "รู้สึกเบื่อ ไม่สนใจอยากทำอะไร",
           "ไม่สบายใจ ซึมเศร้าหรือว่าท้อแท้",

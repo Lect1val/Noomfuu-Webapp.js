@@ -68,24 +68,24 @@
 
 <body>
     <script>
-        // function runApp() {
-        //     liff.getProfile().then(profile => {
-        //         const userProfile = profile.userId;
-        //         const displayName = profile.displayName;
-        //         const statusMessage = profile.statusMessage;
-        //         const pictureUrl = profile.pictureUrl;
-        //     }).catch(
-        //         err => console.error(err)
-        //     );
-        // }
+        function runApp() {
+            liff.getProfile().then(profile => {
+                const userProfile = profile.userId;
+                const displayName = profile.displayName;
+                const statusMessage = profile.statusMessage;
+                const pictureUrl = profile.pictureUrl;
+            }).catch(
+                err => console.error(err)
+            );
+        }
 
-        // liff.init({ liffId: "1655710592-RN7GEeaL" }, () => {
-        //     if (liff.isLoggedIn()) {
-        //         runApp;
-        //     } else {
-        //         liff.login();
-        //     }
-        // }, err => console.error(err.code, error.message));
+        liff.init({ liffId: "1655710592-RN7GEeaL" }, () => {
+            if (liff.isLoggedIn()) {
+                runApp;
+            } else {
+                liff.login();
+            }
+        }, err => console.error(err.code, error.message));
     </script>
     <div class="assess_content">
         <h1 style="margin-top: 20%">แบบทดสอบ</h1>
@@ -96,7 +96,7 @@
         <h2>บางคำถามอาจทำให้รู้สึกไม่ดีหรือไม่สบายใจได้ <br>ถ้ารู้สึกว่าไม่อยากทำต่อไม่ต้องห่วง
             <br>เธอกดปิดได้เลยทันที<br>และระบบจะไม่คำนวณและบันทึกผลใด ๆ ในครั้งนี้
         </h2>
-        <button class="answer_box" onclick="window.location.href='/assessment/depress/2Q?id=userProfile'">
+        <button class="answer_box" onclick="window.location.href='/assessment/depress/2Q?id='+ userProfile">
             ฉันรับรู้และต้องการประเมินต่อ
         </button>
     </div>
