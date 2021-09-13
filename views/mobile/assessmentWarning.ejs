@@ -68,27 +68,41 @@
 
 <body>
     <script>
+        var userProfile = null;
+        var displayName = null;
+        var statusMessage = null;
+        var pictureUrl = null;
+
         function runApp() {
             liff.getProfile().then(profile => {
-                var userProfile = profile.userId;
-                var displayName = profile.displayName;
-                var statusMessage = profile.statusMessage;
-                var pictureUrl = profile.pictureUrl;
+                userProfile = profile.userId;
+                displayName = profile.displayName;
+                statusMessage = profile.statusMessage;
+                pictureUrl = profile.pictureUrl;
+                console.log('run' + userProfile + displayName)
             }).catch(
                 err => console.error(err)
             );
         }
 
         liff.init({ liffId: "1655710592-RN7GEeaL" }, () => {
-            if (liff.isLoggedIn()) {
-                runApp;
+            if (liff.isLoggedIn() /*&& userProfile != null*/) {
+                runApp();
             } else {
                 liff.login();
             }
-        }, err => console.error(err.code, error.message));
 
-        function nextPage(){
-            window.location.href='/assessment/depress/2Q?id='+ userProfile;
+
+        }, err => console.error(err.code, error.message));
+        if (userProfile != null) {
+            console.log(userProfile);
+        } else {
+            console.log("null")
+        }
+        function nextPage() {
+            console.log(userProfile)
+            console.log(displayName)
+            window.location.href = '/assessment/depress/2Q?id=' + userProfile;
         }
     </script>
     <div class="assess_content">
