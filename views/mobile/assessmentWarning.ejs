@@ -86,6 +86,10 @@
                 liff.login();
             }
         }, err => console.error(err.code, error.message));
+
+        function nextPage(){
+            window.location.href='/assessment/depress/2Q?id='+ userProfile
+        }
     </script>
     <div class="assess_content">
         <h1 style="margin-top: 20%">แบบทดสอบ</h1>
@@ -96,7 +100,7 @@
         <h2>บางคำถามอาจทำให้รู้สึกไม่ดีหรือไม่สบายใจได้ <br>ถ้ารู้สึกว่าไม่อยากทำต่อไม่ต้องห่วง
             <br>เธอกดปิดได้เลยทันที<br>และระบบจะไม่คำนวณและบันทึกผลใด ๆ ในครั้งนี้
         </h2>
-        <button class="answer_box" onclick="window.location.href='/assessment/depress/2Q?id='+ userProfile">
+        <button class="answer_box" onclick="nextPage()">
             ฉันรับรู้และต้องการประเมินต่อ
         </button>
     </div>
