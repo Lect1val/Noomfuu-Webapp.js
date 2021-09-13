@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DASS Assessment</title>
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 
     <style>
         html {
@@ -67,15 +68,51 @@
 </head>
 
 <body>
+    <script>
+        var userProfile = null;
+        var displayName = null;
+        var statusMessage = null;
+        var pictureUrl = null;
+
+        function runApp() {
+            liff.getProfile().then(profile => {
+                userProfile = profile.userId;
+                displayName = profile.displayName;
+                statusMessage = profile.statusMessage;
+                pictureUrl = profile.pictureUrl;
+                console.log('run' + userProfile + displayName)
+            }).catch(
+                err => console.error(err)
+            );
+        }
+
+        liff.init({ liffId: "1655710592-RN7GEeaL" }, () => {
+            if (liff.isLoggedIn() /*&& userProfile != null*/) {
+                runApp();
+            } else {
+                liff.login();
+            }
+
+
+        }, err => console.error(err.code, error.message));
+
+        function nextPage() {
+            console.log(userProfile)
+            console.log(displayName)
+            window.location.href = '/assessment/dass/q?id=' + userProfile;
+        }
+        </script>
     <div class="assess_content">
+
         <h1 style="margin-top: 20%">แบบทดสอบ</h1>
         <h3>แบบประเมินภาวะสุขภาพจิต</h3>
 
         <p style="color: #E34545; font-weight: 600;
         font-size: 20px;">คำเตือน</p>
         <h2>บางคำถามอาจทำให้รู้สึกไม่ดีหรือไม่สบายใจได้ <br>ถ้ารู้สึกว่าไม่อยากทำต่อไม่ต้องห่วง
-            <br>เธอกดปิดได้เลยทันที<br>และระบบจะไม่คำนวณและบันทึกผลใด ๆ ในครั้งนี้</h2>
-        <button class="answer_box" onclick="window.location.href='/assessment/dass/q'">
+            <br>เธอกดปิดได้เลยทันที<br>และระบบจะไม่คำนวณและบันทึกผลใด ๆ ในครั้งนี้
+        </h2>
+        <button class="answer_box" onclick="nextPage()">
             ฉันรับรู้และต้องการประเมินต่อ
         </button>
     </div>

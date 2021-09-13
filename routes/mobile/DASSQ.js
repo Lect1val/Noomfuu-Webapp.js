@@ -3,7 +3,8 @@ var router = express.Router();
 const { db } = require("../../Database/database");
 
 router.get("/", (req, res, next) => {
-  res.render("mobile/assessmentDASS");
+  var userID = req.query.id;
+  res.render("mobile/assessmentDASS", {userID});
 });
 
 module.exports = router;
