@@ -4,6 +4,7 @@ const { db } = require("../../Database/database");
 
 router.get("/", (req, res, next) => {
   var assessmentScore = parseInt(req.query.score);
+  var userID = req.query.id;
   var timestamp = new Date(Date.now()).toString()
   console.log(timestamp)
   const data = {
