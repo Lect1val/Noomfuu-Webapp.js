@@ -4,20 +4,27 @@ const { db } = require("../../Database/database");
 
 router.get("/", (req, res, next) => {
   var assessmentScore = parseInt(req.query.score);
+  var userID = req.query.id;
+  var timestamp = new Date(Date.now())
+
   const data = {
+    userID: userID,
     type: "depress",
-    score: assessmentScore
+    score: assessmentScore,
+    //timestamp: FirebaseFirestore.Timestamp.fromDate(timestamp)
+    //timestamp: timestamp
   };
-  //db.collection('Assessment').add(data);
-  db.collection('User').doc('user2').collection('assessment').add(data);
+  if (userID != 'null') {
+    db.collection('User').doc(userID).collection('assessment').add(data);
+  }
 
   var status = "";
-  if(assessmentScore < 7){
+  if (assessmentScore < 7) {
     status = "none";
-  } else if (assessmentScore < 13){
+  } else if (assessmentScore < 13) {
     status = "low";
   }
-  else if (assessmentScore < 19){
+  else if (assessmentScore < 19) {
     status = "medium";
   }
   else {

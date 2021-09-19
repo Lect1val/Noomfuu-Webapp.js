@@ -84,6 +84,8 @@
             <h2 id="9Q">ยากที่จะสงบจิตใจ</h2>
 
             <script>
+                var id = '<%= userID %>'
+
                 var questionLoop = [
                     "ยากที่จะสงบจิตใจ",
                     "รู้สึกปากแห้ง คอแห้ง",
@@ -119,7 +121,7 @@
 
                     if (curNum === 20) {
                         // curNum = 0;
-                        window.location.href = "./result?d=" + d + "&a=" + a + "&s=" + s;
+                        window.location.href = "./result?d=" + d + "&a=" + a + "&s=" + s + "&id=" + id;
                     } else {
                         curNum++;
                     }
@@ -148,7 +150,7 @@
 
                     if (curNum === 20) {
                         // curNum = 0;
-                        window.location.href = "./result?d=" + d + "&a=" + a + "&s=" + s;
+                        window.location.href = "./result?d=" + d + "&a=" + a + "&s=" + s + "&id=" + id;
                     } else {
                         curNum++;
                     }
@@ -177,7 +179,7 @@
 
                     if (curNum === 20) {
                         // curNum = 0;
-                        window.location.href = "./result?d=" + d + "&a=" + a + "&s=" + s;
+                        window.location.href = "./result?d=" + d + "&a=" + a + "&s=" + s + "&id=" + id;
                     } else {
                         curNum++;
                     }
@@ -206,7 +208,7 @@
 
                     if (curNum === 20) {
                         // curNum = 0;
-                        window.location.href = "./result?d=" + d + "&a=" + a + "&s=" + s;
+                        window.location.href = "./result?d=" + d + "&a=" + a + "&s=" + s + "&id=" + id;
                     } else {
                         curNum++;
                     }

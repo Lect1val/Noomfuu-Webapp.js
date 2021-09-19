@@ -152,8 +152,22 @@ router.get("/:userID/note", async (req, res, next) => {
       });
     });
 
+    const noteListRef = db.collection("User").doc(getUserID).collection("note");
+    const noteLists = [];
+    await noteListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        noteLists.push({
+          content: doc.data().content,
+          creatorID: doc.data().creatorID,
+          header: doc.data().header,
+          noteID: doc.data().noteID,
+        });
+      });
+    });
+
     res.render("desktop/all_note", {
       contactlists,
+      noteLists,
       getUserID,
     });
   } catch (error) {
@@ -161,23 +175,44 @@ router.get("/:userID/note", async (req, res, next) => {
   }
 });
 
-router.get("/:userID/note/content", async (req, res, next) => {
+router.get("/:userID/note/:noteID/content", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
     const contactlists = [];
     const getUserID = req.params.userID;
+    const getNoteID = req.params.noteID;
     await contactListRef.get().then((snapshot) => {
       snapshot.forEach((doc) => {
         contactlists.push({
           userID: doc.data().userID,
           nickName: doc.data().nickName,
+          firstName: doc.data().firstName,
+          lastName: doc.data().lastName,
         });
       });
     });
 
+    const noteListRef = db.collection("User").doc(getUserID).collection("note");
+    const noteLists = [];
+    await noteListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        noteLists.push({
+          content: doc.data().content,
+          creatorID: doc.data().creatorID,
+          header: doc.data().header,
+          noteID: doc.data().noteID,
+          timestamp: doc.data().timestamp,
+        });
+      });
+    });
+    console.log(contactlists);
+    console.log(noteLists);
+
     res.render("desktop/note_content", {
       contactlists,
+      noteLists,
       getUserID,
+      getNoteID,
     });
   } catch (error) {
     console.log(error);

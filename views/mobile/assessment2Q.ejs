@@ -75,6 +75,7 @@
       </h2>
 
       <script>
+        var id = '<%= userID %>'
         var questionLoop = [
           "2 สัปดาห์มานี้<br>รู้สึกเบื่อ ทำอะไรก็ไม่เพลิดเพลินไหม",
           "2 สัปดาห์มานี้<br>รู้สึกเศร้า หดหู่ ท้อแท้บ้างไหม",
@@ -89,9 +90,9 @@
           if (curNum === 1) {
             // curNum = 0;
             if (score >= 1) {
-              window.location.href = "./9Q";
+              window.location.href = "./9Q?id=" + id;
             } else {
-              window.location.href = "./Qresult?score=0";
+              window.location.href = "./Qresult?score=0&id="+ id;
             }
           } else {
             curNum++;
@@ -107,9 +108,9 @@
           if (curNum === 1) {
             // curNum = 0;
             if (score == 1) {
-              window.location.href = "./9Q";
+              window.location.href = "./9Q?id=" + id;
             } else {
-              window.location.href = "./Qresult?score=0";
+              window.location.href = "./Qresult?score=0&id="+ id;
             }
           } else {
             curNum++;

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ประเมินโรคซึมเศร้า</title>
-
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <style>
     html {
       background: url(/images/BG-375-667.png) no-repeat center center fixed;
@@ -83,6 +83,7 @@
       <h2 id="9Q">รู้สึกเบื่อ ไม่สนใจอยากทำอะไร</h2>
 
       <script>
+        var id = '<%= userID %>'
         var questionLoop = [
           "รู้สึกเบื่อ ไม่สนใจอยากทำอะไร",
           "ไม่สบายใจ ซึมเศร้าหรือว่าท้อแท้",
@@ -102,7 +103,7 @@
         function nextNever() {
           if (curNum === 8) {
             // curNum = 0;
-              window.location.href = "./Qresult?score=" + score;
+            window.location.href = "./Qresult?score=" + score + "&id=" + id;
           } else {
             curNum++;
           }
@@ -116,7 +117,7 @@
           score += 1;
           if (curNum === 8) {
             // curNum = 0;
-            window.location.href = "./Qresult?score=" + score;
+            window.location.href = "./Qresult?score=" + score + "&id=" + id;
           } else {
             curNum++;
           }
@@ -131,7 +132,7 @@
           if (curNum === 8) {
             // curNum = 0;
             score += 5;
-            window.location.href = "./Qresult?score=" + score;
+            window.location.href = "./Qresult?score=" + score + "&id=" + id;
           } else {
             curNum++;
           }
@@ -146,7 +147,7 @@
           if (curNum === 8) {
             score += 5;
             // curNum = 0;
-            window.location.href = "./Qresult?score=" + score;
+            window.location.href = "./Qresult?score=" + score + "&id=" + id;
           } else {
             curNum++;
           }
