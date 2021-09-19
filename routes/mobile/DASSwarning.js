@@ -3,7 +3,7 @@ var router = express.Router();
 const { db } = require("../../Database/database");
 
 router.get("/", (req, res, next) => {
-  res.render("mobile/assessmentDASSWarning");
+  res.render("mobile/assessmentDASSwarning");
 });
 
 module.exports = router;
