@@ -97,7 +97,7 @@ router.get("/:userID", async (req, res, next) => {
   }
 });
 
-router.post("/:userID", async (req, response, next) => {
+router.post("/:userID", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
     const contactlists = [];
@@ -120,7 +120,7 @@ router.post("/:userID", async (req, response, next) => {
     const newContactNote = req.body.new_contactNote;
 
     const updateProfile = db.collection("User").doc(getUserID);
-    const res = await updateProfile.update({
+    const response = await updateProfile.update({
       firstName: newFirstName,
       lastName: newLastName,
       TelNo: newTel,
@@ -152,7 +152,7 @@ router.post("/:userID", async (req, response, next) => {
       });
     });
 
-    response.redirect("/profile/" + getUserID);
+    res.redirect("/profile/" + getUserID);
     // res.render("desktop/user_profile", {
     //   contactlists,
     //   profileList,
@@ -398,6 +398,56 @@ router.post("/:userID/note/:noteID/content", async (req, res, next) => {
       noteLists,
       getUserID,
       getNoteID,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.get("/:userID/note/:noteID/delete", async (req, res, next) => {
+  try {
+    const contactListRef = db.collection("User");
+    const contactlists = [];
+    const getUserID = req.params.userID;
+    const getNoteID = req.params.noteID;
+    await contactListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().nickName != null && doc.data().nickName != "") {
+          contactlists.push({
+            userID: doc.data().userID,
+            nickName: doc.data().nickName,
+            firstName: doc.data().firstName,
+            lastName: doc.data().lastName,
+          });
+        }
+      });
+    });
+
+    const deleteContent = db
+      .collection("User")
+      .doc(getUserID)
+      .collection("note")
+      .doc(getNoteID);
+    const response = await deleteContent.delete();
+
+    const noteListRef = db.collection("User").doc(getUserID).collection("note");
+    const noteLists = [];
+    await noteListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        noteLists.push({
+          content: doc.data().content,
+          creatorID: doc.data().creatorID,
+          header: doc.data().header,
+          noteID: doc.data().noteID,
+          timestamp: doc.data().timestamp,
+        });
+      });
+    });
+
+    res.render("desktop/all_note", {
+      contactlists,
+      noteLists,
+      getUserID,
     });
   } catch (error) {
     console.log(error);
