@@ -26,12 +26,13 @@ router.get("/", async (req, res, next) => {
     const profileListRef = db.collection("User");
     const profileList = [];
     const getUserID = "6";
-    let testReq = req.params.userID;
-    console.log(testReq);
+    // let testReq = req.params.userID;
+    // console.log(testReq);
     await profileListRef.get().then((snapshot) => {
       snapshot.forEach((doc) => {
         if (doc.data().userID == getUserID) {
           profileList.push({
+            userID: doc.data().userID,
             firstName: doc.data().firstName,
             lastName: doc.data().lastName,
             TelNo: doc.data().TelNo,
@@ -70,12 +71,12 @@ router.get("/:userID", async (req, res, next) => {
     const profileListRef = db.collection("User");
     const profileList = [];
     const getUserID = req.params.userID;
-    let testReq = req.params.userID;
-    console.log(testReq);
+
     await profileListRef.get().then((snapshot) => {
       snapshot.forEach((doc) => {
         if (doc.data().userID == getUserID) {
           profileList.push({
+            userID: doc.data().userID,
             firstName: doc.data().firstName,
             lastName: doc.data().lastName,
             TelNo: doc.data().TelNo,
@@ -91,6 +92,72 @@ router.get("/:userID", async (req, res, next) => {
       profileList,
       getUserID,
     });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.post("/:userID", async (req, response, next) => {
+  try {
+    const contactListRef = db.collection("User");
+    const contactlists = [];
+
+    await contactListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().nickName != null && doc.data().nickName != "") {
+          contactlists.push({
+            userID: doc.data().userID,
+            nickName: doc.data().nickName,
+          });
+        }
+      });
+    });
+    const getUserID = req.params.userID;
+    const newFirstName = req.body.new_firstName;
+    const newLastName = req.body.new_lastName;
+    const newTel = req.body.new_tel;
+    const newEmail = req.body.new_email;
+    const newContactNote = req.body.new_contactNote;
+
+    const updateProfile = db.collection("User").doc(getUserID);
+    const res = await updateProfile.update({
+      firstName: newFirstName,
+      lastName: newLastName,
+      TelNo: newTel,
+      Email: newEmail,
+      contactNote: newContactNote,
+    });
+
+    console.log(newFirstName);
+    console.log(newLastName);
+    console.log(newTel);
+    console.log(newEmail);
+    console.log(newContactNote);
+
+    const profileListRef = db.collection("User");
+    const profileList = [];
+
+    await profileListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().userID == getUserID) {
+          profileList.push({
+            userID: doc.data().userID,
+            firstName: doc.data().firstName,
+            lastName: doc.data().lastName,
+            TelNo: doc.data().TelNo,
+            Email: doc.data().Email,
+            contactNote: doc.data().contactNote,
+          });
+        }
+      });
+    });
+
+    response.redirect("/profile/" + getUserID);
+    // res.render("desktop/user_profile", {
+    //   contactlists,
+    //   profileList,
+    //   getUserID,
+    // });
   } catch (error) {
     console.log(error);
   }
@@ -217,8 +284,8 @@ router.get("/:userID/note/:noteID/content", async (req, res, next) => {
         });
       });
     });
-    console.log(contactlists);
-    console.log(noteLists);
+    // console.log(contactlists);
+    // console.log(noteLists);
 
     res.render("desktop/note_content", {
       contactlists,
@@ -295,7 +362,7 @@ router.post("/:userID/note/:noteID/content", async (req, res, next) => {
     });
 
     const checkSave = req.body.saveEdit;
-    console.log(checkSave);
+    // console.log(checkSave);
     if (checkSave == "Submit") {
       const newHeader = req.body.new_header;
       const newContent = req.body.new_content;
