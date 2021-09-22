@@ -29,10 +29,12 @@ router.get("/", async (req, res, next) => {
 
     await contactListRef.get().then((snapshot) => {
       snapshot.forEach((doc) => {
-        contactlists.push({
-          userID: doc.data().userID,
-          nickName: doc.data().nickName,
-        });
+        if (doc.data().nickName != null && doc.data().nickName != "") {
+          contactlists.push({
+            userID: doc.data().userID,
+            nickName: doc.data().nickName,
+          });
+        }
       });
     });
 

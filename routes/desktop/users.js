@@ -14,10 +14,12 @@ router.get("/", async (req, res, next) => {
 
     await contactListRef.get().then((snapshot) => {
       snapshot.forEach((doc) => {
-        contactlists.push({
-          userID: doc.data().userID,
-          nickName: doc.data().nickName,
-        });
+        if (doc.data().nickName != null && doc.data().nickName != "") {
+          contactlists.push({
+            userID: doc.data().userID,
+            nickName: doc.data().nickName,
+          });
+        }
       });
     });
 
@@ -56,10 +58,12 @@ router.get("/:userID", async (req, res, next) => {
 
     await contactListRef.get().then((snapshot) => {
       snapshot.forEach((doc) => {
-        contactlists.push({
-          userID: doc.data().userID,
-          nickName: doc.data().nickName,
-        });
+        if (doc.data().nickName != null && doc.data().nickName != "") {
+          contactlists.push({
+            userID: doc.data().userID,
+            nickName: doc.data().nickName,
+          });
+        }
       });
     });
 
@@ -99,10 +103,12 @@ router.get("/:userID/analytic", async (req, res, next) => {
     const getUserID = req.params.userID;
     await contactListRef.get().then((snapshot) => {
       snapshot.forEach((doc) => {
-        contactlists.push({
-          userID: doc.data().userID,
-          nickName: doc.data().nickName,
-        });
+        if (doc.data().nickName != null && doc.data().nickName != "") {
+          contactlists.push({
+            userID: doc.data().userID,
+            nickName: doc.data().nickName,
+          });
+        }
       });
     });
 
@@ -122,10 +128,12 @@ router.get("/:userID/appointment", async (req, res, next) => {
     const getUserID = req.params.userID;
     await contactListRef.get().then((snapshot) => {
       snapshot.forEach((doc) => {
-        contactlists.push({
-          userID: doc.data().userID,
-          nickName: doc.data().nickName,
-        });
+        if (doc.data().nickName != null && doc.data().nickName != "") {
+          contactlists.push({
+            userID: doc.data().userID,
+            nickName: doc.data().nickName,
+          });
+        }
       });
     });
 
@@ -145,10 +153,12 @@ router.get("/:userID/note", async (req, res, next) => {
     const getUserID = req.params.userID;
     await contactListRef.get().then((snapshot) => {
       snapshot.forEach((doc) => {
-        contactlists.push({
-          userID: doc.data().userID,
-          nickName: doc.data().nickName,
-        });
+        if (doc.data().nickName != null && doc.data().nickName != "") {
+          contactlists.push({
+            userID: doc.data().userID,
+            nickName: doc.data().nickName,
+          });
+        }
       });
     });
 
@@ -183,12 +193,14 @@ router.get("/:userID/note/:noteID/content", async (req, res, next) => {
     const getNoteID = req.params.noteID;
     await contactListRef.get().then((snapshot) => {
       snapshot.forEach((doc) => {
-        contactlists.push({
-          userID: doc.data().userID,
-          nickName: doc.data().nickName,
-          firstName: doc.data().firstName,
-          lastName: doc.data().lastName,
-        });
+        if (doc.data().nickName != null && doc.data().nickName != "") {
+          contactlists.push({
+            userID: doc.data().userID,
+            nickName: doc.data().nickName,
+            firstName: doc.data().firstName,
+            lastName: doc.data().lastName,
+          });
+        }
       });
     });
 
@@ -219,23 +231,94 @@ router.get("/:userID/note/:noteID/content", async (req, res, next) => {
   }
 });
 
-router.get("/:userID/note/content/edit", async (req, res, next) => {
+router.get("/:userID/note/:noteID/content/edit", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
     const contactlists = [];
     const getUserID = req.params.userID;
+    const getNoteID = req.params.noteID;
     await contactListRef.get().then((snapshot) => {
       snapshot.forEach((doc) => {
-        contactlists.push({
-          userID: doc.data().userID,
-          nickName: doc.data().nickName,
+        if (doc.data().nickName != null && doc.data().nickName != "") {
+          contactlists.push({
+            userID: doc.data().userID,
+            nickName: doc.data().nickName,
+            firstName: doc.data().firstName,
+            lastName: doc.data().lastName,
+          });
+        }
+      });
+    });
+
+    const noteListRef = db.collection("User").doc(getUserID).collection("note");
+    const noteLists = [];
+    await noteListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        noteLists.push({
+          content: doc.data().content,
+          creatorID: doc.data().creatorID,
+          header: doc.data().header,
+          noteID: doc.data().noteID,
+          timestamp: doc.data().timestamp,
         });
       });
     });
 
     res.render("desktop/note_edit", {
       contactlists,
+      noteLists,
       getUserID,
+      getNoteID,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.post("/:userID/note/:noteID/content", async (req, res, next) => {
+  try {
+    const contactListRef = db.collection("User");
+    const contactlists = [];
+    const getUserID = req.params.userID;
+    const getNoteID = req.params.noteID;
+    await contactListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().nickName != null && doc.data().nickName != "") {
+          contactlists.push({
+            userID: doc.data().userID,
+            nickName: doc.data().nickName,
+            firstName: doc.data().firstName,
+            lastName: doc.data().lastName,
+          });
+        }
+      });
+    });
+
+    const newHeader = req.body.new_header;
+    const newContent = req.body.new_content;
+
+    console.log(newContent);
+    console.log(newHeader);
+
+    const noteListRef = db.collection("User").doc(getUserID).collection("note");
+    const noteLists = [];
+    await noteListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        noteLists.push({
+          content: doc.data().content,
+          creatorID: doc.data().creatorID,
+          header: doc.data().header,
+          noteID: doc.data().noteID,
+          timestamp: doc.data().timestamp,
+        });
+      });
+    });
+
+    res.render("desktop/note_content", {
+      contactlists,
+      noteLists,
+      getUserID,
+      getNoteID,
     });
   } catch (error) {
     console.log(error);
