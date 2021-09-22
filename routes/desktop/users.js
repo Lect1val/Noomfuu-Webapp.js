@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const { db } = require("../../Database/database");
+const { db, FieldValue } = require("../../Database/database");
 
 /* GET users listing. */
 // router.get("/", function (req, res, next) {
@@ -294,11 +294,23 @@ router.post("/:userID/note/:noteID/content", async (req, res, next) => {
       });
     });
 
-    const newHeader = req.body.new_header;
-    const newContent = req.body.new_content;
+    const checkSave = req.body.saveEdit;
+    console.log(checkSave);
+    if (checkSave == "Submit") {
+      const newHeader = req.body.new_header;
+      const newContent = req.body.new_content;
 
-    console.log(newContent);
-    console.log(newHeader);
+      const updateContent = db
+        .collection("User")
+        .doc(getUserID)
+        .collection("note")
+        .doc(getNoteID);
+      const res = await updateContent.update({
+        content: newContent,
+        header: newHeader,
+        timestamp: FieldValue.serverTimestamp(),
+      });
+    }
 
     const noteListRef = db.collection("User").doc(getUserID).collection("note");
     const noteLists = [];

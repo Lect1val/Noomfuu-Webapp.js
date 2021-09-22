@@ -62,7 +62,9 @@
                         >
                       </div>
                       <div class="col-sm-4">
-                        <a href="/profile/<%= getUserID %>/note/content/edit">
+                        <a
+                          href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content/edit"
+                        >
                           <p style="color: #3378ff">
                             <img
                               src="/images/Edit.png"
@@ -109,7 +111,9 @@
                         >
                       </div>
                       <div class="col-sm-4">
-                        <a href="/profile/note/content/edit">
+                        <a
+                          href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content/edit"
+                        >
                           <p style="color: #3378ff">
                             <img
                               src="/images/Edit.png"
@@ -155,7 +159,9 @@
                         >
                       </div>
                       <div class="col-sm-4">
-                        <a href="/profile/note/content/edit">
+                        <a
+                          href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content/edit"
+                        >
                           <p style="color: #3378ff">
                             <img
                               src="/images/Edit.png"
