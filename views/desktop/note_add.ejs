@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include component/import%>
+    <style>
+      .note_header {
+        font-size: 32px;
+        font-weight: 700;
+        color: #6e89ea;
+      }
+
+      .note_content {
+        padding: 1%;
+        font-weight: 300;
+        color: #223e63;
+        font-size: 18px;
+        font-family: "Sarabun", sans-serif;
+      }
+
+      .add_card {
+        border-color: #c9e8ff;
+        background-color: #e2f3ff;
+        margin: 3%;
+        padding-top: 30%;
+        padding-bottom: 30%;
+      }
+
+      .note_owner {
+        padding: 2%;
+        font-weight: 600;
+        color: #2f4e77;
+        font-size: 22px;
+      }
+
+      .modify_status {
+        padding: 2%;
+        font-weight: 400;
+        color: #2f4e77;
+        text-align: right;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <%- include component/navbar%>
+    <div class="container-fluid">
+      <div class="row">
+        <%- include component/contactList%>
+
+        <div class="col-md-9">
+          <% include component/profileNav%>
+          <form
+            method="POST"
+            action="/profile/<%= getUserID %>/note/<%= getNoteID %>/content"
+            id="edit_content_form"
+          >
+            <div class="row">
+              <div class="col-md-6">
+                <input
+                  id="new_content_header"
+                  type="text"
+                  placeholder="กรุณาใส่หัวข้อ"
+                  class="note_header"
+                  style="border: none"
+                  name="new_header"
+                />
+              </div>
+              <div
+                class="col-md-6"
+                style="
+                  font-size: 32px;
+                  font-weight: 700;
+                  color: #6e89ea;
+                  text-align: right;
+                  padding-right: 3%;
+                "
+              >
+                <% var creatorID = noteLists.find(el => el.noteID ===
+                getNoteID).creatorID %> <%= contactlists.find(el => el.userID
+                === creatorID).nickName %>
+              </div>
+            </div>
+            <hr />
+
+            <div class="row">
+              <textarea
+                name="new_content"
+                rows="10"
+                class="note_content"
+                id="new_content"
+                placeholder="กรุณาใส่เนื้อหา..."
+              >
+              
+              </textarea>
+              <!--code of auto resize textarea-->
+              <script>
+                var textarea = document.querySelector("textarea");
+
+                textarea.addEventListener("keydown", autosize);
+
+                function autosize() {
+                  var el = this;
+                  setTimeout(function () {
+                    el.style.cssText = "height:auto; padding:0";
+                    // for box-sizing other than "content-box" use:
+                    // el.style.cssText = '-moz-box-sizing:content-box';
+                    el.style.cssText = "height:" + el.scrollHeight + "px";
+                  }, 0);
+                }
+              </script>
+              <!--ending code of auto resize textarea-->
+            </div>
+            <div class="footer mt-auto py-3">
+              <div class="row">
+                <div class="col-sm-8">
+                  <a style="color: #223e63" id="myBtn">
+                    <img src="/images/backArrow.png" style="width: 30px" /> Back
+                  </a>
+                </div>
+
+                <div
+                  class="col-sm-2"
+                  style="text-align: right; padding-right: 3%"
+                >
+                  <a
+                    href="/profile/<%= getUserID %>/note/<%= getNoteID %>/content"
+                    style="color: #223e63"
+                  >
+                  </a>
+                  <button
+                    type="submit"
+                    form="edit_content_form"
+                    name="saveEdit"
+                    value="Submit"
+                    style="
+                      width: 100%;
+                      border: none;
+                      background-color: transparent;
+                    "
+                  >
+                    <p style="color: #2fa549">
+                      <img
+                        src="/images/saveNote.png"
+                        style="height: 20px; margin-right: 5%"
+                      />Save
+                    </p>
+                  </button>
+                </div>
+                <div
+                  class="col-sm-2"
+                  style="text-align: right; padding-right: 3%"
+                >
+                  <a
+                    href="/profile/<%= getUserID %>/note/<%= getNoteID %>/delete"
+                    style="color: #223e63"
+                  >
+                    <p style="color: red">
+                      <img src="/images/delete.png" style="height: 20px" />
+                      Delete
+                    </p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

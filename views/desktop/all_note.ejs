@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <%- include component/import%>
+
+<head>
+  <%- include component/import%>
     <style>
       .note_header {
         color: #223e63;
@@ -23,190 +24,155 @@
         padding-bottom: 30%;
       }
     </style>
-  </head>
+</head>
 
-  <body>
-    <%- include component/navbar%>
+<body>
+  <%- include component/navbar%>
     <div class="container-fluid">
       <div class="row">
         <%- include component/contactList%>
 
-        <div class="col-md-9">
-          <% include component/profileNav%>
+          <div class="col-md-9">
+            <% include component/profileNav%>
 
-          <div style="font-size: 32px; font-weight: 700; color: #6e89ea">
-            <%= contactlists.find(el => el.userID === getUserID).nickName %>
-          </div>
-          <hr />
-
-          <% var card = 1 %> <% for(let x = 0 ; x< noteLists.length;x++) {%> <%
-          if(card==1){ %>
-          <div class="row">
-            <div class="col-md-4">
-              <a
-                href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content"
-              >
-                <div class="card shadow-sm card_style">
-                  <div style="padding: 3%">
-                    <div class="note_header">
-                      <%= noteLists[x].header.substring(0,20) %>
-                    </div>
-                    <p class="note_content">
-                      <%= noteLists[x].content.substring(0,296) %>....
-                    </p>
-                    <div class="row">
-                      <div class="col-sm-4">
-                        <a
-                          href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content"
-                          >See more</a
-                        >
-                      </div>
-                      <div class="col-sm-4">
-                        <a
-                          href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content/edit"
-                        >
-                          <p style="color: #3378ff">
-                            <img
-                              src="/images/Edit.png"
-                              style="height: 20px"
-                            />Edit
-                          </p>
-                        </a>
-                      </div>
-                      <div class="col-sm-4">
-                        <a
-                          href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/delete"
-                        >
-                          <p style="color: red">
-                            <img
-                              src="/images/delete.png"
-                              style="height: 20px"
-                            />
-                            Delete
-                          </p>
-                        </a>
-                      </div>
-                    </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div style="font-size: 32px; font-weight: 700; color: #6e89ea">
+                    <%= contactlists.find(el=> el.userID === getUserID).nickName %>
                   </div>
                 </div>
-              </a>
-            </div>
-
-            <% card++ %> <% }else if(card == 2){ %>
-            <div class="col-md-4">
-              <a
-                href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content"
-              >
-                <div class="card shadow-sm card_style">
-                  <div style="padding: 3%">
-                    <div class="note_header">
-                      <%= noteLists[x].header.substring(0,20) %>
-                    </div>
-                    <p class="note_content">
-                      <%= noteLists[x].content.substring(0,296) %>....
-                    </p>
-                    <div class="row">
-                      <div class="col-sm-4">
-                        <a
-                          href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content"
-                          >See more</a
-                        >
-                      </div>
-                      <div class="col-sm-4">
-                        <a
-                          href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content/edit"
-                        >
-                          <p style="color: #3378ff">
-                            <img
-                              src="/images/Edit.png"
-                              style="height: 20px"
-                            />Edit
-                          </p>
-                        </a>
-                      </div>
-                      <div class="col-sm-4">
-                        <a
-                          href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/delete"
-                        >
-                          <p style="color: red">
-                            <img
-                              src="/images/delete.png"
-                              style="height: 20px"
-                            />
-                            Delete
-                          </p>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
+                <div class="col-md-6" style="text-align: right;">
+                  <a href="/profile/note/add">
+                  <img src="/images/addNote.png" style="height: 40px; padding-right: 5%;" />
+                  </a>
                 </div>
-              </a>
-            </div>
-            <% card++ %> <%console.log(card)%> <% } else if(card == 3) { %>
-            <div class="col-md-4">
-              <a
-                href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content"
-              >
-                <div class="card shadow-sm card_style">
-                  <div style="padding: 3%">
-                    <div class="note_header">
-                      <%= noteLists[x].header.substring(0,20) %>
-                    </div>
-                    <p class="note_content">
-                      <%= noteLists[x].content.substring(0,296) %>....
-                    </p>
-                    <div class="row">
-                      <div class="col-sm-4">
-                        <a
-                          href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content"
-                          >See more</a
-                        >
-                      </div>
-                      <div class="col-sm-4">
-                        <a
-                          href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content/edit"
-                        >
-                          <p style="color: #3378ff">
-                            <img
-                              src="/images/Edit.png"
-                              style="height: 20px"
-                            />Edit
-                          </p>
-                        </a>
-                      </div>
-                      <div class="col-sm-4">
-                        <a
-                          href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/delete"
-                        >
-                          <p style="color: red">
-                            <img
-                              src="/images/delete.png"
-                              style="height: 20px"
-                            />
-                            Delete
-                          </p>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-          <% card = 1 %> <% } %> <% } %>
-
-          <div class="row">
-            <div class="col-md-4">
-              <div class="card shadow-sm add_card">
-                <img
-                  src="/images/addCard.png"
-                  style="height: 70px; width: 70px; align-self: center"
-                />
               </div>
-            </div>
+              <hr />
+
+              <% var card=1 %>
+                <% for(let x=0 ; x< noteLists.length;x++) {%>
+                  <% if(card==1){ %>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <a href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content">
+                          <div class="card shadow-sm card_style">
+                            <div style="padding: 3%">
+                              <div class="note_header">
+                                <%= noteLists[x].header.substring(0,20) %>
+                              </div>
+                              <p class="note_content">
+                                <%= noteLists[x].content.substring(0,296) %>....
+                              </p>
+                              <div class="row">
+                                <div class="col-sm-4">
+                                  <a href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content">See
+                                    more</a>
+                                </div>
+                                <div class="col-sm-4">
+                                  <a href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content/edit">
+                                    <p style="color: #3378ff">
+                                      <img src="/images/Edit.png" style="height: 20px" />Edit
+                                    </p>
+                                  </a>
+                                </div>
+                                <div class="col-sm-4">
+                                  <a href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/delete">
+                                    <p style="color: red">
+                                      <img src="/images/delete.png" style="height: 20px" />
+                                      Delete
+                                    </p>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+
+                      <% card++ %>
+                        <% }else if(card==2){ %>
+                          <div class="col-md-4">
+                            <a href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content">
+                              <div class="card shadow-sm card_style">
+                                <div style="padding: 3%">
+                                  <div class="note_header">
+                                    <%= noteLists[x].header.substring(0,20) %>
+                                  </div>
+                                  <p class="note_content">
+                                    <%= noteLists[x].content.substring(0,296) %>....
+                                  </p>
+                                  <div class="row">
+                                    <div class="col-sm-4">
+                                      <a href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content">See
+                                        more</a>
+                                    </div>
+                                    <div class="col-sm-4">
+                                      <a href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content/edit">
+                                        <p style="color: #3378ff">
+                                          <img src="/images/Edit.png" style="height: 20px" />Edit
+                                        </p>
+                                      </a>
+                                    </div>
+                                    <div class="col-sm-4">
+                                      <a href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/delete">
+                                        <p style="color: red">
+                                          <img src="/images/delete.png" style="height: 20px" />
+                                          Delete
+                                        </p>
+                                      </a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </a>
+                          </div>
+                          <% card++ %>
+                            <%console.log(card)%>
+                              <% } else if(card==3) { %>
+                                <div class="col-md-4">
+                                  <a href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content">
+                                    <div class="card shadow-sm card_style">
+                                      <div style="padding: 3%">
+                                        <div class="note_header">
+                                          <%= noteLists[x].header.substring(0,20) %>
+                                        </div>
+                                        <p class="note_content">
+                                          <%= noteLists[x].content.substring(0,296) %>....
+                                        </p>
+                                        <div class="row">
+                                          <div class="col-sm-4">
+                                            <a href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content">See
+                                              more</a>
+                                          </div>
+                                          <div class="col-sm-4">
+                                            <a
+                                              href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content/edit">
+                                              <p style="color: #3378ff">
+                                                <img src="/images/Edit.png" style="height: 20px" />Edit
+                                              </p>
+                                            </a>
+                                          </div>
+                                          <div class="col-sm-4">
+                                            <a href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/delete">
+                                              <p style="color: red">
+                                                <img src="/images/delete.png" style="height: 20px" />
+                                                Delete
+                                              </p>
+                                            </a>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </a>
+                                </div>
+                    </div>
+                    <% card=1 %>
+                      <% } %>
+                        <% } %>
+
           </div>
-        </div>
       </div>
     </div>
-  </body>
+</body>
+
 </html>
