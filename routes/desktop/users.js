@@ -454,10 +454,11 @@ router.get("/:userID/note/:noteID/delete", async (req, res, next) => {
   }
 });
 
-router.get("/:userID/note/add", (req, res, next) => {
+router.get("/:userID/note/add", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
     const contactlists = [];
+    const getUserID = req.params.userID;
 
     await contactListRef.get().then((snapshot) => {
       snapshot.forEach((doc) => {
@@ -472,6 +473,7 @@ router.get("/:userID/note/add", (req, res, next) => {
 
     res.render("desktop/note_add", {
       contactlists,
+      getUserID,
     });
   } catch (error) {
     console.log(error);
