@@ -26,17 +26,19 @@ a {
 .contact_list {
   color: #786EEA;
   font-size: 20px;
-  text-align: center;
+  text-align: left;
   background-color: #EBE9FD;
-  font-weight: 200;
+  font-weight: 500;
   padding: 3%;
+
 }
 
 a.contact_username {
   color: #786EEA;
   font-size: 20px;
   text-align: center;
-  font-weight: 200;
+  font-weight: 500;
+  margin-left: 10%;
 }
 
 .search_contact {
