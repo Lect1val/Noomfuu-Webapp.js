@@ -49,6 +49,7 @@
         <%- include component/contactList%>
 
         <div class="col-md-9">
+          <% include component/profileNav%>
           <div class="row">
             <div class="col-md-6 note_header">
               <%= noteLists.find(el => el.noteID === getNoteID).header%>
