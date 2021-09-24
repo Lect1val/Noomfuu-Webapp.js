@@ -454,4 +454,28 @@ router.get("/:userID/note/:noteID/delete", async (req, res, next) => {
   }
 });
 
+router.get("/:userID/note/add", (req, res, next) => {
+  try {
+    const contactListRef = db.collection("User");
+    const contactlists = [];
+
+    await contactListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().nickName != null && doc.data().nickName != "") {
+          contactlists.push({
+            userID: doc.data().userID,
+            nickName: doc.data().nickName,
+          });
+        }
+      });
+    });
+
+    res.render("desktop/note_add", {
+      contactlists,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 module.exports = router;
