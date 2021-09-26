@@ -11,6 +11,7 @@ var analyticRouter = require("./routes/desktop/feeling_analytic");
 var noteRouter = require("./routes/desktop/note");
 var noteContentRouter = require("./routes/desktop/note_content");
 var noteEditRouter = require("./routes/desktop/note_edit");
+var noteAddRouter = require("./routes/desktop/note_add");
 var appointmentRouter = require("./routes/desktop/appointment_all");
 // var contactList = require("./routes/contactlist");
 
@@ -41,6 +42,7 @@ app.use("/profile", usersRouter);
 app.use("/profile/analytic", analyticRouter);
 app.use("/profile/note", noteRouter);
 app.use("/profile/note/content", noteContentRouter);
+app.use("/profile/note/add", noteAddRouter);
 app.use("/profile/note/content/edit", noteEditRouter);
 app.use("/profile/appointment", appointmentRouter);
 // app.use(contactList);

@@ -49,6 +49,7 @@
         <%- include component/contactList%>
 
         <div class="col-md-9">
+          <% include component/profileNav%>
           <div class="row">
             <div class="col-md-6 note_header">
               <%= noteLists.find(el => el.noteID === getNoteID).header%>
@@ -97,7 +98,7 @@
                 style="text-align: right; padding-right: 3%"
               >
                 <a
-                  href="/profile/<%= getUserID %>/note/content/edit"
+                  href="/profile/<%= getUserID %>/note/<%= getNoteID %>/content/edit"
                   style="color: #223e63"
                 >
                   <p style="color: #3378ff">
@@ -109,7 +110,10 @@
                 class="col-sm-2"
                 style="text-align: right; padding-right: 3%"
               >
-                <a href="/profile/<%= getUserID %>/note" style="color: #223e63">
+                <a
+                  href="/profile/<%= getUserID %>/note/<%= getNoteID %>/delete"
+                  style="color: #223e63"
+                >
                   <p style="color: red">
                     <img src="/images/delete.png" style="height: 20px" /> Delete
                   </p>

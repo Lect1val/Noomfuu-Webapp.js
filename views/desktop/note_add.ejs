@@ -52,7 +52,7 @@
           <% include component/profileNav%>
           <form
             method="POST"
-            action="/profile/<%= getUserID %>/note/<%= getNoteID %>/content"
+            action="/profile/<%= getUserID %>/note/content"
             id="edit_content_form"
           >
             <div class="row">
@@ -60,7 +60,7 @@
                 <input
                   id="new_content_header"
                   type="text"
-                  value="<%= noteLists.find(el => el.noteID === getNoteID).header%>"
+                  placeholder="กรุณาใส่หัวข้อ"
                   class="note_header"
                   style="border: none"
                   name="new_header"
@@ -76,9 +76,7 @@
                   padding-right: 3%;
                 "
               >
-                <% var creatorID = noteLists.find(el => el.noteID ===
-                getNoteID).creatorID %> <%= contactlists.find(el => el.userID
-                === creatorID).nickName %>
+                New Content
               </div>
             </div>
             <hr />
@@ -89,9 +87,8 @@
                 rows="10"
                 class="note_content"
                 id="new_content"
-              >
-              <%= noteLists.find(el => el.noteID === getNoteID).content %>
-              </textarea>
+                placeholder="กรุณาใส่เนื้อหา..."
+              ></textarea>
               <!--code of auto resize textarea-->
               <script>
                 var textarea = document.querySelector("textarea");
@@ -113,65 +110,21 @@
             <div class="footer mt-auto py-3">
               <div class="row">
                 <div class="col-sm-8">
-                  <a style="color: #223e63" id="myBtn">
+                  <a
+                    href="/profile/<%= getUserID %>/note"
+                    style="color: #223e63"
+                    id="myBtn"
+                  >
                     <img src="/images/backArrow.png" style="width: 30px" /> Back
                   </a>
                 </div>
-
-                <div id="myModal" class="modal">
-                  <!-- Modal content -->
-                  <div class="modal-close-note">
-                    <span class="close">&times;</span>
-                    <br />
-                    <p style="text-align: center; font-size: 18px">
-                      เนื้อหายังไม่ได้บันทึก
-                      คุณแน่ใจไหมว่าจะกลับไปโดยละทิ้งความเปลี่ยนแปลงทั้งหมด
-                    </p>
-                    <button
-                      type="submit"
-                      name="saveEdit"
-                      class="btn btn-success sure_btn"
-                      value="แน่ใจ"
-                    >
-                      แน่ใจ
-                    </button>
-                  </div>
-                </div>
-
-                <script>
-                  // Get the modal
-                  var modal = document.getElementById("myModal");
-
-                  // Get the button that opens the modal
-                  var btn = document.getElementById("myBtn");
-
-                  // Get the <span> element that closes the modal
-                  var span = document.getElementsByClassName("close")[0];
-
-                  // When the user clicks on the button, open the modal
-                  btn.onclick = function () {
-                    modal.style.display = "block";
-                  };
-
-                  // When the user clicks on <span> (x), close the modal
-                  span.onclick = function () {
-                    modal.style.display = "none";
-                  };
-
-                  // When the user clicks anywhere outside of the modal, close it
-                  window.onclick = function (event) {
-                    if (event.target == modal) {
-                      modal.style.display = "none";
-                    }
-                  };
-                </script>
 
                 <div
                   class="col-sm-2"
                   style="text-align: right; padding-right: 3%"
                 >
                   <a
-                    href="/profile/<%= getUserID %>/note/<%= getNoteID %>/content"
+                    href="/profile/<%= getUserID %>/note/content"
                     style="color: #223e63"
                   >
                   </a>
@@ -199,7 +152,7 @@
                   style="text-align: right; padding-right: 3%"
                 >
                   <a
-                    href="/profile/<%= getUserID %>/note/<%= getNoteID %>/delete"
+                    href="/profile/<%= getUserID %>/note/delete"
                     style="color: #223e63"
                   >
                     <p style="color: red">

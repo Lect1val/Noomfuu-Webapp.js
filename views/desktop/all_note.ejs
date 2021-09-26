@@ -34,12 +34,24 @@
         <div class="col-md-9">
           <% include component/profileNav%>
 
-          <div style="font-size: 32px; font-weight: 700; color: #6e89ea">
-            <%= contactlists.find(el => el.userID === getUserID).nickName %>
+          <div class="row">
+            <div class="col-md-6">
+              <div style="font-size: 32px; font-weight: 700; color: #6e89ea">
+                <%= contactlists.find(el=> el.userID === getUserID).nickName %>
+              </div>
+            </div>
+            <div class="col-md-6" style="text-align: right">
+              <a href="/profile/<%= getUserID %>/note/add">
+                <img
+                  src="/images/addNote.png"
+                  style="height: 40px; padding-right: 5%"
+                />
+              </a>
+            </div>
           </div>
           <hr />
 
-          <% var card = 1 %> <% for(let x = 0 ; x< noteLists.length;x++) {%> <%
+          <% var card=1 %> <% for(let x=0 ; x< noteLists.length;x++) {%> <%
           if(card==1){ %>
           <div class="row">
             <div class="col-md-4">
@@ -62,7 +74,9 @@
                         >
                       </div>
                       <div class="col-sm-4">
-                        <a href="/profile/<%= getUserID %>/note/content/edit">
+                        <a
+                          href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content/edit"
+                        >
                           <p style="color: #3378ff">
                             <img
                               src="/images/Edit.png"
@@ -72,7 +86,9 @@
                         </a>
                       </div>
                       <div class="col-sm-4">
-                        <a href="#">
+                        <a
+                          href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/delete"
+                        >
                           <p style="color: red">
                             <img
                               src="/images/delete.png"
@@ -88,7 +104,7 @@
               </a>
             </div>
 
-            <% card++ %> <% }else if(card == 2){ %>
+            <% card++ %> <% }else if(card==2){ %>
             <div class="col-md-4">
               <a
                 href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content"
@@ -109,7 +125,9 @@
                         >
                       </div>
                       <div class="col-sm-4">
-                        <a href="/profile/note/content/edit">
+                        <a
+                          href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content/edit"
+                        >
                           <p style="color: #3378ff">
                             <img
                               src="/images/Edit.png"
@@ -119,7 +137,9 @@
                         </a>
                       </div>
                       <div class="col-sm-4">
-                        <a href="#">
+                        <a
+                          href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/delete"
+                        >
                           <p style="color: red">
                             <img
                               src="/images/delete.png"
@@ -134,7 +154,7 @@
                 </div>
               </a>
             </div>
-            <% card++ %> <%console.log(card)%> <% } else if(card == 3) { %>
+            <% card++ %> <%console.log(card)%> <% } else if(card==3) { %>
             <div class="col-md-4">
               <a
                 href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content"
@@ -155,7 +175,9 @@
                         >
                       </div>
                       <div class="col-sm-4">
-                        <a href="/profile/note/content/edit">
+                        <a
+                          href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/content/edit"
+                        >
                           <p style="color: #3378ff">
                             <img
                               src="/images/Edit.png"
@@ -165,7 +187,9 @@
                         </a>
                       </div>
                       <div class="col-sm-4">
-                        <a href="#">
+                        <a
+                          href="/profile/<%= getUserID %>/note/<%= noteLists[x].noteID %>/delete"
+                        >
                           <p style="color: red">
                             <img
                               src="/images/delete.png"
@@ -181,18 +205,7 @@
               </a>
             </div>
           </div>
-          <% card = 1 %> <% } %> <% } %>
-
-          <div class="row">
-            <div class="col-md-4">
-              <div class="card shadow-sm add_card">
-                <img
-                  src="/images/addCard.png"
-                  style="height: 70px; width: 70px; align-self: center"
-                />
-              </div>
-            </div>
-          </div>
+          <% card=1 %> <% } %> <% } %>
         </div>
       </div>
     </div>
