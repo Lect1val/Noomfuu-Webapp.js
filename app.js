@@ -6,6 +6,8 @@ var logger = require("morgan");
 
 // *Route Desktop*
 var indexRouter = require("./routes/desktop/index");
+var loginRouter = require("./routes/desktop/login");
+var noPermissionRouter = require("./routes/desktop/no_permission");
 var usersRouter = require("./routes/desktop/users");
 var analyticRouter = require("./routes/desktop/feeling_analytic");
 var noteRouter = require("./routes/desktop/note");
@@ -37,7 +39,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 // *App.use Desktop*
-app.use("/", indexRouter);
+app.use("/", loginRouter);
+app.use("/home", indexRouter);
+app.use("/nopermission", noPermissionRouter);
 app.use("/profile", usersRouter);
 app.use("/profile/analytic", analyticRouter);
 app.use("/profile/note", noteRouter);
