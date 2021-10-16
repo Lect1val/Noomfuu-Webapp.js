@@ -480,4 +480,71 @@ router.get("/:userID/note/add", async (req, res, next) => {
   }
 });
 
+router.post("/:userID/note/add", async (req, res, next) => {
+  try {
+    const contactListRef = db.collection("User");
+    const contactlists = [];
+    const getUserID = req.params.userID;
+
+    await contactListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().nickName != null && doc.data().nickName != "") {
+          contactlists.push({
+            userID: doc.data().userID,
+            nickName: doc.data().nickName,
+          });
+        }
+      });
+    });
+
+    const createContent = req.body.create_content;
+    const createHeader = req.body.create_header;
+
+    const oldNoteID = await db
+      .collection("User")
+      .doc(getUserID)
+      .collection("note")
+      .get()
+      .then((snapshot) => snapshot.size);
+    let newNoteID = (oldNoteID + 1).toString();
+
+    const data = {
+      content: createContent,
+      creatorID: getUserID,
+      header: createHeader,
+      noteID: newNoteID,
+      timestamp: FieldValue.serverTimestamp(),
+    };
+
+    await db
+      .collection("User")
+      .doc(getUserID)
+      .collection("note")
+      .doc(newNoteID)
+      .set(data);
+
+    const noteListRef = db.collection("User").doc(getUserID).collection("note");
+    const noteLists = [];
+    await noteListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        noteLists.push({
+          content: doc.data().content,
+          creatorID: doc.data().creatorID,
+          header: doc.data().header,
+          noteID: doc.data().noteID,
+          timestamp: doc.data().timestamp,
+        });
+      });
+    });
+
+    res.render("desktop/all_note", {
+      contactlists,
+      noteLists,
+      getUserID,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 module.exports = router;
