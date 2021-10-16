@@ -52,8 +52,8 @@
           <% include component/profileNav%>
           <form
             method="POST"
-            action="/profile/<%= getUserID %>/note/content"
-            id="edit_content_form"
+            action="/profile/<%= getUserID %>/note/add"
+            id="create_content_form"
           >
             <div class="row">
               <div class="col-md-6">
@@ -63,7 +63,8 @@
                   placeholder="กรุณาใส่หัวข้อ"
                   class="note_header"
                   style="border: none"
-                  name="new_header"
+                  name="create_header"
+                  required
                 />
               </div>
               <div
@@ -83,7 +84,7 @@
 
             <div class="row">
               <textarea
-                name="new_content"
+                name="create_content"
                 rows="10"
                 class="note_content"
                 id="new_content"
@@ -124,13 +125,13 @@
                   style="text-align: right; padding-right: 3%"
                 >
                   <a
-                    href="/profile/<%= getUserID %>/note/content"
+                    href="/profile/<%= getUserID %>/note"
                     style="color: #223e63"
                   >
                   </a>
                   <button
                     type="submit"
-                    form="edit_content_form"
+                    form="create_content_form"
                     name="saveEdit"
                     value="Submit"
                     style="
