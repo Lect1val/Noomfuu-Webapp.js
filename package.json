@@ -10,11 +10,13 @@
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.5",
     "debug": "~2.6.9",
+    "dotenv": "^10.0.0",
     "ejs": "~2.6.1",
     "express": "^4.16.4",
     "express-session": "^1.17.2",
     "firebase-admin": "^9.11.0",
     "firebase-functions": "^3.14.1",
+    "googleapis": "^88.2.0",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
     "nodemon": "^2.0.12"
