@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Gratitude Journal</title>
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $("#div1").fadeIn();
+            $("#div2").fadeIn("slow");
+            $("#div3").fadeIn(3000);
+        });
+    </script>
+
+    <style>
+        html {
+            background: url(/images/BG-375-667.png) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        body {
+            font-family: "Kanit", sans-serif;
+        }
+
+        h1 {
+            color: #223e63;
+            font-weight: 600;
+            font-size: 35px;
+            line-height: 80%;
+            text-align: center;
+        }
+
+        h2 {
+            color: #223e63;
+            font-weight: 200;
+            font-size: 18px;
+            padding: 0% 10% 5% 10%;
+            text-align: center;
+        }
+
+        h3 {
+            color: #223e63;
+            font-weight: 300;
+            font-size: 20px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: none;
+            color: #ab94e9;
+        }
+
+        .content_box {
+            position: fixed;
+            left: 50%;
+            bottom: 50px;
+            transform: translate(-50%, -50%);
+            margin: 0 auto;
+
+            background-color: white;
+
+            text-align: center;
+            border: none;
+            width: 80%;
+            padding: 3%;
+            margin: auto;
+            /* box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25); */
+            border-radius: 10px;
+            font-family: "Kanit", sans-serif;
+            word-wrap: break-word;
+            display: none;
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <script>
+        var userProfile = null;
+        var displayName = null;
+        var statusMessage = null;
+        var pictureUrl = null;
+
+        function runApp() {
+            liff.getProfile().then(profile => {
+                userProfile = profile.userId;
+                displayName = profile.displayName;
+                statusMessage = profile.statusMessage;
+                pictureUrl = profile.pictureUrl;
+                console.log('run' + userProfile + displayName)
+            }).catch(
+                err => console.error(err)
+            );
+        }
+
+        liff.init({ liffId: "1655710592-Kr0LQEAx" }, () => {
+            if (liff.isLoggedIn() /*&& userProfile != null*/) {
+                runApp();
+            } else {
+                liff.login();
+            }
+
+
+        }, err => console.error(err.code, error.message));
+        if (userProfile != null) {
+            console.log(userProfile);
+        } else {
+            console.log("null")
+        }
+
+        function next(){
+            window.location.href = "./journal/" + userProfile;
+        }
+
+    </script>
+
+    <div style="padding-top: 8%;">
+        <h1>Gratitude Journal</h1>
+        <h2>บันทึกแห่งความทรงจำ<br>ว่าคุณเคยมีความสุขแค่ไหน</h2>
+    </div>
+    <div id="div3" class="content_box"><a onclick='next()'>กดเพื่อดูเนื้อหา</a></div>
+</body>
+
+</html>
