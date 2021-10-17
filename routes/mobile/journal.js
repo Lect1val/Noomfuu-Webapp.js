@@ -7,12 +7,12 @@ router.get("/", (req, res, next) => {
 });
 
 router.get("/:userID", async (req, res, next) => {
-  const userID = req.params.userID
+  const userID = req.params.userID;
 
-  const journalRef = db.collection('User').doc(userID).collection('Journal');
+  const journalRef = db.collection("User").doc(userID).collection("Journal");
   const journals = [];
 
-  const snapshot = await journalRef.orderBy('journalID', 'asc').get();
+  const snapshot = await journalRef.orderBy("journalID", "asc").get();
 
   await journalRef.get().then((snapshot) => {
     snapshot.forEach((doc) => {
@@ -23,41 +23,67 @@ router.get("/:userID", async (req, res, next) => {
     });
   });
 
-  console.log(journals)
+  console.log(journals);
 
-  res.render("mobile/journal", {journals, userID});
+  res.render("mobile/journal", { journals, userID });
 });
 
 router.get("/:userID/add", (req, res, next) => {
-  const userID = req.params.userID
-  res.render("mobile/journal_add", {userID});
+  const userID = req.params.userID;
+  res.render("mobile/journal_add", { userID });
 });
 
 router.post("/:userID/add", async (req, res, next) => {
-  const userID = req.params.userID
+  const userID = req.params.userID;
 
   var content = req.body.content;
 
+  const oldJournal = [];
   const oldJournalID = await db
-  .collection("User")
-  .doc(userID)
-  .collection("Journal")
-  .get()
-  .then((snapshot) => snapshot.size);
-let newJournalID = (oldJournalID + 1).toString();
+    .collection("User")
+    .doc(userID)
+    .collection("Journal")
+    .orderBy("journalID", "desc")
+    .limit(1)
+    .get()
+    .then((snapshot) => {
+      snapshot.forEach((doc) => {
+        oldJournal.push({
+          content: doc.data().content,
+          journalID: doc.data().journalID,
+          timestamp: doc.data().timestamp,
+        });
+      });
+    });
 
-  const data = {
-    content: content,
-    timestamp: FieldValue.serverTimestamp(),
-    journalID: newJournalID
-  };
-  //db.collection('Assessment').add(data);
-  db.collection('User').doc(userID).collection('Journal').doc(newJournalID).set(data);
+  if (oldJournal[0] == undefined) {
+    const data = {
+      content: content,
+      timestamp: FieldValue.serverTimestamp(),
+      journalID: "1",
+    };
 
-  const journalRef = db.collection('User').doc(userID).collection('Journal');
+    db.collection("User").doc(userID).collection("Journal").doc("1").set(data);
+  } else if (oldJournal[0] != undefined) {
+    const newJournalID = (Number(oldJournal[0].journalID) + 1).toString();
+    console.log(newJournalID);
+    const data = {
+      content: content,
+      timestamp: FieldValue.serverTimestamp(),
+      journalID: newJournalID,
+    };
+    //db.collection('Assessment').add(data);
+    db.collection("User")
+      .doc(userID)
+      .collection("Journal")
+      .doc(newJournalID)
+      .set(data);
+  }
+
+  const journalRef = db.collection("User").doc(userID).collection("Journal");
   const journals = [];
 
-  const snapshot = await journalRef.orderBy('journalID', 'asc').get();
+  const snapshot = await journalRef.orderBy("journalID", "asc").get();
 
   await journalRef.get().then((snapshot) => {
     snapshot.forEach((doc) => {
@@ -68,7 +94,7 @@ let newJournalID = (oldJournalID + 1).toString();
     });
   });
 
-  res.render("mobile/journal", {journals, userID});
+  res.render("mobile/journal", { journals, userID });
 });
 
 module.exports = router;
