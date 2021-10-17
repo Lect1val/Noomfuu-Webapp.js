@@ -7,25 +7,68 @@ router.get("/", (req, res, next) => {
 });
 
 router.get("/:userID", async (req, res, next) => {
-    const userID = req.params.userID
-    
-    const journalRef = db.collection('User').doc(userID).collection('Journal');
-    const journals = [];
+  const userID = req.params.userID
 
-    const snapshot = await journalRef.get();
+  const journalRef = db.collection('User').doc(userID).collection('Journal');
+  const journals = [];
 
-    await journalRef.get().then((snapshot) => {
-        snapshot.forEach((doc) => {
-            journals.push({
-              content: doc.data().content,
-              timestamp: doc.data().timestamp,
-            });
-        });
+  const snapshot = await journalRef.orderBy('journalID', 'asc').get();
+
+  await journalRef.get().then((snapshot) => {
+    snapshot.forEach((doc) => {
+      journals.push({
+        content: doc.data().content,
+        timestamp: doc.data().timestamp,
       });
-
-      console.log(journals)
-
-    res.render("mobile/journal", {journals});
+    });
   });
+
+  console.log(journals)
+
+  res.render("mobile/journal", {journals, userID});
+});
+
+router.get("/:userID/add", (req, res, next) => {
+  const userID = req.params.userID
+  res.render("mobile/journal_add", {userID});
+});
+
+router.post("/:userID/add", async (req, res, next) => {
+  const userID = req.params.userID
+
+  var content = req.body.content;
+
+  const oldJournalID = await db
+  .collection("User")
+  .doc(userID)
+  .collection("Journal")
+  .get()
+  .then((snapshot) => snapshot.size);
+let newJournalID = (oldJournalID + 1).toString();
+
+  const data = {
+    content: content,
+    timestamp: FieldValue.serverTimestamp(),
+    journalID: newJournalID
+  };
+  //db.collection('Assessment').add(data);
+  db.collection('User').doc(userID).collection('Journal').doc(newJournalID).set(data);
+
+  const journalRef = db.collection('User').doc(userID).collection('Journal');
+  const journals = [];
+
+  const snapshot = await journalRef.orderBy('journalID', 'asc').get();
+
+  await journalRef.get().then((snapshot) => {
+    snapshot.forEach((doc) => {
+      journals.push({
+        content: doc.data().content,
+        timestamp: doc.data().timestamp,
+      });
+    });
+  });
+
+  res.render("mobile/journal", {journals, userID});
+});
 
 module.exports = router;

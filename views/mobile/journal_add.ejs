@@ -46,24 +46,30 @@
             text-decoration: none;
         }
 
-        .content_box {
+        .addjournal {
             background-color: white;
+            text-align: center;
             border: none;
             width: 90%;
             padding: 3%;
             margin-top: 1%;
-            margin-bottom: 3%;
-            margin-right: 3%;
             /* box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25); */
             border-radius: 10px;
             font-family: "Kanit", sans-serif;
-            word-wrap: break-word;
         }
 
-        .addjournal{
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
+        .journal_content {
+            margin: 0 auto;
+            padding: 2%;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.5);
+            ;
+            margin: auto;
+            font-weight: 500;
+            color: #223e63;
+            font-size: 16px;
+            font-family: "Kanit", sans-serif;
+            width: 90%;
         }
     </style>
 </head>
@@ -74,23 +80,15 @@
         <h1>Gratitude Journal</h1>
         <h2>ฉันเคยรู้สึกขอบคุณสิ่งเหล่านี้</h2>
     </div>
-    <% for(let x=0 ; x< journals.length;x++) {%>
-        <% if(x==0) {%>
-            <div><%=journals[x].timestamp.toDate().toDateString()%></div>
-        <% } else if(journals[x].timestamp.toDate().toDateString() != journals[x-1].timestamp.toDate().toDateString()) { %>
-            <div><%=journals[x].timestamp.toDate().toDateString()%></div>
-        <% } %>
-        <div class="content_box"><%= journals[x].content%></div>
-    <% } %>
+    <form method="post" action="/journal/<%= userID %>/add" id="create_journal">
+        <div>
+            <textarea name="content" rows="10" class="journal_content" placeholder="กรุณาใส่เนื้อหา..."></textarea>
+        </div>
 
-    <div class="addjournal">
-        <a href="/journal/<%= userID %>/add">
-            <img
-              src="/images/addNote.png"
-              style="height: 50px; padding-right: 5%"
-            />
-          </a>
-    </div>
+        <button class="addjournal" type="submit" form="create_journal">
+            save
+        </button>
+    </form>
 
 </body>
 
