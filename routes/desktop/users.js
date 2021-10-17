@@ -128,11 +128,11 @@ router.post("/:userID", async (req, res, next) => {
       contactNote: newContactNote,
     });
 
-    console.log(newFirstName);
-    console.log(newLastName);
-    console.log(newTel);
-    console.log(newEmail);
-    console.log(newContactNote);
+    // console.log(newFirstName);
+    // console.log(newLastName);
+    // console.log(newTel);
+    // console.log(newEmail);
+    // console.log(newContactNote);
 
     const profileListRef = db.collection("User");
     const profileList = [];
@@ -500,28 +500,67 @@ router.post("/:userID/note/add", async (req, res, next) => {
     const createContent = req.body.create_content;
     const createHeader = req.body.create_header;
 
+    // const oldNoteID = await db
+    //   .collection("User")
+    //   .doc(getUserID)
+    //   .collection("note")
+    //   .get()
+    //   .then((snapshot) => snapshot.size);
+    // let newNoteID = (oldNoteID + 1).toString();
+
+    const oldNote = [];
     const oldNoteID = await db
       .collection("User")
       .doc(getUserID)
       .collection("note")
+      .orderBy("noteID", "desc")
+      .limit(1)
       .get()
-      .then((snapshot) => snapshot.size);
-    let newNoteID = (oldNoteID + 1).toString();
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          oldNote.push({
+            content: doc.data().content,
+            creatorID: doc.data().creatorID,
+            header: doc.data().header,
+            noteID: doc.data().noteID,
+            timestamp: doc.data().timestamp,
+          });
+        });
+      });
 
-    const data = {
-      content: createContent,
-      creatorID: getUserID,
-      header: createHeader,
-      noteID: newNoteID,
-      timestamp: FieldValue.serverTimestamp(),
-    };
+    if (oldNote[0] == undefined) {
+      const data = {
+        content: createContent,
+        creatorID: getUserID,
+        header: createHeader,
+        noteID: "1",
+        timestamp: FieldValue.serverTimestamp(),
+      };
 
-    await db
-      .collection("User")
-      .doc(getUserID)
-      .collection("note")
-      .doc(newNoteID)
-      .set(data);
+      await db
+        .collection("User")
+        .doc(getUserID)
+        .collection("note")
+        .doc("1")
+        .set(data);
+    } else if (oldNote[0] != undefined) {
+      const newNoteID = (Number(oldNote[0].noteID) + 1).toString();
+
+      const data = {
+        content: createContent,
+        creatorID: getUserID,
+        header: createHeader,
+        noteID: newNoteID,
+        timestamp: FieldValue.serverTimestamp(),
+      };
+
+      await db
+        .collection("User")
+        .doc(getUserID)
+        .collection("note")
+        .doc(newNoteID)
+        .set(data);
+    }
 
     const noteListRef = db.collection("User").doc(getUserID).collection("note");
     const noteLists = [];
