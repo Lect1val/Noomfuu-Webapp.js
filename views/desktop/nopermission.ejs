@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include component/import%>
+<style>
+    .box{
+        height: 100%;
+        /*position: relative;*/
+        text-align: center;
+    }
+
+    .box > p {
+    position: absolute;
+    top: 30%;
+    left: 0;
+    right: 0;
+    font-size: 28px;
+}
+
+.answer_box {
+      background-color: #EBE9FD;
+      border: none;
+      width: 40%;
+      padding: 1%;
+      margin-top: 1%;
+      margin-bottom: 1%;
+      box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 20px;
+      font-family: "Kanit", sans-serif;
+    }
+</style>
+</head>
+<body>
+    <div class="box"><p><img src="/images/NoomFuusad.png" height="150px" width="auto">
+        <br>คุณไม่มีสิทธิ์ในการเข้าถึงเว็บไซต์ <br>
+        <button class="answer_box" id="myButton" onclick="nextAlways()" name="user_ans" value="3">
+            Login ด้วย Admin username
+          </button></p></div>
+</body>
+</html>

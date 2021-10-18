@@ -6,6 +6,8 @@ var logger = require("morgan");
 
 // *Route Desktop*
 var indexRouter = require("./routes/desktop/index");
+var loginRouter = require("./routes/desktop/login");
+var noPermissionRouter = require("./routes/desktop/no_permission");
 var usersRouter = require("./routes/desktop/users");
 var analyticRouter = require("./routes/desktop/feeling_analytic");
 var noteRouter = require("./routes/desktop/note");
@@ -18,11 +20,12 @@ var appointmentRouter = require("./routes/desktop/appointment_all");
 // *Route Mobile*
 var assessment2QRouter = require("./routes/mobile/assessment2Q");
 var assessment9QRouter = require("./routes/mobile/assessment9Q");
-var assessmentWarning = require("./routes/mobile/warning");
-var assessmentResult = require("./routes/mobile/assessmentResult");
-var DASSwarning = require("./routes/mobile/DASSwarning");
-var DASSQuestion = require("./routes/mobile/DASSQ");
-var DASSResult = require("./routes/mobile/DASSresult");
+var assessmentWarningRouter = require("./routes/mobile/warning");
+var assessmentResultRouter = require("./routes/mobile/assessmentResult");
+var DASSwarningRouter = require("./routes/mobile/DASSwarning");
+var DASSQuestionRouter = require("./routes/mobile/DASSQ");
+var DASSResultRouter = require("./routes/mobile/DASSresult");
+var journalRouter = require("./routes/mobile/journal");
 
 var app = express();
 
@@ -37,7 +40,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 // *App.use Desktop*
-app.use("/", indexRouter);
+app.use("/", loginRouter);
+app.use("/home", indexRouter);
+app.use("/nopermission", noPermissionRouter);
 app.use("/profile", usersRouter);
 app.use("/profile/analytic", analyticRouter);
 app.use("/profile/note", noteRouter);
@@ -48,13 +53,14 @@ app.use("/profile/appointment", appointmentRouter);
 // app.use(contactList);
 
 // *App.use Mobile*
-app.use("/assessment/depress", assessmentWarning);
+app.use("/assessment/depress", assessmentWarningRouter);
 app.use("/assessment/depress/2Q", assessment2QRouter);
 app.use("/assessment/depress/9Q", assessment9QRouter);
-app.use("/assessment/depress/Qresult", assessmentResult);
-app.use("/assessment/dass", DASSwarning);
-app.use("/assessment/dass/q", DASSQuestion);
-app.use("/assessment/dass/result", DASSResult);
+app.use("/assessment/depress/Qresult", assessmentResultRouter);
+app.use("/assessment/dass", DASSwarningRouter);
+app.use("/assessment/dass/q", DASSQuestionRouter);
+app.use("/assessment/dass/result", DASSResultRouter);
+app.use("/journal", journalRouter);
 
 
 // catch 404 and forward to error handler
