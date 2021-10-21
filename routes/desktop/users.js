@@ -52,6 +52,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+//* เข้าหน้า User Profile
 router.get("/:userID", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
@@ -97,6 +98,7 @@ router.get("/:userID", async (req, res, next) => {
   }
 });
 
+//* แก้ไขข้อมูลในหน้า User Profile
 router.post("/:userID", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
@@ -163,6 +165,7 @@ router.post("/:userID", async (req, res, next) => {
   }
 });
 
+//* เข้าหน้า Analytic
 router.get("/:userID/analytic", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
@@ -188,6 +191,59 @@ router.get("/:userID/analytic", async (req, res, next) => {
   }
 });
 
+//* เข้าหน้า ALl Assessment
+router.get("/:userID/assessment", async (req, res, next) => {
+  try {
+    const contactListRef = db.collection("User");
+    const contactlists = [];
+    const getUserID = req.params.userID;
+
+    await contactListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().nickName != null && doc.data().nickName != "") {
+          contactlists.push({
+            userID: doc.data().userID,
+            nickName: doc.data().nickName,
+          });
+        }
+      });
+    });
+    res.render("desktop/all_assessment", {
+      contactlists,
+      getUserID,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+//* เข้าหน้า All Chat History
+router.get("/:userID/chat", async (req, res, next) => {
+  try {
+    const contactListRef = db.collection("User");
+    const contactlists = [];
+    const getUserID = req.params.userID;
+
+    await contactListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().nickName != null && doc.data().nickName != "") {
+          contactlists.push({
+            userID: doc.data().userID,
+            nickName: doc.data().nickName,
+          });
+        }
+      });
+    });
+    res.render("desktop/all_chat", {
+      contactlists,
+      getUserID,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+//* เข้าหน้า Appointment
 router.get("/:userID/appointment", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
@@ -213,6 +269,7 @@ router.get("/:userID/appointment", async (req, res, next) => {
   }
 });
 
+//* เข้าหน้า All Note
 router.get("/:userID/note", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
@@ -252,6 +309,7 @@ router.get("/:userID/note", async (req, res, next) => {
   }
 });
 
+//* เข้าหน้าเฉพาะ Note
 router.get("/:userID/note/:noteID/content", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
@@ -298,6 +356,7 @@ router.get("/:userID/note/:noteID/content", async (req, res, next) => {
   }
 });
 
+//* เข้าหน้าแก้ไข Note
 router.get("/:userID/note/:noteID/content/edit", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
@@ -342,6 +401,7 @@ router.get("/:userID/note/:noteID/content/edit", async (req, res, next) => {
   }
 });
 
+//* แก้ไขข้อมูล Note
 router.post("/:userID/note/:noteID/content", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
@@ -404,6 +464,7 @@ router.post("/:userID/note/:noteID/content", async (req, res, next) => {
   }
 });
 
+//* ลบ Note
 router.get("/:userID/note/:noteID/delete", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
@@ -454,6 +515,7 @@ router.get("/:userID/note/:noteID/delete", async (req, res, next) => {
   }
 });
 
+//* เข้าหน้าเพิ่ม Note
 router.get("/:userID/note/add", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
@@ -480,6 +542,7 @@ router.get("/:userID/note/add", async (req, res, next) => {
   }
 });
 
+//* เพิ่ม Note
 router.post("/:userID/note/add", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
@@ -586,53 +649,4 @@ router.post("/:userID/note/add", async (req, res, next) => {
   }
 });
 
-router.get("/:userID/assessment", async (req, res, next) => {
-  try {
-    const contactListRef = db.collection("User");
-    const contactlists = [];
-    const getUserID = req.params.userID;
-
-    await contactListRef.get().then((snapshot) => {
-      snapshot.forEach((doc) => {
-        if (doc.data().nickName != null && doc.data().nickName != "") {
-          contactlists.push({
-            userID: doc.data().userID,
-            nickName: doc.data().nickName,
-          });
-        }
-      });
-    });
-    res.render("desktop/all_assessment", {
-      contactlists,
-      getUserID,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-router.get("/:userID/chat", async (req, res, next) => {
-  try {
-    const contactListRef = db.collection("User");
-    const contactlists = [];
-    const getUserID = req.params.userID;
-
-    await contactListRef.get().then((snapshot) => {
-      snapshot.forEach((doc) => {
-        if (doc.data().nickName != null && doc.data().nickName != "") {
-          contactlists.push({
-            userID: doc.data().userID,
-            nickName: doc.data().nickName,
-          });
-        }
-      });
-    });
-    res.render("desktop/all_chat", {
-      contactlists,
-      getUserID,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-});
 module.exports = router;
