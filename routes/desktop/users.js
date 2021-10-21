@@ -586,4 +586,53 @@ router.post("/:userID/note/add", async (req, res, next) => {
   }
 });
 
+router.get("/:userID/assessment", async (req, res, next) => {
+  try {
+    const contactListRef = db.collection("User");
+    const contactlists = [];
+    const getUserID = req.params.userID;
+
+    await contactListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().nickName != null && doc.data().nickName != "") {
+          contactlists.push({
+            userID: doc.data().userID,
+            nickName: doc.data().nickName,
+          });
+        }
+      });
+    });
+    res.render("desktop/all_assessment", {
+      contactlists,
+      getUserID,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.get("/:userID/chat", async (req, res, next) => {
+  try {
+    const contactListRef = db.collection("User");
+    const contactlists = [];
+    const getUserID = req.params.userID;
+
+    await contactListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().nickName != null && doc.data().nickName != "") {
+          contactlists.push({
+            userID: doc.data().userID,
+            nickName: doc.data().nickName,
+          });
+        }
+      });
+    });
+    res.render("desktop/all_chat", {
+      contactlists,
+      getUserID,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
 module.exports = router;
