@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include component/import%>
+</head>
+
+<body>
+    <%- include component/navbar%>
+        <div class="container-fluid">
+            <div class="row">
+                <%- include component/contactList%>
+
+                    <div class="col-md-9">
+                        <% include component/profileNav%>
+
+                            <div class="row">
+                                <h1>Depression Assessment</h1>
+                                <hr>
+                                <div style="
+                                    padding-bottom: 5%;
+                                    padding-right: 2%;
+                                    padding-left: 2%;
+                                    padding-top: 5%;
+                                  ">
+                                    <form class="d-flex">
+                                        <input class="search_contact" type="search" placeholder="search"
+                                            aria-label="Search" />
+                                        <button class="btn btn-outline-primary" type="submit" style="margin-left: 2%">
+                                            Search
+                                        </button>
+                                    </form>
+                                </div>
+                                <table class="chat_history_table">
+                                    <tr style="color: #786EEA; background-color: #E3E1F7; font-size: 24px;">
+                                        <th style="width: 30%;">Time</th>
+                                        <th style="width: 20%;">Type</th>
+                                        <th colspan="3">Result</th>
+                                        <th>State</th>
+                                    </tr>
+                                    <!--Begining of Assessment Loop-->
+                                    <tr>
+                                        <td id="assess_date">22-03-2021 21:00 pm</td>
+                                        <td id="assess_type">DASS</td>
+                                        <td id="Dscore" class="chat_list">D = 3</td>
+                                        <td id="Ascore" class="chat_list">A = 5</td>
+                                        <td id="Sscore" class="chat_list">S = 10</td>
+                                        <td id="chat_state" class="chat_list"><button type="button"
+                                                class="btn btn_positive">Safe</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td id="assess_date">24-03-2021 12:34 pm</td>
+                                        <td id="chat_content">Depression</td>
+                                        <td id="chat_state" class="chat_list" colspan="3">20</td>
+                                        <td id="chat_state" class="chat_list"><button type="button"
+                                                class="btn btn_negative">Danger</button></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td id="assess_date">26-04-2021 09:10 am</td>
+                                        <td id="assess_type">DASS</td>
+                                        <td id="Dscore" class="chat_list">D = 12</td>
+                                        <td id="Ascore" class="chat_list">A = 8</td>
+                                        <td id="Sscore" class="chat_list">S = 15</td>
+                                        <td id="chat_state" class="chat_list"><button type="button"
+                                                class="btn btn_negative">Danger</button></td>
+                                    </tr>
+                                    <!--Ending of chat Loop-->
+                                </table>
+                            </div>
+
+                    </div>
+            </div>
+        </div>
+</body>
+
+</html>

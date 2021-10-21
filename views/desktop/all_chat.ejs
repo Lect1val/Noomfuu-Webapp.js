@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include component/import%>
+</head>
+
+<body>
+    <%- include component/navbar%>
+        <div class="container-fluid">
+            <div class="row">
+                <%- include component/contactList%>
+
+                    <div class="col-md-9">
+                        <% include component/profileNav%>
+
+                            <div class="row">
+                                <h1>Chat History</h1>
+                                <hr>
+
+                                <div style="
+                                    padding-bottom: 5%;
+                                    padding-right: 2%;
+                                    padding-left: 2%;
+                                    padding-top: 5%;
+                                  ">
+                                    <form class="d-flex">
+                                        <input class="search_contact" type="search" placeholder="search"
+                                            aria-label="Search" />
+                                        <button class="btn btn-outline-primary" type="submit" style="margin-left: 2%">
+                                            Search
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <table class="chat_history_table">
+                                    <tr style="color: #786EEA; background-color: #E3E1F7; font-size: 24px;">
+                                        <th>Date</th>
+                                        <th>Content</th>
+                                        <th>State</th>
+                                    </tr>
+                                    <!--Begining of Chat Loop-->
+                                    <tr>
+                                        <td id="chat_date">22-03-2021</td>
+                                        <td id="chat_content" style="text-align: left;">รู้สึกไม่ดีเลย
+                                            เพื่อนไม่ยอมทำงานที่ตกลงกันไว้ พอเตือนก็ชักสีหน้า เสียสุขภาพจิตมาก ๆ</td>
+                                        <td id="chat_state" class="chat_list"><button type="button"
+                                                class="btn btn_negative">Negative</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td id="chat_date"> </td>
+                                        <!--If same date with above not show date-->
+                                        <td id="chat_content" style="text-align: left;">ให้งานอะไรไปทำก็ทำไม่ถูก
+                                            ทั้งกลุ่มต้องหยุดงานมาทำแทน น่าหงุดหงิดมาก</td>
+                                        <td id="chat_state" class="chat_list"><button type="button"
+                                                class="btn btn_negative">Negative</button></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td id="chat_date">22-03-2021</td>
+                                        <td id="chat_content" style="text-align: left;">ดีขึ้นบ้างละ
+                                            ดีนะที่บอกแล้วยังฟังกันบ้าง</td>
+                                        <td id="chat_state" class="chat_list"><button type="button"
+                                                class="btn btn_positive">Positive</button></td>
+                                    </tr>
+                                    <!--Ending of chat Loop-->
+                                </table>
+                            </div>
+
+                    </div>
+            </div>
+        </div>
+</body>
+
+</html>
