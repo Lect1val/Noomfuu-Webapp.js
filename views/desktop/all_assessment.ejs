@@ -18,14 +18,19 @@
                                 <h1>Depression Assessment</h1>
                                 <hr>
                                 <div style="
-                                    padding-bottom: 5%;
+                                    padding-bottom: 2%;
                                     padding-right: 2%;
                                     padding-left: 2%;
-                                    padding-top: 5%;
+                                    padding-top: 2%;
                                   ">
                                     <form class="d-flex">
                                         <input class="search_contact" type="search" placeholder="search"
                                             aria-label="Search" />
+                                            <select class="btn-outline-primary form-select" aria-label="Default select example" style="width: 20%; margin-left: 2%">
+                                                <option selected>search by</option>
+                                                <option value="type">type</option>
+                                                <option value="state">state</option>
+                                            </select>
                                         <button class="btn btn-outline-primary" type="submit" style="margin-left: 2%">
                                             Search
                                         </button>
@@ -67,6 +72,11 @@
                                     </tr>
                                     <!--Ending of chat Loop-->
                                 </table>
+                                <div style="margin-top: 1%;">
+                                    <a href="/profile/<%= getUserID %>/analytic" style="color: #223e63">
+                                        <img src="/images/backArrow.png" style="width: 30px;" /> Back
+                                    </a>
+                                </div>
                             </div>
 
                     </div>
