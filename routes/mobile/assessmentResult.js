@@ -5,6 +5,8 @@ const { db, FieldValue } = require("../../Database/database");
 router.get("/", async (req, res, next) => {
   var assessmentScore = parseInt(req.query.score);
   var userID = req.query.id;
+  var status = "";
+  var statusRecord = "";
 
   const oldAssessment = [];
   const oldAssessmentID = await db
@@ -23,6 +25,22 @@ router.get("/", async (req, res, next) => {
     });
 
   if (userID != "null") {
+    // *Check Assessment Score
+    if (assessmentScore < 7) {
+      status = "none";
+      statusRecord = "Safe";
+    } else if (assessmentScore < 13) {
+      status = "low";
+      statusRecord = "Safe";
+    } else if (assessmentScore < 19) {
+      status = "medium";
+      statusRecord = "Follow";
+    } else {
+      status = "high";
+      statusRecord = "Danger";
+    }
+
+    //* Logic Add Assessment 
     if (oldAssessment[0] == undefined) {
       const data = {
         assessmentID: "1",
@@ -30,6 +48,7 @@ router.get("/", async (req, res, next) => {
         type: "depress",
         score: assessmentScore,
         timestamp: FieldValue.serverTimestamp(),
+        status: statusRecord,
       };
       //db.collection('Assessment').add(data);
       await db
@@ -49,6 +68,7 @@ router.get("/", async (req, res, next) => {
         type: "depress",
         score: assessmentScore,
         timestamp: FieldValue.serverTimestamp(),
+        status: statusRecord,
         //timestamp: timestamp
       };
       //db.collection('Assessment').add(data);
@@ -61,16 +81,6 @@ router.get("/", async (req, res, next) => {
     }
   }
 
-  var status = "";
-  if (assessmentScore < 7) {
-    status = "none";
-  } else if (assessmentScore < 13) {
-    status = "low";
-  } else if (assessmentScore < 19) {
-    status = "medium";
-  } else {
-    status = "high";
-  }
   res.render("mobile/assessmentResult", {
     status,
   });

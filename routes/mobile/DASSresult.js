@@ -7,6 +7,7 @@ router.get("/", async (req, res, next) => {
   var DScore = parseInt(req.query.d);
   var AScore = parseInt(req.query.a);
   var SScore = parseInt(req.query.s);
+  var statusRecord = "";
 
   const oldAssessment = [];
   const oldAssessmentID = await db
@@ -23,7 +24,62 @@ router.get("/", async (req, res, next) => {
         });
       });
     });
+
   if (userID != "null") {
+    // * Check DScore
+    if (DScore >= 0 && DScore <= 6) {
+      // ? DScore = safe
+      // * Check AScore
+      if (AScore >= 0 && AScore <= 5) {
+        // ? AScore = safe
+        // * Check SScore
+        if (SScore >= 0 && SScore <= 9) {
+          // ? SScore = safe
+          statusRecord = "Safe";
+        } else if (SScore >= 10 && SScore <= 12) {
+          // ? SScore = follow
+          statusRecord = "Follow";
+        } else if (SScore >= 13) {
+          // ! SScore = Danger
+          statusRecord = "Danger";
+        }
+      } else if (AScore >= 6 && AScore <= 7) {
+        // ? AScore = follow
+        // * Check SScore
+        if (SScore >= 10 && SScore <= 12) {
+          // ? SScore = follow
+          statusRecord = "Follow";
+        } else if (SScore >= 13) {
+          // ! SScore = Danger
+          statusRecord = "Danger";
+        }
+      } else if (AScore >= 8) {
+        // ! AScore = Danger
+        statusRecord = "Danger";
+      }
+    } else if (DScore >= 7 && DScore <= 10) {
+      // ? DScore = follow
+      // * Check AScore
+      if (AScore >= 6 && AScore <= 7) {
+        // ? AScore = follow
+        // * Check SScore
+        if (SScore >= 10 && SScore <= 12) {
+          // ? SScore = follow
+          statusRecord = "Follow";
+        } else if (SScore >= 13) {
+          // ! SScore = Danger
+          statusRecord = "Danger";
+        }
+      } else if (AScore >= 8) {
+        // ! AScore = Danger
+        statusRecord = "Danger";
+      }
+    } else if (DScore >= 11) {
+      // ! DScore = Danger
+      statusRecord = "Danger";
+    }
+
+    //* Logic Add Assessment
     if (oldAssessment[0] == undefined) {
       const data = {
         assessmentID: "1",
@@ -33,6 +89,7 @@ router.get("/", async (req, res, next) => {
         Ascore: AScore,
         Sscore: SScore,
         timestamp: FieldValue.serverTimestamp(),
+        status: statusRecord,
       };
       //db.collection('Assessment').add(data);
       await db
