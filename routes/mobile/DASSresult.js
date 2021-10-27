@@ -28,54 +28,39 @@ router.get("/", async (req, res, next) => {
   if (userID != "null") {
     // * Check DScore
     if (DScore >= 0 && DScore <= 6) {
-      // ? DScore = safe
       // * Check AScore
       if (AScore >= 0 && AScore <= 5) {
-        // ? AScore = safe
         // * Check SScore
         if (SScore >= 0 && SScore <= 9) {
-          // ? SScore = safe
           statusRecord = "Safe";
         } else if (SScore >= 10 && SScore <= 12) {
-          // ? SScore = follow
           statusRecord = "Follow";
         } else if (SScore >= 13) {
-          // ! SScore = Danger
           statusRecord = "Danger";
         }
       } else if (AScore >= 6 && AScore <= 7) {
-        // ? AScore = follow
         // * Check SScore
-        if (SScore >= 10 && SScore <= 12) {
-          // ? SScore = follow
+        if (SScore >= 0 && SScore <= 12) {
           statusRecord = "Follow";
         } else if (SScore >= 13) {
-          // ! SScore = Danger
           statusRecord = "Danger";
         }
       } else if (AScore >= 8) {
-        // ! AScore = Danger
         statusRecord = "Danger";
       }
     } else if (DScore >= 7 && DScore <= 10) {
-      // ? DScore = follow
       // * Check AScore
-      if (AScore >= 6 && AScore <= 7) {
-        // ? AScore = follow
+      if (AScore >= 0 && AScore <= 7) {
         // * Check SScore
-        if (SScore >= 10 && SScore <= 12) {
-          // ? SScore = follow
+        if (SScore >= 0 && SScore <= 12) {
           statusRecord = "Follow";
         } else if (SScore >= 13) {
-          // ! SScore = Danger
           statusRecord = "Danger";
         }
       } else if (AScore >= 8) {
-        // ! AScore = Danger
         statusRecord = "Danger";
       }
     } else if (DScore >= 11) {
-      // ! DScore = Danger
       statusRecord = "Danger";
     }
 
@@ -110,6 +95,7 @@ router.get("/", async (req, res, next) => {
         Dscore: DScore,
         Ascore: AScore,
         Sscore: SScore,
+        status: statusRecord,
         timestamp: FieldValue.serverTimestamp(),
       };
       //db.collection('Assessment').add(data);
