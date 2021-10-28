@@ -89,32 +89,73 @@
                                     <th>State</th>
                                 </tr>
                                 <!--Begining of Assessment Loop-->
-                                <tr>
-                                    <td id="assess_date">22-03-2021 21:00 pm</td>
-                                    <td id="assess_type">DASS</td>
-                                    <td id="Dscore" class="chat_list">D = 3</td>
-                                    <td id="Ascore" class="chat_list">A = 5</td>
-                                    <td id="Sscore" class="chat_list">S = 10</td>
-                                    <td id="chat_state" class="chat_list"><button type="button"
-                                        class="btn btn_positive">Safe</button></td>
-                                </tr>
-                                <tr>
-                                    <td id="assess_date">24-03-2021 12:34 pm</td>
-                                    <td id="chat_content">Depression</td>
-                                    <td id="chat_state" class="chat_list" colspan="3">20</td>
-                                    <td id="chat_state" class="chat_list"><button type="button"
-                                        class="btn btn_negative">Danger</button></td>
-                                </tr>
-
-                                <tr>
-                                    <td id="assess_date">26-04-2021 09:10 am</td>
-                                    <td id="assess_type">DASS</td>
-                                    <td id="Dscore" class="chat_list">D = 12</td>
-                                    <td id="Ascore" class="chat_list">A = 8</td>
-                                    <td id="Sscore" class="chat_list">S = 15</td>
-                                    <td id="chat_state" class="chat_list"><button type="button"
-                                        class="btn btn_negative">Danger</button></td>
-                                </tr>
+                                <% for(let i = 0 ; i< assessmentList.length;i++) {%> <%
+                                    if(assessmentList[i].type == "dass"){ %>
+                                    <tr>
+                                      <td id="assess_date">
+                                        <%= assessmentList[i].timestamp.toDate().toDateString() %> <%=
+                                        assessmentList[i].timestamp.toDate().toLocaleTimeString() %>
+                                      </td>
+                                      <td id="assess_type">
+                                        <%= assessmentList[i].type.toUpperCase() %>
+                                      </td>
+                                      <td id="Dscore" class="chat_list">
+                                        D = <%= assessmentList[i].Dscore %>
+                                      </td>
+                                      <td id="Ascore" class="chat_list">
+                                        A = <%= assessmentList[i].Ascore %>
+                                      </td>
+                                      <td id="Sscore" class="chat_list">
+                                        S = <%= assessmentList[i].Sscore %>
+                                      </td>
+                                      <td id="chat_state" class="chat_list">
+                                        <% if(assessmentList[i].status == "Safe"){ %>
+                                        <button type="button" class="btn btn_positive">
+                                          <%= assessmentList[i].status %>
+                                        </button>
+                                        <% }else if(assessmentList[i].status == "Follow"){ %>
+                                        <button type="button" class="btn btn_neutral">
+                                          <%= assessmentList[i].status %>
+                                        </button>
+                                        <% }else if(assessmentList[i].status == "Danger"){ %>
+                                        <button type="button" class="btn btn_negative">
+                                          <%= assessmentList[i].status %>
+                                        </button>
+                                        <% }%>
+                                      </td>
+                                    </tr>
+                                    <% }else if(assessmentList[i].type == "depress"){ %>
+                                    <tr>
+                                      <td id="assess_date">
+                                        <%= assessmentList[i].timestamp.toDate().toDateString() %> <%=
+                                        assessmentList[i].timestamp.toDate().toLocaleTimeString() %>
+                                      </td>
+                                      <td id="chat_content">
+                                        <%= assessmentList[i].type[0].toUpperCase() +
+                                        assessmentList[i].type.substr(1).toLowerCase()+"ion" %>
+                                      </td>
+                                      <td id="chat_state" class="chat_list" colspan="3">
+                                        <%= assessmentList[i].score %>
+                                      </td>
+                                      <td id="chat_state" class="chat_list">
+                                        <% if(assessmentList[i].status == "Safe"){ %>
+                                        <button type="button" class="btn btn_positive">
+                                          <%= assessmentList[i].status %>
+                                        </button>
+                                        <% }else if(assessmentList[i].status == "Follow"){ %>
+                                        <button type="button" class="btn btn_neutral">
+                                          <%= assessmentList[i].status %>
+                                        </button>
+                                        <% }else if(assessmentList[i].status == "Danger"){ %>
+                                        <button type="button" class="btn btn_negative">
+                                          <%= assessmentList[i].status %>
+                                        </button>
+                                        <% }%>
+                                      </td>
+                                    </tr>
+                                    <% }%>
+                                <%} %>
+                               
                                 <!--Ending of chat Loop-->
                             </table>
                             <div style="text-align: right; margin: 1%;"><a href="/profile/<%= getUserID %>/assessment">see all assessment history</a></div>

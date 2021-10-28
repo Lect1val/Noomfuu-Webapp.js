@@ -182,9 +182,44 @@ router.get("/:userID/analytic", async (req, res, next) => {
       });
     });
 
+    const assessmentListRef = await db
+      .collection("User")
+      .doc(getUserID)
+      .collection("assessment")
+      .orderBy("timestamp", "desc")
+      .limit(3);
+    const assessmentList = [];
+
+    await assessmentListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().type == "dass") {
+          console.log("dass");
+          assessmentList.push({
+            assessmentID: doc.data().assessmentID,
+            type: doc.data().type,
+            timestamp: doc.data().timestamp,
+            status: doc.data().status,
+            Ascore: doc.data().Ascore,
+            Dscore: doc.data().Dscore,
+            Sscore: doc.data().Sscore,
+          });
+        } else if (doc.data().type == "depress") {
+          console.log("depress");
+          assessmentList.push({
+            assessmentID: doc.data().assessmentID,
+            type: doc.data().type,
+            timestamp: doc.data().timestamp,
+            status: doc.data().status,
+            score: doc.data().score,
+          });
+        }
+      });
+    });
+
     res.render("desktop/feeling_analytic", {
       contactlists,
       getUserID,
+      assessmentList,
     });
   } catch (error) {
     console.log(error);
@@ -209,10 +244,11 @@ router.get("/:userID/assessment", async (req, res, next) => {
       });
     });
 
-    const assessmentListRef = db
+    const assessmentListRef = await db
       .collection("User")
       .doc(getUserID)
-      .collection("assessment");
+      .collection("assessment")
+      .orderBy("timestamp", "desc");
     const assessmentList = [];
 
     await assessmentListRef.get().then((snapshot) => {
