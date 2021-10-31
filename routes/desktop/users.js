@@ -130,12 +130,6 @@ router.post("/:userID", async (req, res, next) => {
       contactNote: newContactNote,
     });
 
-    // console.log(newFirstName);
-    // console.log(newLastName);
-    // console.log(newTel);
-    // console.log(newEmail);
-    // console.log(newContactNote);
-
     const profileListRef = db.collection("User");
     const profileList = [];
 
@@ -155,11 +149,6 @@ router.post("/:userID", async (req, res, next) => {
     });
 
     res.redirect("/profile/" + getUserID);
-    // res.render("desktop/user_profile", {
-    //   contactlists,
-    //   profileList,
-    //   getUserID,
-    // });
   } catch (error) {
     console.log(error);
   }
@@ -216,10 +205,30 @@ router.get("/:userID/analytic", async (req, res, next) => {
       });
     });
 
+    const chatListRef = await db
+      .collection("User")
+      .doc(getUserID)
+      .collection("message")
+      .orderBy("timestamp", "desc")
+      .limit(3);
+    const chatList = [];
+
+    await chatListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        chatList.push({
+          messageID: doc.data().messageID,
+          emotion: doc.data().emotion,
+          timestamp: doc.data().timestamp,
+          content: doc.data().content,
+        });
+      });
+    });
+
     res.render("desktop/feeling_analytic", {
       contactlists,
       getUserID,
       assessmentList,
+      chatList,
     });
   } catch (error) {
     console.log(error);
@@ -304,9 +313,29 @@ router.get("/:userID/chat", async (req, res, next) => {
         }
       });
     });
+
+    const chatListRef = await db
+      .collection("User")
+      .doc(getUserID)
+      .collection("message")
+      .orderBy("timestamp", "desc");
+    const chatList = [];
+
+    await chatListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        chatList.push({
+          messageID: doc.data().messageID,
+          emotion: doc.data().emotion,
+          timestamp: doc.data().timestamp,
+          content: doc.data().content,
+        });
+      });
+    });
+
     res.render("desktop/all_chat", {
       contactlists,
       getUserID,
+      chatList,
     });
   } catch (error) {
     console.log(error);
