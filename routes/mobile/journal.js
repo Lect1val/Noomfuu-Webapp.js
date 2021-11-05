@@ -9,7 +9,7 @@ router.get("/", (req, res, next) => {
 router.get("/:userID", async (req, res, next) => {
   const userID = req.params.userID;
 
-  const journalRef = db.collection("User").doc(userID).collection("Journal");
+  const journalRef = db.collection("User").doc(userID).collection("journal");
   const journals = [];
 
   const snapshot = await journalRef.orderBy("journalID", "asc").get();
@@ -42,7 +42,7 @@ router.post("/:userID/add", async (req, res, next) => {
   const oldJournalID = await db
     .collection("User")
     .doc(userID)
-    .collection("Journal")
+    .collection("journal")
     .orderBy("journalID", "desc")
     .limit(1)
     .get()
@@ -63,7 +63,7 @@ router.post("/:userID/add", async (req, res, next) => {
       journalID: "1",
     };
 
-    db.collection("User").doc(userID).collection("Journal").doc("1").set(data);
+    db.collection("User").doc(userID).collection("journal").doc("1").set(data);
   } else if (oldJournal[0] != undefined) {
     const newJournalID = (Number(oldJournal[0].journalID) + 1).toString();
     console.log(newJournalID);
@@ -75,12 +75,12 @@ router.post("/:userID/add", async (req, res, next) => {
     //db.collection('Assessment').add(data);
     db.collection("User")
       .doc(userID)
-      .collection("Journal")
+      .collection("journal")
       .doc(newJournalID)
       .set(data);
   }
 
-  const journalRef = db.collection("User").doc(userID).collection("Journal");
+  const journalRef = db.collection("User").doc(userID).collection("journal");
   const journals = [];
 
   const snapshot = await journalRef.orderBy("journalID", "asc").get();
