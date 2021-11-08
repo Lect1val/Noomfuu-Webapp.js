@@ -27,16 +27,31 @@ router.get("/", async (req, res, next) => {
     const contactListRef = db.collection("User");
     const contactlists = [];
 
-    await contactListRef.get().then((snapshot) => {
-      snapshot.forEach((doc) => {
-        if (doc.data().nickName != null && doc.data().nickName != "") {
-          contactlists.push({
-            userID: doc.data().userID,
-            nickName: doc.data().nickName,
-          });
-        }
+    const search_name = req.query.search;
+
+    if (search_name != null) {
+      await contactListRef.where('nickName', '>=', search_name).get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().nickName != null && doc.data().nickName != "") {
+            contactlists.push({
+              userID: doc.data().userID,
+              nickName: doc.data().nickName,
+            });
+          }
+        });
       });
-    });
+    } else {
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().nickName != null && doc.data().nickName != "") {
+            contactlists.push({
+              userID: doc.data().userID,
+              nickName: doc.data().nickName,
+            });
+          }
+        });
+      });
+    }
 
     res.render("desktop/index", {
       contactlists,

@@ -26,6 +26,7 @@ var DASSwarningRouter = require("./routes/mobile/DASSwarning");
 var DASSQuestionRouter = require("./routes/mobile/DASSQ");
 var DASSResultRouter = require("./routes/mobile/DASSresult");
 var journalRouter = require("./routes/mobile/journal");
+var makeAppointmentRouter = require("./routes/mobile/makeAppointment");
 
 var app = express();
 
@@ -40,7 +41,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 // *App.use Desktop*
-app.use("/", loginRouter);
+app.use("/", indexRouter);
 app.use("/home", indexRouter);
 app.use("/nopermission", noPermissionRouter);
 app.use("/profile", usersRouter);
@@ -61,6 +62,7 @@ app.use("/assessment/dass", DASSwarningRouter);
 app.use("/assessment/dass/q", DASSQuestionRouter);
 app.use("/assessment/dass/result", DASSResultRouter);
 app.use("/journal", journalRouter);
+app.use("/appointment", makeAppointmentRouter);
 
 
 // catch 404 and forward to error handler

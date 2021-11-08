@@ -11,6 +11,7 @@ router.get("/", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
     const contactlists = [];
+    
 
     await contactListRef.get().then((snapshot) => {
       snapshot.forEach((doc) => {
@@ -52,6 +53,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+//* เข้าหน้า User Profile
 router.get("/:userID", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
@@ -97,6 +99,7 @@ router.get("/:userID", async (req, res, next) => {
   }
 });
 
+//* แก้ไขข้อมูลในหน้า User Profile
 router.post("/:userID", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
@@ -128,12 +131,6 @@ router.post("/:userID", async (req, res, next) => {
       contactNote: newContactNote,
     });
 
-    // console.log(newFirstName);
-    // console.log(newLastName);
-    // console.log(newTel);
-    // console.log(newEmail);
-    // console.log(newContactNote);
-
     const profileListRef = db.collection("User");
     const profileList = [];
 
@@ -153,16 +150,12 @@ router.post("/:userID", async (req, res, next) => {
     });
 
     res.redirect("/profile/" + getUserID);
-    // res.render("desktop/user_profile", {
-    //   contactlists,
-    //   profileList,
-    //   getUserID,
-    // });
   } catch (error) {
     console.log(error);
   }
 });
 
+//* เข้าหน้า Analytic
 router.get("/:userID/analytic", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
@@ -179,15 +172,178 @@ router.get("/:userID/analytic", async (req, res, next) => {
       });
     });
 
+    const assessmentListRef = await db
+      .collection("User")
+      .doc(getUserID)
+      .collection("assessment")
+      .orderBy("timestamp", "desc")
+      .limit(3);
+    const assessmentList = [];
+
+    await assessmentListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().type == "dass") {
+          console.log("dass");
+          assessmentList.push({
+            assessmentID: doc.data().assessmentID,
+            type: doc.data().type,
+            timestamp: doc.data().timestamp,
+            status: doc.data().status,
+            Ascore: doc.data().Ascore,
+            Dscore: doc.data().Dscore,
+            Sscore: doc.data().Sscore,
+          });
+        } else if (doc.data().type == "depress") {
+          console.log("depress");
+          assessmentList.push({
+            assessmentID: doc.data().assessmentID,
+            type: doc.data().type,
+            timestamp: doc.data().timestamp,
+            status: doc.data().status,
+            score: doc.data().score,
+          });
+        }
+      });
+    });
+
+    const chatListRef = await db
+      .collection("User")
+      .doc(getUserID)
+      .collection("message")
+      .orderBy("timestamp", "desc")
+      .limit(3);
+    const chatList = [];
+
+    await chatListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        chatList.push({
+          messageID: doc.data().messageID,
+          emotion: doc.data().emotion,
+          timestamp: doc.data().timestamp,
+          content: doc.data().content,
+        });
+      });
+    });
+
     res.render("desktop/feeling_analytic", {
       contactlists,
       getUserID,
+      assessmentList,
+      chatList,
     });
   } catch (error) {
     console.log(error);
   }
 });
 
+//* เข้าหน้า ALl Assessment
+router.get("/:userID/assessment", async (req, res, next) => {
+  try {
+    const contactListRef = db.collection("User");
+    const contactlists = [];
+    const getUserID = req.params.userID;
+
+    await contactListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().nickName != null && doc.data().nickName != "") {
+          contactlists.push({
+            userID: doc.data().userID,
+            nickName: doc.data().nickName,
+          });
+        }
+      });
+    });
+
+    const assessmentListRef = await db
+      .collection("User")
+      .doc(getUserID)
+      .collection("assessment")
+      .orderBy("timestamp", "desc");
+    const assessmentList = [];
+
+    await assessmentListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().type == "dass") {
+          console.log("dass");
+          assessmentList.push({
+            assessmentID: doc.data().assessmentID,
+            type: doc.data().type,
+            timestamp: doc.data().timestamp,
+            status: doc.data().status,
+            Ascore: doc.data().Ascore,
+            Dscore: doc.data().Dscore,
+            Sscore: doc.data().Sscore,
+          });
+        } else if (doc.data().type == "depress") {
+          console.log("depress");
+          assessmentList.push({
+            assessmentID: doc.data().assessmentID,
+            type: doc.data().type,
+            timestamp: doc.data().timestamp,
+            status: doc.data().status,
+            score: doc.data().score,
+          });
+        }
+      });
+    });
+    console.log(assessmentList);
+    res.render("desktop/all_assessment", {
+      contactlists,
+      getUserID,
+      assessmentList,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+//* เข้าหน้า All Chat History
+router.get("/:userID/chat", async (req, res, next) => {
+  try {
+    const contactListRef = db.collection("User");
+    const contactlists = [];
+    const getUserID = req.params.userID;
+
+    await contactListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().nickName != null && doc.data().nickName != "") {
+          contactlists.push({
+            userID: doc.data().userID,
+            nickName: doc.data().nickName,
+          });
+        }
+      });
+    });
+
+    const chatListRef = await db
+      .collection("User")
+      .doc(getUserID)
+      .collection("message")
+      .orderBy("timestamp", "desc");
+    const chatList = [];
+
+    await chatListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        chatList.push({
+          messageID: doc.data().messageID,
+          emotion: doc.data().emotion,
+          timestamp: doc.data().timestamp,
+          content: doc.data().content,
+        });
+      });
+    });
+
+    res.render("desktop/all_chat", {
+      contactlists,
+      getUserID,
+      chatList,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+//* เข้าหน้า Appointment
 router.get("/:userID/appointment", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
@@ -213,6 +369,7 @@ router.get("/:userID/appointment", async (req, res, next) => {
   }
 });
 
+//* เข้าหน้า All Note
 router.get("/:userID/note", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
@@ -252,6 +409,7 @@ router.get("/:userID/note", async (req, res, next) => {
   }
 });
 
+//* เข้าหน้าเฉพาะ Note
 router.get("/:userID/note/:noteID/content", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
@@ -298,6 +456,7 @@ router.get("/:userID/note/:noteID/content", async (req, res, next) => {
   }
 });
 
+//* เข้าหน้าแก้ไข Note
 router.get("/:userID/note/:noteID/content/edit", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
@@ -342,6 +501,7 @@ router.get("/:userID/note/:noteID/content/edit", async (req, res, next) => {
   }
 });
 
+//* แก้ไขข้อมูล Note
 router.post("/:userID/note/:noteID/content", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
@@ -404,6 +564,7 @@ router.post("/:userID/note/:noteID/content", async (req, res, next) => {
   }
 });
 
+//* ลบ Note
 router.get("/:userID/note/:noteID/delete", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
@@ -454,6 +615,7 @@ router.get("/:userID/note/:noteID/delete", async (req, res, next) => {
   }
 });
 
+//* เข้าหน้าเพิ่ม Note
 router.get("/:userID/note/add", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
@@ -480,6 +642,7 @@ router.get("/:userID/note/add", async (req, res, next) => {
   }
 });
 
+//* เพิ่ม Note
 router.post("/:userID/note/add", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");

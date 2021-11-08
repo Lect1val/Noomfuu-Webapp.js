@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make an Appointment</title>
+    <style>
+        html {
+            background: url(/images/BG-375-667.png) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        body {
+            font-family: "Kanit", sans-serif;
+        }
+
+        h1 {
+            color: #223e63;
+            font-weight: 600;
+            font-size: 35px;
+            line-height: 80%;
+            text-align: center;
+        }
+
+        h2 {
+            color: #223e63;
+            font-weight: 200;
+            font-size: 18px;
+            padding: 0% 10% 5% 10%;
+            text-align: center;
+        }
+
+        h3 {
+            color: #223e63;
+            font-weight: 300;
+            font-size: 20px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: none;
+            color: #ab94e9;
+        }
+
+        .content_box {
+            position: fixed;
+            left: 50%;
+            bottom: 50px;
+            transform: translate(-50%, -50%);
+            margin: 0 auto;
+
+            background-color: white;
+
+            text-align: center;
+            border: none;
+            width: 80%;
+            padding: 3%;
+            margin: auto;
+            /* box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25); */
+            border-radius: 10px;
+            font-family: "Kanit", sans-serif;
+            word-wrap: break-word;
+            /* display: none; */
+        }
+
+        .box {
+            height: 100%;
+            /*position: relative;*/
+            text-align: center;
+        }
+
+        .box>p {
+            position: absolute;
+            top: 25%;
+            left: 0;
+            right: 0;
+        }
+
+        .submit {
+            background-color: #EBE9FD;
+            border: none;
+            width: 10%;
+            padding: 1%;
+            margin-top: 1%;
+            margin-bottom: 1%;
+            box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+            border-radius: 20px;
+            font-family: "Kanit", sans-serif;
+        }
+
+        .inputbox {
+            width: 90%;
+            margin: 3%;
+            /* margin-right: 3%; */
+            padding: 1%;
+            background-color: #EFF3F9;
+            border: none;
+            font-size: 16px;
+            text-align: center;
+            font-family: "Kanit", sans-serif;
+        }
+
+        .inputHeader{
+            font-size: 20px;
+        }
+
+        .submit{
+            background-color: white;
+            border: none;
+            width: 100%;
+            padding: 3%;
+            margin-top: 3%;
+            margin-bottom: 3%;
+            box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+            border-radius: 20px;
+            font-family: "Kanit", sans-serif;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <script>
+        function nextGoogle() {
+            window.location.href = "/appointment/googleAdd";
+        }
+        function next() {
+            window.location.href = "/appointment/add";
+        }
+    </script>
+
+    <div style="padding-top: 8%;">
+        <h1>Make Appointment</h1>
+    </div>
+    <div style="text-align: center;">
+        <form method="post" id="appoint" action="/appointment/add?id=<%= userID %>">
+            <div class="inputHeader">รหัสนักศึกษา</div>
+            <div><input type="number" class="inputbox" name="appointStdID" id="appointStdID" required/></div>
+
+            <div class="inputHeader">ชื่อ-นามสกุล</div>
+            <div><input type="text" class="inputbox" name="appointName" id="appointName" required/></div>
+
+            <div class="inputHeader">วันนัดหมาย</div>
+            <div><input type="date" class="inputbox" name="appointDate" id="appointDate" required/></div>
+
+            <div class="inputHeader">เวลา</div>
+            <div><input type="time" list="times" step=“600” class="inputbox" name="appointTime" id="appointTime" min="09:00" max="18:00" required/></div>
+
+            <div class="inputHeader">ช่องทางปรึกษา</div>
+            <select class="inputbox" id="type" name="type">
+                <option value="online">Online</option>
+                <option value="onsite">On site ที่มหาวิทยาลัย</option>
+              </select>
+
+            <datalist id="times">
+                <option value="12:00:00">
+                <option value="12:30:00">
+                <option value="13:00:00">
+                <option value="13:30:00">
+                <option value="14:00:00">
+                <option value="14:30:00">
+            </datalist>
+
+            <button class="submit" type="submit" form="appoint">
+                ดำเนินการนัดหมาย
+            </button>
+        </form>
+    </div>
+</body>
+
+</html>
