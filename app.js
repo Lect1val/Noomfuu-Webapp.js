@@ -41,7 +41,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 // *App.use Desktop*
-app.use("/", loginRouter);
+app.use("/", indexRouter);
 app.use("/home", indexRouter);
 app.use("/nopermission", noPermissionRouter);
 app.use("/profile", usersRouter);

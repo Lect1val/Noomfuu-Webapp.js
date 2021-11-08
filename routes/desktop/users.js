@@ -11,6 +11,7 @@ router.get("/", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
     const contactlists = [];
+    
 
     await contactListRef.get().then((snapshot) => {
       snapshot.forEach((doc) => {
