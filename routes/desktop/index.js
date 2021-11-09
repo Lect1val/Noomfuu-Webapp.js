@@ -26,6 +26,7 @@ router.get("/", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
+    const contactlists = [];
 
     const search_name = req.query.search;
 
@@ -42,7 +43,6 @@ router.get("/", async (req, res, next) => {
         });
       });
       let i = 0;
-      const contactlists = [];
 
       await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
