@@ -25,22 +25,47 @@ const { db } = require("../../Database/database");
 router.get("/", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
-    const contactlists = [];
+    const contactlists_temp = [];
 
     const search_name = req.query.search;
 
     if (search_name != null) {
-      await contactListRef.where('nickName', '>=', search_name).get().then((snapshot) => {
+      console.log(search_name)
+      await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
           if (doc.data().nickName != null && doc.data().nickName != "") {
-            contactlists.push({
+            contactlists_temp.push({
               userID: doc.data().userID,
               nickName: doc.data().nickName,
             });
           }
         });
       });
+      let i = 0;
+      const contactlists = [];
+
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().nickName != null && doc.data().nickName != "") {
+            // console.log(contactlists_temp[i].nickName.toLowerCase())
+            // console.log(contactlists_temp[i].nickName.toLowerCase().includes(search_name.toLowerCase()))
+            i++;
+            if(contactlists_temp[i-1].nickName.toLowerCase().includes(search_name.toLowerCase())){
+            contactlists.push({
+              userID: doc.data().userID,
+              nickName: doc.data().nickName,
+            });
+            
+          }
+          }
+        });
+      });
+      
+      res.render("desktop/index", {
+        contactlists,
+      });
     } else {
+
       await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
           if (doc.data().nickName != null && doc.data().nickName != "") {
@@ -51,11 +76,11 @@ router.get("/", async (req, res, next) => {
           }
         });
       });
-    }
 
-    res.render("desktop/index", {
-      contactlists,
-    });
+      res.render("desktop/index", {
+        contactlists,
+      });
+    }
   } catch (error) {
     console.log(error);
   }
