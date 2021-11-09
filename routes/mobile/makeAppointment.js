@@ -3,29 +3,34 @@ var router = express.Router();
 const { db } = require("../../Database/database");
 //const { calendar } = require("../../controller/calendar");
 
-const fs = require('fs');
-const readline = require('readline');
-const { google } = require('googleapis');
+const fs = require("fs");
+const readline = require("readline");
+const { google } = require("googleapis");
 
 // If modifying these scopes, delete token.json.
-const SCOPE = ['https://www.googleapis.com/auth/calendar'];
+const SCOPE = ["https://www.googleapis.com/auth/calendar"];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
-const TOKEN_PATH = 'token.json';
+const TOKEN_PATH = "token.json";
 
-const client_id = "856329999838-indv4mv7k2oa39iatapono29kj4l5c6m.apps.googleusercontent.com"
-const project_id = "noomfuu-jfge"
-const auth_uri = "https://accounts.google.com/o/oauth2/auth"
-const token_uri = "https://oauth2.googleapis.com/token"
-const auth_provider_x509_cert_url = "https://www.googleapis.com/oauth2/v1/certs"
-const client_secret = "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"
-const javascript_origins = ["https://noomfuu-webapp-js.herokuapp.com"]
+const client_id =
+  "856329999838-indv4mv7k2oa39iatapono29kj4l5c6m.apps.googleusercontent.com";
+const project_id = "noomfuu-jfge";
+const auth_uri = "https://accounts.google.com/o/oauth2/auth";
+const token_uri = "https://oauth2.googleapis.com/token";
+const auth_provider_x509_cert_url =
+  "https://www.googleapis.com/oauth2/v1/certs";
+const client_secret = "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";
+const javascript_origins = ["https://noomfuu-webapp-js.herokuapp.com"];
 
 function authorize(credentials, callback) {
-  client_secret, client_id, redirect_uris = credentials.installed;
+  client_secret, client_id, (redirect_uris = credentials.installed);
   const oAuth2Client = new google.auth.OAuth2(
-      client_id, client_secret, redirect_uris[0]);
+    client_id,
+    client_secret,
+    redirect_uris[0]
+  );
 
   // Check if we have previously stored a token.
   fs.readFile(TOKEN_PATH, (err, token) => {
@@ -44,23 +49,23 @@ function authorize(credentials, callback) {
 
 function getAccessToken(oAuth2Client, callback) {
   const authUrl = oAuth2Client.generateAuthUrl({
-    access_type: 'offline',
+    access_type: "offline",
     scope: SCOPES,
   });
-  console.log('Authorize this app by visiting this url:', authUrl);
+  console.log("Authorize this app by visiting this url:", authUrl);
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
   });
-  rl.question('Enter the code from that page here: ', (code) => {
+  rl.question("Enter the code from that page here: ", (code) => {
     rl.close();
     oAuth2Client.getToken(code, (err, token) => {
-      if (err) return console.error('Error retrieving access token', err);
+      if (err) return console.error("Error retrieving access token", err);
       oAuth2Client.setCredentials(token);
       // Store the token to disk for later program executions
       fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
         if (err) return console.error(err);
-        console.log('Token stored to', TOKEN_PATH);
+        console.log("Token stored to", TOKEN_PATH);
       });
       callback(oAuth2Client);
     });
@@ -73,11 +78,10 @@ router.get("/", (req, res, next) => {
 
 router.get("/add", (req, res, next) => {
   const userID = req.query.id;
-  res.render("mobile/appointDetail", {userID});
-
+  res.render("mobile/appointDetail", { userID });
 });
 
-router.post("/add", async (req, res, next)=> {
+router.post("/add", async (req, res, next) => {
   const userID = req.query.id;
   console.log(userID);
   const appointStdID = req.body.appointStdID;
@@ -86,73 +90,128 @@ router.post("/add", async (req, res, next)=> {
   const appointTime = req.body.appointTime + ":00+0700Z";
   const type = req.body.type;
 
-  const appointStart = new Date(appointDate + " " + appointTime)
-  const appointEnd = new Date(new Date(appointStart).setHours(appointStart.getHours() + 1));
+  const appointStart = new Date(appointDate + " " + appointTime);
+  const appointEnd = new Date(
+    new Date(appointStart).setHours(appointStart.getHours() + 1)
+  );
 
-  console.log(appointStart, appointEnd)
+  console.log(appointStart, appointEnd);
 
-  const data = {
-    // appointID: ,
-    userID: userID,
-    studentID: appointStdID,
-    fullname: appointName,
-    appointmentStart: appointStart,
-    appointmentEnd: appointEnd,
-    type: type,
-    timestamp: FieldValue.serverTimestamp(),
-  };
+  const oldAppointment = [];
+  const oldAppointmentID = await db
+    .collection("User")
+    .doc(getUserID)
+    .collection("appointment")
+    .orderBy("appointID", "desc")
+    .limit(1)
+    .get()
+    .then((snapshot) => {
+      snapshot.forEach((doc) => {
+        oldAppointment.push({
+          appointID: doc.data().appointID,
+          userID: doc.data().userID,
+          studentID: doc.data().studentID,
+          fullname: doc.data().fullname,
+          appointmentStart: doc.data().appointStart,
+          appointmentEnd: doc.data().appointEnd,
+          type: doc.data().type,
+          timestamp: doc.data().timestamp,
+        });
+      });
+    });
 
+  if (oldAppointment[0] == undefined) {
+    const data = {
+      appointID: "1",
+      userID: userID,
+      studentID: appointStdID,
+      fullname: appointName,
+      appointmentStart: appointStart,
+      appointmentEnd: appointEnd,
+      type: type,
+      timestamp: FieldValue.serverTimestamp(),
+    };
 
+    await db
+      .collection("User")
+      .doc(getUserID)
+      .collection("appointment")
+      .doc("1")
+      .set(data);
+  } else if (oldAppointment[0] != undefined) {
+    const newAppointmentID = (
+      Number(oldAppointment[0].appointID) + 1
+    ).toString();
 
-  res.render("mobile/appointDetail", {userID});
+    const data = {
+      appointID: newAppointmentID,
+      userID: userID,
+      studentID: appointStdID,
+      fullname: appointName,
+      appointmentStart: appointStart,
+      appointmentEnd: appointEnd,
+      type: type,
+      timestamp: FieldValue.serverTimestamp(),
+    };
 
+    await db
+      .collection("User")
+      .doc(getUserID)
+      .collection("appointment")
+      .doc(newAppointmentID)
+      .set(data);
+  }
+
+  res.render("mobile/appointDetail", { userID });
 });
 
 router.get("/googleAdd", (req, res, next) => {
-
   var event = {
-    'summary': 'Google I/O 2015',
-    'location': '800 Howard St., San Francisco, CA 94103',
-    'description': 'A chance to hear more about Google\'s developer products.',
-    'start': {
-      'dateTime': '2021-10-28T09:00:00-07:00',
-      'timeZone': 'America/Los_Angeles',
+    summary: "Google I/O 2015",
+    location: "800 Howard St., San Francisco, CA 94103",
+    description: "A chance to hear more about Google's developer products.",
+    start: {
+      dateTime: "2021-10-28T09:00:00-07:00",
+      timeZone: "America/Los_Angeles",
     },
-    'end': {
-      'dateTime': '2021-10-28T17:00:00-07:00',
-      'timeZone': 'America/Los_Angeles',
+    end: {
+      dateTime: "2021-10-28T17:00:00-07:00",
+      timeZone: "America/Los_Angeles",
     },
-    'recurrence': [
-      'RRULE:FREQ=DAILY;COUNT=2'
+    recurrence: ["RRULE:FREQ=DAILY;COUNT=2"],
+    attendees: [
+      { email: "srud8mm07ss8rkfs04kkcj3oac@group.calendar.google.com" },
     ],
-    'attendees': [
-      {'email': 'srud8mm07ss8rkfs04kkcj3oac@group.calendar.google.com'},
-    ],
-    'reminders': {
-      'useDefault': false,
-      'overrides': [
-        {'method': 'email', 'minutes': 24 * 60},
-        {'method': 'popup', 'minutes': 10},
+    reminders: {
+      useDefault: false,
+      overrides: [
+        { method: "email", minutes: 24 * 60 },
+        { method: "popup", minutes: 10 },
       ],
     },
   };
 
-  console.log("create var")
-  
-  const calendar = google.calendar({version:"v3", auth})
-  calendar.events.insert({
-    auth: auth,
-    calendarId: 'primary',
-    resource: event,
-  }, function(err, event) {
-    if (err) {
-      console.log('There was an error contacting the Calendar service: ' + err);
-      return;
+  console.log("create var");
+
+  const calendar = google.calendar({ version: "v3", auth });
+  calendar.events.insert(
+    {
+      auth: auth,
+      calendarId: "primary",
+      resource: event,
+    },
+    function (err, event) {
+      if (err) {
+        console.log(
+          "There was an error contacting the Calendar service: " + err
+        );
+        return;
+      }
+      console.log("Event created: %s", event.htmlLink);
     }
-    console.log('Event created: %s', event.htmlLink);
-  });
+  );
 
   res.redirect("/appointment");
-})
+});
 
 module.exports = router;
