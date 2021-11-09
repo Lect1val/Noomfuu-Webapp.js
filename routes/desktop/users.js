@@ -11,7 +11,7 @@ router.get("/", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
     const contactlists = [];
-    
+
 
     await contactListRef.get().then((snapshot) => {
       snapshot.forEach((doc) => {
@@ -259,33 +259,135 @@ router.get("/:userID/assessment", async (req, res, next) => {
       .doc(getUserID)
       .collection("assessment")
       .orderBy("timestamp", "desc");
+
+    const search_name = req.query.search;
+    const filter = req.query.filter;
+    const assessmentList_temp = [];
     const assessmentList = [];
 
-    await assessmentListRef.get().then((snapshot) => {
-      snapshot.forEach((doc) => {
-        if (doc.data().type == "dass") {
-          console.log("dass");
-          assessmentList.push({
-            assessmentID: doc.data().assessmentID,
-            type: doc.data().type,
-            timestamp: doc.data().timestamp,
-            status: doc.data().status,
-            Ascore: doc.data().Ascore,
-            Dscore: doc.data().Dscore,
-            Sscore: doc.data().Sscore,
+    if ((search_name != null && filter != null)) {
+      if (filter == "state") {
+        await assessmentListRef.get().then((snapshot) => {
+          snapshot.forEach((doc) => {
+            if (doc.data().type == "dass") {
+              console.log("dass");
+              assessmentList_temp.push({
+                assessmentID: doc.data().assessmentID,
+                type: doc.data().type,
+                timestamp: doc.data().timestamp,
+                status: doc.data().status,
+                Ascore: doc.data().Ascore,
+                Dscore: doc.data().Dscore,
+                Sscore: doc.data().Sscore,
+              });
+            } else if (doc.data().type == "depress") {
+              console.log("depress");
+              assessmentList_temp.push({
+                assessmentID: doc.data().assessmentID,
+                type: doc.data().type,
+                timestamp: doc.data().timestamp,
+                status: doc.data().status,
+                score: doc.data().score,
+              });
+            }
           });
-        } else if (doc.data().type == "depress") {
-          console.log("depress");
-          assessmentList.push({
-            assessmentID: doc.data().assessmentID,
-            type: doc.data().type,
-            timestamp: doc.data().timestamp,
-            status: doc.data().status,
-            score: doc.data().score,
+        });
+
+        let i = 0;
+
+        await assessmentListRef.get().then((snapshot) => {
+          snapshot.forEach((doc) => {
+            console.log(assessmentList_temp[i].status.toLowerCase())
+            console.log(assessmentList_temp[i].status.toLowerCase() == search_name)
+            i++;
+            if(assessmentList_temp[i-1].status.toLowerCase() == search_name){
+            if (doc.data().type == "dass") {
+              console.log("dass");
+              assessmentList.push({
+                assessmentID: doc.data().assessmentID,
+                type: doc.data().type,
+                timestamp: doc.data().timestamp,
+                status: doc.data().status,
+                Ascore: doc.data().Ascore,
+                Dscore: doc.data().Dscore,
+                Sscore: doc.data().Sscore,
+              });
+            } else if (doc.data().type == "depress") {
+              console.log("depress");
+              assessmentList.push({
+                assessmentID: doc.data().assessmentID,
+                type: doc.data().type,
+                timestamp: doc.data().timestamp,
+                status: doc.data().status,
+                score: doc.data().score,
+              });
+            }
+          }
+          });
+        });
+      } else if (filter == "type") {
+        if (search_name == "dass") {
+          await assessmentListRef.get().then((snapshot) => {
+            snapshot.forEach((doc) => {
+              if (doc.data().type == "dass") {
+                console.log("dass");
+                assessmentList.push({
+                  assessmentID: doc.data().assessmentID,
+                  type: doc.data().type,
+                  timestamp: doc.data().timestamp,
+                  status: doc.data().status,
+                  Ascore: doc.data().Ascore,
+                  Dscore: doc.data().Dscore,
+                  Sscore: doc.data().Sscore,
+                });
+              }
+            });
+          });
+        } else if(search_name == "depress" || "ซึมเศร้า") {
+          await assessmentListRef.get().then((snapshot) => {
+            snapshot.forEach((doc) => {
+              if (doc.data().type == "depress") {
+                console.log("depress");
+                assessmentList.push({
+                  assessmentID: doc.data().assessmentID,
+                type: doc.data().type,
+                timestamp: doc.data().timestamp,
+                status: doc.data().status,
+                score: doc.data().score,
+                });
+              }
+            });
           });
         }
+      }
+
+    } else {
+      await assessmentListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().type == "dass") {
+            console.log("dass");
+            assessmentList.push({
+              assessmentID: doc.data().assessmentID,
+              type: doc.data().type,
+              timestamp: doc.data().timestamp,
+              status: doc.data().status,
+              Ascore: doc.data().Ascore,
+              Dscore: doc.data().Dscore,
+              Sscore: doc.data().Sscore,
+            });
+          } else if (doc.data().type == "depress") {
+            console.log("depress");
+            assessmentList.push({
+              assessmentID: doc.data().assessmentID,
+              type: doc.data().type,
+              timestamp: doc.data().timestamp,
+              status: doc.data().status,
+              score: doc.data().score,
+            });
+          }
+        });
       });
-    });
+    }
     console.log(assessmentList);
     res.render("desktop/all_assessment", {
       contactlists,
@@ -320,18 +422,91 @@ router.get("/:userID/chat", async (req, res, next) => {
       .doc(getUserID)
       .collection("message")
       .orderBy("timestamp", "desc");
+
+    const search_name = req.query.search;
+    const filter = req.query.filter;
+    const chatList_temp = [];
     const chatList = [];
 
-    await chatListRef.get().then((snapshot) => {
-      snapshot.forEach((doc) => {
-        chatList.push({
-          messageID: doc.data().messageID,
-          emotion: doc.data().emotion,
-          timestamp: doc.data().timestamp,
-          content: doc.data().content,
+    if (search_name != null && filter != null) {
+      if (filter == "chat") {
+        await chatListRef.get().then((snapshot) => {
+          snapshot.forEach((doc) => {
+            chatList_temp.push({
+              messageID: doc.data().messageID,
+              emotion: doc.data().emotion,
+              timestamp: doc.data().timestamp,
+              content: doc.data().content,
+            });
+          });
+        });
+        let i = 0;
+
+        await chatListRef.get().then((snapshot) => {
+          snapshot.forEach((doc) => {
+            console.log(chatList_temp[i].content.toLowerCase())
+            console.log(chatList_temp[i].content.toLowerCase().includes(search_name.toLowerCase()))
+            i++;
+            if (chatList_temp[i - 1].content.toLowerCase().includes(search_name.toLowerCase())) {
+              chatList.push({
+                messageID: doc.data().messageID,
+                emotion: doc.data().emotion,
+                timestamp: doc.data().timestamp,
+                content: doc.data().content,
+              });
+            }
+          });
+        });
+      } else {
+        let emotion = ""
+        if (search_name.includes("neg")) {
+          emotion = "-1"
+        } else if (search_name.includes("pos")) {
+          emotion = "1"
+        } else {
+          emotion = "0"
+        }
+        console.log(emotion)
+        await chatListRef.get().then((snapshot) => {
+          snapshot.forEach((doc) => {
+            chatList_temp.push({
+              messageID: doc.data().messageID,
+              emotion: doc.data().emotion,
+              timestamp: doc.data().timestamp,
+              content: doc.data().content,
+            });
+          });
+        });
+        let i = 0;
+
+        await chatListRef.get().then((snapshot) => {
+          snapshot.forEach((doc) => {
+            console.log(chatList_temp[i].emotion.toLowerCase())
+            console.log(chatList_temp[i].emotion.toLowerCase() == emotion)
+            i++;
+            if (chatList_temp[i - 1].emotion.toLowerCase().toLowerCase() == emotion) {
+              chatList.push({
+                messageID: doc.data().messageID,
+                emotion: doc.data().emotion,
+                timestamp: doc.data().timestamp,
+                content: doc.data().content,
+              });
+            }
+          });
+        });
+      }
+    } else {
+      await chatListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          chatList.push({
+            messageID: doc.data().messageID,
+            emotion: doc.data().emotion,
+            timestamp: doc.data().timestamp,
+            content: doc.data().content,
+          });
         });
       });
-    });
+    }
 
     res.render("desktop/all_chat", {
       contactlists,
