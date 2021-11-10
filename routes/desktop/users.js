@@ -55,6 +55,29 @@ router.get("/", async (req, res, next) => {
 //* เข้าหน้า User Profile
 router.get("/:userID", async (req, res, next) => {
   try {
+    const getUserID = req.params.userID;
+    const line = require("@line/bot-sdk");
+    let urlPic = "";
+    let lineName = "";
+    const client = new line.Client({
+      channelAccessToken:
+        "9UwRYnrTQskyPOTIuEj0gv8d6YX8LPpKkh2JYOE1KqEDvHWXbXGJhFOHbBl+Ynuv5CUcBne57zh3QKNLBbHvEiYkSksux4jAGSuGwswbTSvKvBVQ88IznUuHBoBaheC56eclrcNUP7Fxw0jbHGCF/wdB04t89/1O/w1cDnyilFU=",
+    });
+
+    await client
+      .getProfile(getUserID)
+      .then((profile) => {
+        lineName = profile.displayName;
+        urlPic = profile.pictureUrl;
+      })
+      .catch((err) => {
+        // error handling
+      });
+    const updateProfile = db.collection("User").doc(getUserID);
+    const response = await updateProfile.update({
+      lineName: lineName,
+    });
+
     const contactListRef = db.collection("User");
     const contactlists = [];
 
@@ -71,7 +94,6 @@ router.get("/:userID", async (req, res, next) => {
 
     const profileListRef = db.collection("User");
     const profileList = [];
-    const getUserID = req.params.userID;
 
     await profileListRef.get().then((snapshot) => {
       snapshot.forEach((doc) => {
@@ -139,6 +161,7 @@ router.get("/:userID", async (req, res, next) => {
       emotionList,
       timeList,
       chartList,
+      urlPic,
     });
   } catch (error) {
     console.log(error);

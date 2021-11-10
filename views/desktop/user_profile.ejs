@@ -53,7 +53,11 @@
                             <table style="width: 100%;">
                                 <tr>
                                     <td rowspan="4" style="text-align: center;width: 30%;">
-                                        <img src="/images/ProfilePic.jpg" class="profile_crop">
+                                        <% if(urlPic!=""){ %>
+                                            <img src="<%= urlPic%>" class="profile_crop">
+                                        <% }else if(urlPic==""){ %>
+                                            <img src="/images/user.png" class="profile_crop">
+                                        <% } %>
                                     </td>
                                     <td style="width: 15%;" class="data_head">Fullname : </td>
                                     <td>
