@@ -12,7 +12,6 @@ router.get("/", async (req, res, next) => {
     const contactListRef = db.collection("User");
     const contactlists = [];
 
-
     await contactListRef.get().then((snapshot) => {
       snapshot.forEach((doc) => {
         if (doc.data().nickName != null && doc.data().nickName != "") {
@@ -206,6 +205,50 @@ router.get("/:userID/analytic", async (req, res, next) => {
       });
     });
 
+    const chartListRef = await db
+      .collection("User")
+      .doc(getUserID)
+      .collection("message")
+      .orderBy("timestamp", "asc");
+    const chartList = [];
+
+    await chartListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        chartList.push({
+          emotion: doc.data().emotion,
+          timestamp: doc.data().timestamp,
+        });
+      });
+    });
+
+    const timeList = [];
+    const emotionList = [];
+    let scoreEmotion = 0;
+    let countIndexList = 0;
+    for (let L = 0; L < chartList.length; L++) {
+      if (L == 0) {
+        timeList[0] = chartList[0];
+        scoreEmotion = Number(chartList[0].emotion);
+        emotionList[0] = scoreEmotion;
+      } else if (L != 0) {
+        if (
+          chartList[L - 1].timestamp.toDate().toDateString() !=
+          chartList[L].timestamp.toDate().toDateString()
+        ) {
+          countIndexList++;
+          timeList[countIndexList] = chartList[L];
+          scoreEmotion = Number(chartList[L].emotion);
+          emotionList[countIndexList] = scoreEmotion;
+        } else if (
+          chartList[L - 1].timestamp.toDate().toDateString() ==
+          chartList[L].timestamp.toDate().toDateString()
+        ) {
+          scoreEmotion = scoreEmotion + Number(chartList[L].emotion);
+          emotionList[countIndexList] = scoreEmotion;
+        }
+      }
+    }
+    
     const chatListRef = await db
       .collection("User")
       .doc(getUserID)
@@ -230,6 +273,9 @@ router.get("/:userID/analytic", async (req, res, next) => {
       getUserID,
       assessmentList,
       chatList,
+      chartList,
+      timeList,
+      emotionList,
     });
   } catch (error) {
     console.log(error);
@@ -265,7 +311,7 @@ router.get("/:userID/assessment", async (req, res, next) => {
     const assessmentList_temp = [];
     const assessmentList = [];
 
-    if ((search_name != null && filter != null)) {
+    if (search_name != null && filter != null) {
       if (filter == "state") {
         await assessmentListRef.get().then((snapshot) => {
           snapshot.forEach((doc) => {
@@ -297,32 +343,36 @@ router.get("/:userID/assessment", async (req, res, next) => {
 
         await assessmentListRef.get().then((snapshot) => {
           snapshot.forEach((doc) => {
-            console.log(assessmentList_temp[i].status.toLowerCase())
-            console.log(assessmentList_temp[i].status.toLowerCase() == search_name)
+            console.log(assessmentList_temp[i].status.toLowerCase());
+            console.log(
+              assessmentList_temp[i].status.toLowerCase() == search_name
+            );
             i++;
-            if(assessmentList_temp[i-1].status.toLowerCase() == search_name){
-            if (doc.data().type == "dass") {
-              console.log("dass");
-              assessmentList.push({
-                assessmentID: doc.data().assessmentID,
-                type: doc.data().type,
-                timestamp: doc.data().timestamp,
-                status: doc.data().status,
-                Ascore: doc.data().Ascore,
-                Dscore: doc.data().Dscore,
-                Sscore: doc.data().Sscore,
-              });
-            } else if (doc.data().type == "depress") {
-              console.log("depress");
-              assessmentList.push({
-                assessmentID: doc.data().assessmentID,
-                type: doc.data().type,
-                timestamp: doc.data().timestamp,
-                status: doc.data().status,
-                score: doc.data().score,
-              });
+            if (
+              assessmentList_temp[i - 1].status.toLowerCase() == search_name
+            ) {
+              if (doc.data().type == "dass") {
+                console.log("dass");
+                assessmentList.push({
+                  assessmentID: doc.data().assessmentID,
+                  type: doc.data().type,
+                  timestamp: doc.data().timestamp,
+                  status: doc.data().status,
+                  Ascore: doc.data().Ascore,
+                  Dscore: doc.data().Dscore,
+                  Sscore: doc.data().Sscore,
+                });
+              } else if (doc.data().type == "depress") {
+                console.log("depress");
+                assessmentList.push({
+                  assessmentID: doc.data().assessmentID,
+                  type: doc.data().type,
+                  timestamp: doc.data().timestamp,
+                  status: doc.data().status,
+                  score: doc.data().score,
+                });
+              }
             }
-          }
           });
         });
       } else if (filter == "type") {
@@ -343,24 +393,23 @@ router.get("/:userID/assessment", async (req, res, next) => {
               }
             });
           });
-        } else if(search_name == "depress" || "ซึมเศร้า") {
+        } else if (search_name == "depress" || "ซึมเศร้า") {
           await assessmentListRef.get().then((snapshot) => {
             snapshot.forEach((doc) => {
               if (doc.data().type == "depress") {
                 console.log("depress");
                 assessmentList.push({
                   assessmentID: doc.data().assessmentID,
-                type: doc.data().type,
-                timestamp: doc.data().timestamp,
-                status: doc.data().status,
-                score: doc.data().score,
+                  type: doc.data().type,
+                  timestamp: doc.data().timestamp,
+                  status: doc.data().status,
+                  score: doc.data().score,
                 });
               }
             });
           });
         }
       }
-
     } else {
       await assessmentListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
@@ -444,10 +493,18 @@ router.get("/:userID/chat", async (req, res, next) => {
 
         await chatListRef.get().then((snapshot) => {
           snapshot.forEach((doc) => {
-            console.log(chatList_temp[i].content.toLowerCase())
-            console.log(chatList_temp[i].content.toLowerCase().includes(search_name.toLowerCase()))
+            console.log(chatList_temp[i].content.toLowerCase());
+            console.log(
+              chatList_temp[i].content
+                .toLowerCase()
+                .includes(search_name.toLowerCase())
+            );
             i++;
-            if (chatList_temp[i - 1].content.toLowerCase().includes(search_name.toLowerCase())) {
+            if (
+              chatList_temp[i - 1].content
+                .toLowerCase()
+                .includes(search_name.toLowerCase())
+            ) {
               chatList.push({
                 messageID: doc.data().messageID,
                 emotion: doc.data().emotion,
@@ -458,15 +515,15 @@ router.get("/:userID/chat", async (req, res, next) => {
           });
         });
       } else {
-        let emotion = ""
+        let emotion = "";
         if (search_name.includes("neg")) {
-          emotion = "-1"
+          emotion = "-1";
         } else if (search_name.includes("pos")) {
-          emotion = "1"
+          emotion = "1";
         } else {
-          emotion = "0"
+          emotion = "0";
         }
-        console.log(emotion)
+        console.log(emotion);
         await chatListRef.get().then((snapshot) => {
           snapshot.forEach((doc) => {
             chatList_temp.push({
@@ -481,10 +538,13 @@ router.get("/:userID/chat", async (req, res, next) => {
 
         await chatListRef.get().then((snapshot) => {
           snapshot.forEach((doc) => {
-            console.log(chatList_temp[i].emotion.toLowerCase())
-            console.log(chatList_temp[i].emotion.toLowerCase() == emotion)
+            console.log(chatList_temp[i].emotion.toLowerCase());
+            console.log(chatList_temp[i].emotion.toLowerCase() == emotion);
             i++;
-            if (chatList_temp[i - 1].emotion.toLowerCase().toLowerCase() == emotion) {
+            if (
+              chatList_temp[i - 1].emotion.toLowerCase().toLowerCase() ==
+              emotion
+            ) {
               chatList.push({
                 messageID: doc.data().messageID,
                 emotion: doc.data().emotion,
