@@ -88,10 +88,57 @@ router.get("/:userID", async (req, res, next) => {
       });
     });
 
+    const chartListRef = await db
+      .collection("User")
+      .doc(getUserID)
+      .collection("message")
+      .orderBy("timestamp", "asc");
+    const chartList = [];
+
+    await chartListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        chartList.push({
+          emotion: doc.data().emotion,
+          timestamp: doc.data().timestamp,
+        });
+      });
+    });
+
+    const timeList = [];
+    const emotionList = [];
+    let scoreEmotion = 0;
+    let countIndexList = 0;
+    for (let L = 0; L < chartList.length; L++) {
+      if (L == 0) {
+        timeList[0] = chartList[0];
+        scoreEmotion = Number(chartList[0].emotion);
+        emotionList[0] = scoreEmotion;
+      } else if (L != 0) {
+        if (
+          chartList[L - 1].timestamp.toDate().toDateString() !=
+          chartList[L].timestamp.toDate().toDateString()
+        ) {
+          countIndexList++;
+          timeList[countIndexList] = chartList[L];
+          scoreEmotion = Number(chartList[L].emotion);
+          emotionList[countIndexList] = scoreEmotion;
+        } else if (
+          chartList[L - 1].timestamp.toDate().toDateString() ==
+          chartList[L].timestamp.toDate().toDateString()
+        ) {
+          scoreEmotion = scoreEmotion + Number(chartList[L].emotion);
+          emotionList[countIndexList] = scoreEmotion;
+        }
+      }
+    }
+
     res.render("desktop/user_profile", {
       contactlists,
       profileList,
       getUserID,
+      emotionList,
+      timeList,
+      chartList,
     });
   } catch (error) {
     console.log(error);
@@ -248,7 +295,7 @@ router.get("/:userID/analytic", async (req, res, next) => {
         }
       }
     }
-    
+
     const chatListRef = await db
       .collection("User")
       .doc(getUserID)
