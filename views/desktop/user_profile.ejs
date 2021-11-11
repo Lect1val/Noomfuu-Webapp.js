@@ -125,6 +125,11 @@
                                                                     getUserID).lastName %>"></td>
                                                         </tr>
                                                         <tr>
+                                                            <td class="data_head">Nickname</td>
+                                                            <td style="width:75%"><input type="text" class="text_field" name="new_nickname"
+                                                                    value="<%= contactlists.find(el => el.userID === getUserID).nickName %>"></td>
+                                                        </tr>
+                                                        <tr>
                                                             <td class="data_head">Tel</td>
                                                             <td style="width:75%"><input type="text" name="new_tel"
                                                                     class="text_field shadow-sm" value="<%= profileList.find(el => el.userID ===
