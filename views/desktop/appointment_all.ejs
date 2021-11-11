@@ -61,7 +61,15 @@
                 font-size: 16px;
             }
 
-            
+            .modal-appoint {
+                background-color: #fefefe;
+                margin: 15% auto;
+                /* 15% from the top and centered */
+                padding: 20px;
+                border: 1px solid #888;
+                width: 60%;
+                /* Could be more or less, depending on screen size */
+            }
         </style>
 </head>
 
@@ -72,31 +80,20 @@
                 <%- include component/contactList%>
                     <div class="col-md-9">
                         <% include component/profileNav%>
-                            
-                            <div style="font-size: 32px; font-weight: 700; color: #6E89EA;"><%= contactlists.find(el => el.userID === getUserID).nickName %></div>
-                            <hr>
-                            
-                            <div id='loading'>loading...</div>
-                            <div id='calendar'></div>
 
-                            <!--download .ics button-->
-                            <div style="text-align: right; margin-top: 1%;">
-                                <form
-                                    action="https://calendar.google.com/calendar/ical/en.th%23holiday%40group.v.calendar.google.com/public/basic.ics">
-                                    <button class="download_ics" type="submit" value="sync">sync with your
-                                        calendar</button>
-                                </form>
+                            <div style="font-size: 32px; font-weight: 700; color: #6E89EA;">
+                                <%= contactlists.find(el=> el.userID === getUserID).nickName %>
                             </div>
+                            <hr>
 
                             <h1>Appointment</h1>
-                            <hr>
 
                             <!--Appointment row 1-->
                             <div class="row">
                                 <!--Appointment Card 1-->
                                 <div class="col-md-6">
                                     <a href="#">
-                                        <div class="card shadow-sm card_style">
+                                        <div class="card shadow-sm card_style" id="myBtn">
                                             <Table
                                                 style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
                                                 <tr>
@@ -115,11 +112,87 @@
                                             </Table>
                                         </div>
                                     </a>
+                                    <div id="myModal" class="modal">
+
+                                        <!-- Modal content -->
+                                        <div class="modal-appoint">
+                                            <span class="close">&times;</span>
+                                            <h3 style="text-align: center;">Edit Profile</h3>
+                                            <hr>
+                                            <form method="POST" action="" id="edit_profile">
+                                                <table style="width: 100%;">
+                                                    <tr>
+                                                        <td class="data_head">Appointment Date</td>
+                                                        <td style="width:75%"><input type="date"
+                                                                class="text_field shadow-sm" name="new_starttime"
+                                                                id="starttime" required value=""></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="data_head">Start Time</td>
+                                                        <td style="width:75%"><input type="time"
+                                                                class="text_field shadow-sm" name="new_starttime"
+                                                                id="starttime" required value=""></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="data_head">End Time</td>
+                                                        <td style="width:75%"><input type="time"
+                                                                class="text_field shadow-sm" name="new_endtime"
+                                                                id="endtime" required value=""></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="data_head">channel</td>
+                                                        <td style="width:75%">
+                                                            <select class="text_field shadow-sm" id="type"
+                                                                name="new_type">
+                                                                <option value="online">Online</option>
+                                                                <option value="onsite">On site ที่มหาวิทยาลัย</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <div class="d-grid gap-2" style="margin:3%;">
+                                                    <button type="submit" form="edit_profile"
+                                                        class="btn btn-outline-success">
+                                                        Save
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                        // Get the modal
+                                        var modal = document.getElementById("myModal");
+
+                                        // Get the button that opens the modal
+                                        var btn = document.getElementById("myBtn");
+
+                                        // Get the <span> element that closes the modal
+                                        var span = document.getElementsByClassName("close")[0];
+
+                                        // When the user clicks on the button, open the modal
+                                        btn.onclick = function () {
+                                            modal.style.display = "block";
+                                        }
+
+                                        // When the user clicks on <span> (x), close the modal
+                                        span.onclick = function () {
+                                            modal.style.display = "none";
+                                        }
+
+                                        // When the user clicks anywhere outside of the modal, close it
+                                        window.onclick = function (event) {
+                                            if (event.target == modal) {
+                                                modal.style.display = "none";
+                                            }
+                                        }
+
+                                    </script>
                                 </div>
                                 <!--Appointment Card 2-->
                                 <div class="col-md-6">
                                     <a href="#">
-                                        <div class="card shadow-sm card_style">
+                                        <div class="card shadow-sm card_style" id="myBtn">
                                             <Table
                                                 style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
                                                 <tr>
@@ -138,6 +211,87 @@
                                             </Table>
                                         </div>
                                     </a>
+                                    <div id="myModal" class="modal">
+
+                                        <!-- Modal content -->
+                                        <div class="modal-appoint">
+                                            <span class="close">&times;</span>
+                                            <h3 style="text-align: center;">Appointment Detail</h3>
+                                            <hr>
+                                            <form method="POST" action="" id="edit_profile">
+                                                <table style="width: 100%;">
+                                                    <tr>
+                                                        <td class="data_head">Appointment Date</td>
+                                                        <td style="width:75%"><input type="date"
+                                                                class="text_field shadow-sm" name="new_starttime"
+                                                                id="starttime" required value=""></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="data_head">Start Time</td>
+                                                        <td style="width:75%"><input type="time"
+                                                                class="text_field shadow-sm" name="new_starttime"
+                                                                id="starttime" required value=""></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="data_head">End Time</td>
+                                                        <td style="width:75%"><input type="time"
+                                                                class="text_field shadow-sm" name="new_endtime"
+                                                                id="endtime" required value=""></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="data_head">meeting link</td>
+                                                        <td style="width:75%"><input type="text" class="text_field shadow-sm" name="new_link"
+                                                                value=""></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="data_head">channel</td>
+                                                        <td style="width:75%">
+                                                            <select class="text_field shadow-sm" id="type"
+                                                                name="new_type">
+                                                                <option value="online">Online</option>
+                                                                <option value="onsite">On site ที่มหาวิทยาลัย</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <div class="d-grid gap-2" style="margin:3%;">
+                                                    <button type="submit" form="edit_profile"
+                                                        class="btn btn-outline-success">
+                                                        Save
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                        // Get the modal
+                                        var modal = document.getElementById("myModal");
+
+                                        // Get the button that opens the modal
+                                        var btn = document.getElementById("myBtn");
+
+                                        // Get the <span> element that closes the modal
+                                        var span = document.getElementsByClassName("close")[0];
+
+                                        // When the user clicks on the button, open the modal
+                                        btn.onclick = function () {
+                                            modal.style.display = "block";
+                                        }
+
+                                        // When the user clicks on <span> (x), close the modal
+                                        span.onclick = function () {
+                                            modal.style.display = "none";
+                                        }
+
+                                        // When the user clicks anywhere outside of the modal, close it
+                                        window.onclick = function (event) {
+                                            if (event.target == modal) {
+                                                modal.style.display = "none";
+                                            }
+                                        }
+
+                                    </script>
                                 </div>
                             </div>
                             <!--Ending of Appointment row 1-->
@@ -147,7 +301,7 @@
                                 <!--Appointment Card 3-->
                                 <div class="col-md-6">
                                     <a href="#">
-                                        <div class="card shadow-sm card_style">
+                                        <div class="card shadow-sm card_style" id="myBtn">
                                             <Table
                                                 style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
                                                 <tr>
@@ -160,7 +314,8 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="appoint_ongoing">On going</td>
-                                                    <td class="appoint_place" style="text-align: right;">ห้องพยาบาล อาคารเรียนรวม 2<br>
+                                                    <td class="appoint_place" style="text-align: right;">ห้องพยาบาล
+                                                        อาคารเรียนรวม 2<br>
                                                         มจธ. บางมด</td>
                                                 </tr>
                                             </Table>
@@ -169,6 +324,19 @@
                                 </div>
                             </div>
                             <!--Ending of Appointment row 2-->
+                            <hr>
+
+                            <div id='loading'>loading...</div>
+                            <div id='calendar'></div>
+
+                            <!--download .ics button-->
+                            <div style="text-align: right; margin-top: 1%;">
+                                <form
+                                    action="https://calendar.google.com/calendar/ical/en.th%23holiday%40group.v.calendar.google.com/public/basic.ics">
+                                    <button class="download_ics" type="submit" value="sync">sync with your
+                                        calendar</button>
+                                </form>
+                            </div>
 
                             <h1>Appointment History</h1>
                             <hr>
@@ -211,7 +379,8 @@
                                                     <td class="appoint_time">13:00 น.</td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="appoint_canceled" style="padding-top: 10px;">Canceled</td>
+                                                    <td class="appoint_canceled" style="padding-top: 10px;">Canceled
+                                                    </td>
                                                 </tr>
                                             </Table>
                                         </div>
@@ -220,9 +389,9 @@
                             </div>
                             <!--Ending of Appointment row 1-->
                     </div>
-                    
 
-                    
+
+
             </div>
 
         </div>
