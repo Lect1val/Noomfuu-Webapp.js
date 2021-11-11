@@ -31,13 +31,13 @@ router.get("/", async (req, res, next) => {
     const search_name = req.query.search;
 
     if (search_name != null) {
-      console.log(search_name)
+      console.log(search_name);
       await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
-          if (doc.data().nickName != null && doc.data().nickName != "") {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
             contactlists_temp.push({
               userID: doc.data().userID,
-              nickName: doc.data().nickName,
+              lineName: doc.data().lineName,
             });
           }
         });
@@ -46,32 +46,32 @@ router.get("/", async (req, res, next) => {
 
       await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
-          if (doc.data().nickName != null && doc.data().nickName != "") {
-            // console.log(contactlists_temp[i].nickName.toLowerCase())
-            // console.log(contactlists_temp[i].nickName.toLowerCase().includes(search_name.toLowerCase()))
+          if (doc.data().lineName != null && doc.data().lineName != "") {
             i++;
-            if(contactlists_temp[i-1].nickName.toLowerCase().includes(search_name.toLowerCase())){
-            contactlists.push({
-              userID: doc.data().userID,
-              nickName: doc.data().nickName,
-            });
-            
-          }
+            if (
+              contactlists_temp[i - 1].lineName
+                .toLowerCase()
+                .includes(search_name.toLowerCase())
+            ) {
+              contactlists.push({
+                userID: doc.data().userID,
+                lineName: doc.data().lineName,
+              });
+            }
           }
         });
       });
-      
+
       res.render("desktop/index", {
         contactlists,
       });
     } else {
-
       await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
-          if (doc.data().nickName != null && doc.data().nickName != "") {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
             contactlists.push({
               userID: doc.data().userID,
-              nickName: doc.data().nickName,
+              lineName: doc.data().lineName,
             });
           }
         });

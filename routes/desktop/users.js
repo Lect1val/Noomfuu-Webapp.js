@@ -33,20 +33,6 @@ router.get("/:userID", async (req, res, next) => {
       lineName: lineName,
     });
 
-    const contactListRef = db.collection("User");
-    const contactlists = [];
-
-    await contactListRef.get().then((snapshot) => {
-      snapshot.forEach((doc) => {
-        if (doc.data().nickName != null && doc.data().nickName != "") {
-          contactlists.push({
-            userID: doc.data().userID,
-            nickName: doc.data().nickName,
-          });
-        }
-      });
-    });
-
     const profileListRef = db.collection("User");
     const profileList = [];
 
@@ -109,15 +95,75 @@ router.get("/:userID", async (req, res, next) => {
       }
     }
 
-    res.render("desktop/user_profile", {
-      contactlists,
-      profileList,
-      getUserID,
-      emotionList,
-      timeList,
-      chartList,
-      urlPic,
-    });
+    const contactListRef = db.collection("User");
+    const contactlists_temp = [];
+    const contactlists = [];
+
+    const search_name = req.query.search;
+
+    if (search_name != null) {
+      console.log(search_name);
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists_temp.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+      let i = 0;
+
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            i++;
+            if (
+              contactlists_temp[i - 1].lineName
+                .toLowerCase()
+                .includes(search_name.toLowerCase())
+            ) {
+              contactlists.push({
+                userID: doc.data().userID,
+                lineName: doc.data().lineName,
+              });
+            }
+          }
+        });
+      });
+
+      res.render("desktop/user_profile", {
+        contactlists,
+        profileList,
+        getUserID,
+        emotionList,
+        timeList,
+        chartList,
+        urlPic,
+      });
+    } else {
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+
+      res.render("desktop/user_profile", {
+        contactlists,
+        profileList,
+        getUserID,
+        emotionList,
+        timeList,
+        chartList,
+        urlPic,
+      });
+    }
   } catch (error) {
     console.log(error);
   }
@@ -126,19 +172,6 @@ router.get("/:userID", async (req, res, next) => {
 //* แก้ไขข้อมูลในหน้า User Profile
 router.post("/:userID", async (req, res, next) => {
   try {
-    const contactListRef = db.collection("User");
-    const contactlists = [];
-
-    await contactListRef.get().then((snapshot) => {
-      snapshot.forEach((doc) => {
-        if (doc.data().nickName != null && doc.data().nickName != "") {
-          contactlists.push({
-            userID: doc.data().userID,
-            nickName: doc.data().nickName,
-          });
-        }
-      });
-    });
     const getUserID = req.params.userID;
     const newFirstName = req.body.new_firstName;
     const newLastName = req.body.new_lastName;
@@ -173,7 +206,59 @@ router.post("/:userID", async (req, res, next) => {
       });
     });
 
-    res.redirect("/profile/" + getUserID);
+    const contactListRef = db.collection("User");
+    const contactlists_temp = [];
+    const contactlists = [];
+
+    const search_name = req.query.search;
+
+    if (search_name != null) {
+      console.log(search_name);
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists_temp.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+      let i = 0;
+
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            i++;
+            if (
+              contactlists_temp[i - 1].lineName
+                .toLowerCase()
+                .includes(search_name.toLowerCase())
+            ) {
+              contactlists.push({
+                userID: doc.data().userID,
+                lineName: doc.data().lineName,
+              });
+            }
+          }
+        });
+      });
+
+      res.redirect("/profile/" + getUserID);
+    } else {
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+
+      res.redirect("/profile/" + getUserID);
+    }
   } catch (error) {
     console.log(error);
   }
@@ -182,19 +267,7 @@ router.post("/:userID", async (req, res, next) => {
 //* เข้าหน้า Analytic
 router.get("/:userID/analytic", async (req, res, next) => {
   try {
-    const contactListRef = db.collection("User");
-    const contactlists = [];
     const getUserID = req.params.userID;
-    await contactListRef.get().then((snapshot) => {
-      snapshot.forEach((doc) => {
-        if (doc.data().nickName != null && doc.data().nickName != "") {
-          contactlists.push({
-            userID: doc.data().userID,
-            nickName: doc.data().nickName,
-          });
-        }
-      });
-    });
 
     const assessmentListRef = await db
       .collection("User")
@@ -293,15 +366,75 @@ router.get("/:userID/analytic", async (req, res, next) => {
       });
     });
 
-    res.render("desktop/feeling_analytic", {
-      contactlists,
-      getUserID,
-      assessmentList,
-      chatList,
-      chartList,
-      timeList,
-      emotionList,
-    });
+    const contactListRef = db.collection("User");
+    const contactlists_temp = [];
+    const contactlists = [];
+
+    const search_name = req.query.search;
+
+    if (search_name != null) {
+      console.log(search_name);
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists_temp.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+      let i = 0;
+
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            i++;
+            if (
+              contactlists_temp[i - 1].lineName
+                .toLowerCase()
+                .includes(search_name.toLowerCase())
+            ) {
+              contactlists.push({
+                userID: doc.data().userID,
+                lineName: doc.data().lineName,
+              });
+            }
+          }
+        });
+      });
+
+      res.render("desktop/feeling_analytic", {
+        contactlists,
+        getUserID,
+        assessmentList,
+        chatList,
+        chartList,
+        timeList,
+        emotionList,
+      });
+    } else {
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+
+      res.render("desktop/feeling_analytic", {
+        contactlists,
+        getUserID,
+        assessmentList,
+        chatList,
+        chartList,
+        timeList,
+        emotionList,
+      });
+    }
   } catch (error) {
     console.log(error);
   }
@@ -310,20 +443,7 @@ router.get("/:userID/analytic", async (req, res, next) => {
 //* เข้าหน้า ALl Assessment
 router.get("/:userID/assessment", async (req, res, next) => {
   try {
-    const contactListRef = db.collection("User");
-    const contactlists = [];
     const getUserID = req.params.userID;
-
-    await contactListRef.get().then((snapshot) => {
-      snapshot.forEach((doc) => {
-        if (doc.data().nickName != null && doc.data().nickName != "") {
-          contactlists.push({
-            userID: doc.data().userID,
-            nickName: doc.data().nickName,
-          });
-        }
-      });
-    });
 
     const assessmentListRef = await db
       .collection("User")
@@ -331,12 +451,12 @@ router.get("/:userID/assessment", async (req, res, next) => {
       .collection("assessment")
       .orderBy("timestamp", "desc");
 
-    const search_name = req.query.search;
+    const search_assessment_name = req.query.searchassessment;
     const filter = req.query.filter;
     const assessmentList_temp = [];
     const assessmentList = [];
 
-    if (search_name != null && filter != null) {
+    if (search_assessment_name != null && filter != null) {
       if (filter == "state") {
         await assessmentListRef.get().then((snapshot) => {
           snapshot.forEach((doc) => {
@@ -370,11 +490,13 @@ router.get("/:userID/assessment", async (req, res, next) => {
           snapshot.forEach((doc) => {
             console.log(assessmentList_temp[i].status.toLowerCase());
             console.log(
-              assessmentList_temp[i].status.toLowerCase() == search_name
+              assessmentList_temp[i].status.toLowerCase() ==
+                search_assessment_name
             );
             i++;
             if (
-              assessmentList_temp[i - 1].status.toLowerCase() == search_name
+              assessmentList_temp[i - 1].status.toLowerCase() ==
+              search_assessment_name
             ) {
               if (doc.data().type == "dass") {
                 console.log("dass");
@@ -401,7 +523,7 @@ router.get("/:userID/assessment", async (req, res, next) => {
           });
         });
       } else if (filter == "type") {
-        if (search_name == "dass") {
+        if (search_assessment_name == "dass") {
           await assessmentListRef.get().then((snapshot) => {
             snapshot.forEach((doc) => {
               if (doc.data().type == "dass") {
@@ -418,7 +540,7 @@ router.get("/:userID/assessment", async (req, res, next) => {
               }
             });
           });
-        } else if (search_name == "depress" || "ซึมเศร้า") {
+        } else if (search_assessment_name == "depress" || "ซึมเศร้า") {
           await assessmentListRef.get().then((snapshot) => {
             snapshot.forEach((doc) => {
               if (doc.data().type == "depress") {
@@ -462,12 +584,68 @@ router.get("/:userID/assessment", async (req, res, next) => {
         });
       });
     }
-    console.log(assessmentList);
-    res.render("desktop/all_assessment", {
-      contactlists,
-      getUserID,
-      assessmentList,
-    });
+
+    const contactListRef = db.collection("User");
+    const contactlists_temp = [];
+    const contactlists = [];
+
+    const search_name = req.query.search;
+
+    if (search_name != null) {
+      console.log(search_name);
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists_temp.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+      let i = 0;
+
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            i++;
+            if (
+              contactlists_temp[i - 1].lineName
+                .toLowerCase()
+                .includes(search_name.toLowerCase())
+            ) {
+              contactlists.push({
+                userID: doc.data().userID,
+                lineName: doc.data().lineName,
+              });
+            }
+          }
+        });
+      });
+
+      res.render("desktop/all_assessment", {
+        contactlists,
+        getUserID,
+        assessmentList,
+      });
+    } else {
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+
+      res.render("desktop/all_assessment", {
+        contactlists,
+        getUserID,
+        assessmentList,
+      });
+    }
   } catch (error) {
     console.log(error);
   }
@@ -476,33 +654,19 @@ router.get("/:userID/assessment", async (req, res, next) => {
 //* เข้าหน้า All Chat History
 router.get("/:userID/chat", async (req, res, next) => {
   try {
-    const contactListRef = db.collection("User");
-    const contactlists = [];
     const getUserID = req.params.userID;
-
-    await contactListRef.get().then((snapshot) => {
-      snapshot.forEach((doc) => {
-        if (doc.data().nickName != null && doc.data().nickName != "") {
-          contactlists.push({
-            userID: doc.data().userID,
-            nickName: doc.data().nickName,
-          });
-        }
-      });
-    });
-
     const chatListRef = await db
       .collection("User")
       .doc(getUserID)
       .collection("message")
       .orderBy("timestamp", "desc");
 
-    const search_name = req.query.search;
+    const search_chat_name = req.query.searchchat;
     const filter = req.query.filter;
     const chatList_temp = [];
     const chatList = [];
 
-    if (search_name != null && filter != null) {
+    if (search_chat_name != null && filter != null) {
       if (filter == "chat") {
         await chatListRef.get().then((snapshot) => {
           snapshot.forEach((doc) => {
@@ -522,13 +686,13 @@ router.get("/:userID/chat", async (req, res, next) => {
             console.log(
               chatList_temp[i].content
                 .toLowerCase()
-                .includes(search_name.toLowerCase())
+                .includes(search_chat_name.toLowerCase())
             );
             i++;
             if (
               chatList_temp[i - 1].content
                 .toLowerCase()
-                .includes(search_name.toLowerCase())
+                .includes(search_chat_name.toLowerCase())
             ) {
               chatList.push({
                 messageID: doc.data().messageID,
@@ -541,9 +705,9 @@ router.get("/:userID/chat", async (req, res, next) => {
         });
       } else {
         let emotion = "";
-        if (search_name.includes("neg")) {
+        if (search_chat_name.includes("neg")) {
           emotion = "-1";
-        } else if (search_name.includes("pos")) {
+        } else if (search_chat_name.includes("pos")) {
           emotion = "1";
         } else {
           emotion = "0";
@@ -593,11 +757,67 @@ router.get("/:userID/chat", async (req, res, next) => {
       });
     }
 
-    res.render("desktop/all_chat", {
-      contactlists,
-      getUserID,
-      chatList,
-    });
+    const contactListRef = db.collection("User");
+    const contactlists_temp = [];
+    const contactlists = [];
+
+    const search_name = req.query.search;
+
+    if (search_name != null) {
+      console.log(search_name);
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists_temp.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+      let i = 0;
+
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            i++;
+            if (
+              contactlists_temp[i - 1].lineName
+                .toLowerCase()
+                .includes(search_name.toLowerCase())
+            ) {
+              contactlists.push({
+                userID: doc.data().userID,
+                lineName: doc.data().lineName,
+              });
+            }
+          }
+        });
+      });
+
+      res.render("desktop/all_chat", {
+        contactlists,
+        getUserID,
+        chatList,
+      });
+    } else {
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+
+      res.render("desktop/all_chat", {
+        contactlists,
+        getUserID,
+        chatList,
+      });
+    }
   } catch (error) {
     console.log(error);
   }
@@ -606,24 +826,67 @@ router.get("/:userID/chat", async (req, res, next) => {
 //* เข้าหน้า Appointment
 router.get("/:userID/appointment", async (req, res, next) => {
   try {
-    const contactListRef = db.collection("User");
-    const contactlists = [];
     const getUserID = req.params.userID;
-    await contactListRef.get().then((snapshot) => {
-      snapshot.forEach((doc) => {
-        if (doc.data().nickName != null && doc.data().nickName != "") {
-          contactlists.push({
-            userID: doc.data().userID,
-            nickName: doc.data().nickName,
-          });
-        }
-      });
-    });
 
-    res.render("desktop/appointment_all", {
-      contactlists,
-      getUserID,
-    });
+    const contactListRef = db.collection("User");
+    const contactlists_temp = [];
+    const contactlists = [];
+
+    const search_name = req.query.search;
+
+    if (search_name != null) {
+      console.log(search_name);
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists_temp.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+      let i = 0;
+
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            i++;
+            if (
+              contactlists_temp[i - 1].lineName
+                .toLowerCase()
+                .includes(search_name.toLowerCase())
+            ) {
+              contactlists.push({
+                userID: doc.data().userID,
+                lineName: doc.data().lineName,
+              });
+            }
+          }
+        });
+      });
+
+      res.render("desktop/appointment_all", {
+        contactlists,
+        getUserID,
+      });
+    } else {
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+
+      res.render("desktop/appointment_all", {
+        contactlists,
+        getUserID,
+      });
+    }
   } catch (error) {
     console.log(error);
   }
@@ -632,19 +895,7 @@ router.get("/:userID/appointment", async (req, res, next) => {
 //* เข้าหน้า All Note
 router.get("/:userID/note", async (req, res, next) => {
   try {
-    const contactListRef = db.collection("User");
-    const contactlists = [];
     const getUserID = req.params.userID;
-    await contactListRef.get().then((snapshot) => {
-      snapshot.forEach((doc) => {
-        if (doc.data().nickName != null && doc.data().nickName != "") {
-          contactlists.push({
-            userID: doc.data().userID,
-            nickName: doc.data().nickName,
-          });
-        }
-      });
-    });
 
     const noteListRef = db.collection("User").doc(getUserID).collection("note");
     const noteLists = [];
@@ -659,11 +910,67 @@ router.get("/:userID/note", async (req, res, next) => {
       });
     });
 
-    res.render("desktop/all_note", {
-      contactlists,
-      noteLists,
-      getUserID,
-    });
+    const contactListRef = db.collection("User");
+    const contactlists_temp = [];
+    const contactlists = [];
+
+    const search_name = req.query.search;
+
+    if (search_name != null) {
+      console.log(search_name);
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists_temp.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+      let i = 0;
+
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            i++;
+            if (
+              contactlists_temp[i - 1].lineName
+                .toLowerCase()
+                .includes(search_name.toLowerCase())
+            ) {
+              contactlists.push({
+                userID: doc.data().userID,
+                lineName: doc.data().lineName,
+              });
+            }
+          }
+        });
+      });
+
+      res.render("desktop/all_note", {
+        contactlists,
+        noteLists,
+        getUserID,
+      });
+    } else {
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+
+      res.render("desktop/all_note", {
+        contactlists,
+        noteLists,
+        getUserID,
+      });
+    }
   } catch (error) {
     console.log(error);
   }
@@ -672,22 +979,8 @@ router.get("/:userID/note", async (req, res, next) => {
 //* เข้าหน้าเฉพาะ Note
 router.get("/:userID/note/:noteID/content", async (req, res, next) => {
   try {
-    const contactListRef = db.collection("User");
-    const contactlists = [];
     const getUserID = req.params.userID;
     const getNoteID = req.params.noteID;
-    await contactListRef.get().then((snapshot) => {
-      snapshot.forEach((doc) => {
-        if (doc.data().nickName != null && doc.data().nickName != "") {
-          contactlists.push({
-            userID: doc.data().userID,
-            nickName: doc.data().nickName,
-            firstName: doc.data().firstName,
-            lastName: doc.data().lastName,
-          });
-        }
-      });
-    });
 
     const noteListRef = db.collection("User").doc(getUserID).collection("note");
     const noteLists = [];
@@ -702,15 +995,70 @@ router.get("/:userID/note/:noteID/content", async (req, res, next) => {
         });
       });
     });
-    // console.log(contactlists);
-    // console.log(noteLists);
 
-    res.render("desktop/note_content", {
-      contactlists,
-      noteLists,
-      getUserID,
-      getNoteID,
-    });
+    const contactListRef = db.collection("User");
+    const contactlists_temp = [];
+    const contactlists = [];
+
+    const search_name = req.query.search;
+
+    if (search_name != null) {
+      console.log(search_name);
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists_temp.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+      let i = 0;
+
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            i++;
+            if (
+              contactlists_temp[i - 1].lineName
+                .toLowerCase()
+                .includes(search_name.toLowerCase())
+            ) {
+              contactlists.push({
+                userID: doc.data().userID,
+                lineName: doc.data().lineName,
+              });
+            }
+          }
+        });
+      });
+
+      res.render("desktop/note_content", {
+        contactlists,
+        noteLists,
+        getUserID,
+        getNoteID,
+      });
+    } else {
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+
+      res.render("desktop/note_content", {
+        contactlists,
+        noteLists,
+        getUserID,
+        getNoteID,
+      });
+    }
   } catch (error) {
     console.log(error);
   }
@@ -719,22 +1067,8 @@ router.get("/:userID/note/:noteID/content", async (req, res, next) => {
 //* เข้าหน้าแก้ไข Note
 router.get("/:userID/note/:noteID/content/edit", async (req, res, next) => {
   try {
-    const contactListRef = db.collection("User");
-    const contactlists = [];
     const getUserID = req.params.userID;
     const getNoteID = req.params.noteID;
-    await contactListRef.get().then((snapshot) => {
-      snapshot.forEach((doc) => {
-        if (doc.data().nickName != null && doc.data().nickName != "") {
-          contactlists.push({
-            userID: doc.data().userID,
-            nickName: doc.data().nickName,
-            firstName: doc.data().firstName,
-            lastName: doc.data().lastName,
-          });
-        }
-      });
-    });
 
     const noteListRef = db.collection("User").doc(getUserID).collection("note");
     const noteLists = [];
@@ -750,12 +1084,69 @@ router.get("/:userID/note/:noteID/content/edit", async (req, res, next) => {
       });
     });
 
-    res.render("desktop/note_edit", {
-      contactlists,
-      noteLists,
-      getUserID,
-      getNoteID,
-    });
+    const contactListRef = db.collection("User");
+    const contactlists_temp = [];
+    const contactlists = [];
+
+    const search_name = req.query.search;
+
+    if (search_name != null) {
+      console.log(search_name);
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists_temp.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+      let i = 0;
+
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            i++;
+            if (
+              contactlists_temp[i - 1].lineName
+                .toLowerCase()
+                .includes(search_name.toLowerCase())
+            ) {
+              contactlists.push({
+                userID: doc.data().userID,
+                lineName: doc.data().lineName,
+              });
+            }
+          }
+        });
+      });
+
+      res.render("desktop/note_edit", {
+        contactlists,
+        noteLists,
+        getUserID,
+        getNoteID,
+      });
+    } else {
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+
+      res.render("desktop/note_edit", {
+        contactlists,
+        noteLists,
+        getUserID,
+        getNoteID,
+      });
+    }
   } catch (error) {
     console.log(error);
   }
@@ -764,22 +1155,8 @@ router.get("/:userID/note/:noteID/content/edit", async (req, res, next) => {
 //* แก้ไขข้อมูล Note
 router.post("/:userID/note/:noteID/content", async (req, res, next) => {
   try {
-    const contactListRef = db.collection("User");
-    const contactlists = [];
     const getUserID = req.params.userID;
     const getNoteID = req.params.noteID;
-    await contactListRef.get().then((snapshot) => {
-      snapshot.forEach((doc) => {
-        if (doc.data().nickName != null && doc.data().nickName != "") {
-          contactlists.push({
-            userID: doc.data().userID,
-            nickName: doc.data().nickName,
-            firstName: doc.data().firstName,
-            lastName: doc.data().lastName,
-          });
-        }
-      });
-    });
 
     const checkSave = req.body.saveEdit;
     // console.log(checkSave);
@@ -813,12 +1190,69 @@ router.post("/:userID/note/:noteID/content", async (req, res, next) => {
       });
     });
 
-    res.render("desktop/note_content", {
-      contactlists,
-      noteLists,
-      getUserID,
-      getNoteID,
-    });
+    const contactListRef = db.collection("User");
+    const contactlists_temp = [];
+    const contactlists = [];
+
+    const search_name = req.query.search;
+
+    if (search_name != null) {
+      console.log(search_name);
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists_temp.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+      let i = 0;
+
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            i++;
+            if (
+              contactlists_temp[i - 1].lineName
+                .toLowerCase()
+                .includes(search_name.toLowerCase())
+            ) {
+              contactlists.push({
+                userID: doc.data().userID,
+                lineName: doc.data().lineName,
+              });
+            }
+          }
+        });
+      });
+
+      res.render("desktop/note_content", {
+        contactlists,
+        noteLists,
+        getUserID,
+        getNoteID,
+      });
+    } else {
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+
+      res.render("desktop/note_content", {
+        contactlists,
+        noteLists,
+        getUserID,
+        getNoteID,
+      });
+    }
   } catch (error) {
     console.log(error);
   }
@@ -827,22 +1261,8 @@ router.post("/:userID/note/:noteID/content", async (req, res, next) => {
 //* ลบ Note
 router.get("/:userID/note/:noteID/delete", async (req, res, next) => {
   try {
-    const contactListRef = db.collection("User");
-    const contactlists = [];
     const getUserID = req.params.userID;
     const getNoteID = req.params.noteID;
-    await contactListRef.get().then((snapshot) => {
-      snapshot.forEach((doc) => {
-        if (doc.data().nickName != null && doc.data().nickName != "") {
-          contactlists.push({
-            userID: doc.data().userID,
-            nickName: doc.data().nickName,
-            firstName: doc.data().firstName,
-            lastName: doc.data().lastName,
-          });
-        }
-      });
-    });
 
     const deleteContent = db
       .collection("User")
@@ -865,11 +1285,67 @@ router.get("/:userID/note/:noteID/delete", async (req, res, next) => {
       });
     });
 
-    res.render("desktop/all_note", {
-      contactlists,
-      noteLists,
-      getUserID,
-    });
+    const contactListRef = db.collection("User");
+    const contactlists_temp = [];
+    const contactlists = [];
+
+    const search_name = req.query.search;
+
+    if (search_name != null) {
+      console.log(search_name);
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists_temp.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+      let i = 0;
+
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            i++;
+            if (
+              contactlists_temp[i - 1].lineName
+                .toLowerCase()
+                .includes(search_name.toLowerCase())
+            ) {
+              contactlists.push({
+                userID: doc.data().userID,
+                lineName: doc.data().lineName,
+              });
+            }
+          }
+        });
+      });
+
+      res.render("desktop/all_note", {
+        contactlists,
+        noteLists,
+        getUserID,
+      });
+    } else {
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+
+      res.render("desktop/all_note", {
+        contactlists,
+        noteLists,
+        getUserID,
+      });
+    }
   } catch (error) {
     console.log(error);
   }
@@ -878,25 +1354,66 @@ router.get("/:userID/note/:noteID/delete", async (req, res, next) => {
 //* เข้าหน้าเพิ่ม Note
 router.get("/:userID/note/add", async (req, res, next) => {
   try {
-    const contactListRef = db.collection("User");
-    const contactlists = [];
     const getUserID = req.params.userID;
+    const contactListRef = db.collection("User");
+    const contactlists_temp = [];
+    const contactlists = [];
 
-    await contactListRef.get().then((snapshot) => {
-      snapshot.forEach((doc) => {
-        if (doc.data().nickName != null && doc.data().nickName != "") {
-          contactlists.push({
-            userID: doc.data().userID,
-            nickName: doc.data().nickName,
-          });
-        }
+    const search_name = req.query.search;
+
+    if (search_name != null) {
+      console.log(search_name);
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists_temp.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
       });
-    });
+      let i = 0;
 
-    res.render("desktop/note_add", {
-      contactlists,
-      getUserID,
-    });
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            i++;
+            if (
+              contactlists_temp[i - 1].lineName
+                .toLowerCase()
+                .includes(search_name.toLowerCase())
+            ) {
+              contactlists.push({
+                userID: doc.data().userID,
+                lineName: doc.data().lineName,
+              });
+            }
+          }
+        });
+      });
+
+      res.render("desktop/note_add", {
+        contactlists,
+        getUserID,
+      });
+    } else {
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+
+      res.render("desktop/note_add", {
+        contactlists,
+        getUserID,
+      });
+    }
   } catch (error) {
     console.log(error);
   }
@@ -905,31 +1422,10 @@ router.get("/:userID/note/add", async (req, res, next) => {
 //* เพิ่ม Note
 router.post("/:userID/note/add", async (req, res, next) => {
   try {
-    const contactListRef = db.collection("User");
-    const contactlists = [];
     const getUserID = req.params.userID;
-
-    await contactListRef.get().then((snapshot) => {
-      snapshot.forEach((doc) => {
-        if (doc.data().nickName != null && doc.data().nickName != "") {
-          contactlists.push({
-            userID: doc.data().userID,
-            nickName: doc.data().nickName,
-          });
-        }
-      });
-    });
 
     const createContent = req.body.create_content;
     const createHeader = req.body.create_header;
-
-    // const oldNoteID = await db
-    //   .collection("User")
-    //   .doc(getUserID)
-    //   .collection("note")
-    //   .get()
-    //   .then((snapshot) => snapshot.size);
-    // let newNoteID = (oldNoteID + 1).toString();
 
     const oldNote = [];
     const oldNoteID = await db
@@ -999,11 +1495,67 @@ router.post("/:userID/note/add", async (req, res, next) => {
       });
     });
 
-    res.render("desktop/all_note", {
-      contactlists,
-      noteLists,
-      getUserID,
-    });
+    const contactListRef = db.collection("User");
+    const contactlists_temp = [];
+    const contactlists = [];
+
+    const search_name = req.query.search;
+
+    if (search_name != null) {
+      console.log(search_name);
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists_temp.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+      let i = 0;
+
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            i++;
+            if (
+              contactlists_temp[i - 1].lineName
+                .toLowerCase()
+                .includes(search_name.toLowerCase())
+            ) {
+              contactlists.push({
+                userID: doc.data().userID,
+                lineName: doc.data().lineName,
+              });
+            }
+          }
+        });
+      });
+
+      res.render("desktop/all_note", {
+        contactlists,
+        noteLists,
+        getUserID,
+      });
+    } else {
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+
+      res.render("desktop/all_note", {
+        contactlists,
+        noteLists,
+        getUserID,
+      });
+    }
   } catch (error) {
     console.log(error);
   }
