@@ -52,7 +52,7 @@
                             
                             <table style="width: 100%;">
                                 <tr>
-                                    <td rowspan="4" style="text-align: center;width: 30%;">
+                                    <td rowspan="5" style="text-align: center;width: 30%;">
                                         <% if(urlPic!=""){ %>
                                             <img src="<%= urlPic%>" class="profile_crop">
                                         <% }else if(urlPic==""){ %>
@@ -63,6 +63,12 @@
                                     <td>
                                         <div class="textbox shadow-sm"> <%= profileList.find(el => el.userID === getUserID).firstName %> <%= profileList.find(el => el.userID ===
                                             getUserID).lastName %></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="data_head">Nickname : </td>
+                                    <td>
+                                        <div class="textbox shadow-sm"><%= contactlists.find(el => el.userID === getUserID).nickName %></div>
                                     </td>
                                 </tr>
                                 <tr>
