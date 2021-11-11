@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const { db } = require("../../Database/database");
+const { db, FieldValue } = require("../../Database/database");
 //const { calendar } = require("../../controller/calendar");
 
 const fs = require("fs");
@@ -100,7 +100,7 @@ router.post("/add", async (req, res, next) => {
   const oldAppointment = [];
   const oldAppointmentID = await db
     .collection("User")
-    .doc(getUserID)
+    .doc(userID)
     .collection("appointment")
     .orderBy("appointID", "desc")
     .limit(1)
@@ -134,7 +134,7 @@ router.post("/add", async (req, res, next) => {
 
     await db
       .collection("User")
-      .doc(getUserID)
+      .doc(userID)
       .collection("appointment")
       .doc("1")
       .set(data);
@@ -156,7 +156,7 @@ router.post("/add", async (req, res, next) => {
 
     await db
       .collection("User")
-      .doc(getUserID)
+      .doc(userID)
       .collection("appointment")
       .doc(newAppointmentID)
       .set(data);
