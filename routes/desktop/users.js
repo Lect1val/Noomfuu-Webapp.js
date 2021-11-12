@@ -2,14 +2,10 @@ var express = require("express");
 var router = express.Router();
 const { db, FieldValue } = require("../../Database/database");
 
-/* GET users listing. */
-// router.get("/", function (req, res, next) {
-//   res.render("user_profile", { title: "Express" });
-// });
-
 //* เข้าหน้า User Profile
 router.get("/:userID", async (req, res, next) => {
   try {
+    // ดึงรูป และ line username จาก line
     const getUserID = req.params.userID;
     const line = require("@line/bot-sdk");
     let urlPic = "";
@@ -28,11 +24,14 @@ router.get("/:userID", async (req, res, next) => {
       .catch((err) => {
         // error handling
       });
+
+    // save line username ลง DB
     const updateProfile = db.collection("User").doc(getUserID);
     const response = await updateProfile.update({
       lineName: lineName,
     });
 
+    // ดึงข้อมูล user ไป show ในหน้า user profile
     const profileListRef = db.collection("User");
     const profileList = [];
 
@@ -51,6 +50,7 @@ router.get("/:userID", async (req, res, next) => {
       });
     });
 
+    // ดึงข้อมูล chart emotion 7 วัน ไป show ในหน้า user profile
     const chartListRef = await db
       .collection("User")
       .doc(getUserID)
@@ -95,6 +95,7 @@ router.get("/:userID", async (req, res, next) => {
       }
     }
 
+    //ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
     const contactlists = [];
@@ -172,6 +173,7 @@ router.get("/:userID", async (req, res, next) => {
 //* แก้ไขข้อมูลในหน้า User Profile
 router.post("/:userID", async (req, res, next) => {
   try {
+    //รับข้อมูลที่แก้ไขมาจาก front-end
     const getUserID = req.params.userID;
     const newFirstName = req.body.new_firstName;
     const newLastName = req.body.new_lastName;
@@ -179,6 +181,7 @@ router.post("/:userID", async (req, res, next) => {
     const newEmail = req.body.new_email;
     const newContactNote = req.body.new_contactNote;
 
+    // update ข้อมูล prodile ใน DB
     const updateProfile = db.collection("User").doc(getUserID);
     const response = await updateProfile.update({
       firstName: newFirstName,
@@ -188,6 +191,7 @@ router.post("/:userID", async (req, res, next) => {
       contactNote: newContactNote,
     });
 
+    // ดึงข้อมูล user ไป show ในหน้า user profile หลัง update แล้ว
     const profileListRef = db.collection("User");
     const profileList = [];
 
@@ -206,6 +210,7 @@ router.post("/:userID", async (req, res, next) => {
       });
     });
 
+    //ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
     const contactlists = [];
@@ -269,6 +274,7 @@ router.get("/:userID/analytic", async (req, res, next) => {
   try {
     const getUserID = req.params.userID;
 
+    // ดึงข้อมูล Assessment 3 อันดับล่าสุด ไป show ใน หน้า Analytic
     const assessmentListRef = await db
       .collection("User")
       .doc(getUserID)
@@ -303,6 +309,7 @@ router.get("/:userID/analytic", async (req, res, next) => {
       });
     });
 
+    // ดึงข้อมูล chart emotion 14 วัน ไป show ในหน้า Analytic
     const chartListRef = await db
       .collection("User")
       .doc(getUserID)
@@ -347,6 +354,7 @@ router.get("/:userID/analytic", async (req, res, next) => {
       }
     }
 
+    // ดึงข้อมูล chat 3 อันดับล่าสุด ไป show ในหน้า Analytic
     const chatListRef = await db
       .collection("User")
       .doc(getUserID)
@@ -366,6 +374,7 @@ router.get("/:userID/analytic", async (req, res, next) => {
       });
     });
 
+    //ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
     const contactlists = [];
@@ -445,6 +454,7 @@ router.get("/:userID/assessment", async (req, res, next) => {
   try {
     const getUserID = req.params.userID;
 
+    // ดึงข้อมูล Assessment ทั้งหมด ไป show ใน หน้า All Assessment และ search assessment
     const assessmentListRef = await db
       .collection("User")
       .doc(getUserID)
@@ -585,6 +595,7 @@ router.get("/:userID/assessment", async (req, res, next) => {
       });
     }
 
+    // ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
     const contactlists = [];
@@ -655,6 +666,8 @@ router.get("/:userID/assessment", async (req, res, next) => {
 router.get("/:userID/chat", async (req, res, next) => {
   try {
     const getUserID = req.params.userID;
+
+    // ดึงข้อมูล chat ทั้งหมด ไป show ใน หน้า All Chat และ search chat
     const chatListRef = await db
       .collection("User")
       .doc(getUserID)
@@ -757,6 +770,7 @@ router.get("/:userID/chat", async (req, res, next) => {
       });
     }
 
+    // ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
     const contactlists = [];
@@ -828,6 +842,7 @@ router.get("/:userID/appointment", async (req, res, next) => {
   try {
     const getUserID = req.params.userID;
 
+    // ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
     const contactlists = [];
@@ -897,6 +912,7 @@ router.get("/:userID/note", async (req, res, next) => {
   try {
     const getUserID = req.params.userID;
 
+    // ดึงข้อมูล Note ทั้งหมดไป show ที่หน้า All Note
     const noteListRef = db.collection("User").doc(getUserID).collection("note");
     const noteLists = [];
     await noteListRef.get().then((snapshot) => {
@@ -910,6 +926,7 @@ router.get("/:userID/note", async (req, res, next) => {
       });
     });
 
+    // ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
     const contactlists = [];
@@ -982,6 +999,7 @@ router.get("/:userID/note/:noteID/content", async (req, res, next) => {
     const getUserID = req.params.userID;
     const getNoteID = req.params.noteID;
 
+    // ดึงข้อมูล Note ไป show ที่หน้า Content Note
     const noteListRef = db.collection("User").doc(getUserID).collection("note");
     const noteLists = [];
     await noteListRef.get().then((snapshot) => {
@@ -996,6 +1014,7 @@ router.get("/:userID/note/:noteID/content", async (req, res, next) => {
       });
     });
 
+    // ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
     const contactlists = [];
@@ -1070,6 +1089,7 @@ router.get("/:userID/note/:noteID/content/edit", async (req, res, next) => {
     const getUserID = req.params.userID;
     const getNoteID = req.params.noteID;
 
+    // ดึงข้อมูล Note ไป show ที่หน้า Edit Note 
     const noteListRef = db.collection("User").doc(getUserID).collection("note");
     const noteLists = [];
     await noteListRef.get().then((snapshot) => {
@@ -1084,6 +1104,7 @@ router.get("/:userID/note/:noteID/content/edit", async (req, res, next) => {
       });
     });
 
+    // ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
     const contactlists = [];
@@ -1158,8 +1179,8 @@ router.post("/:userID/note/:noteID/content", async (req, res, next) => {
     const getUserID = req.params.userID;
     const getNoteID = req.params.noteID;
 
+    // update note  ลง DB
     const checkSave = req.body.saveEdit;
-    // console.log(checkSave);
     if (checkSave == "Submit") {
       const newHeader = req.body.new_header;
       const newContent = req.body.new_content;
@@ -1176,6 +1197,7 @@ router.post("/:userID/note/:noteID/content", async (req, res, next) => {
       });
     }
 
+    // ดึงข้อมูล Note ที่ update แล้ว ไป show ที่หน้า Content Note
     const noteListRef = db.collection("User").doc(getUserID).collection("note");
     const noteLists = [];
     await noteListRef.get().then((snapshot) => {
@@ -1190,6 +1212,7 @@ router.post("/:userID/note/:noteID/content", async (req, res, next) => {
       });
     });
 
+    // ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
     const contactlists = [];
@@ -1264,6 +1287,7 @@ router.get("/:userID/note/:noteID/delete", async (req, res, next) => {
     const getUserID = req.params.userID;
     const getNoteID = req.params.noteID;
 
+    // ลบ note ออหจาห DB
     const deleteContent = db
       .collection("User")
       .doc(getUserID)
@@ -1271,6 +1295,7 @@ router.get("/:userID/note/:noteID/delete", async (req, res, next) => {
       .doc(getNoteID);
     const response = await deleteContent.delete();
 
+    // ดึงข้อมูล Note หลังจากลบ ไป show ที่หน้า All Note
     const noteListRef = db.collection("User").doc(getUserID).collection("note");
     const noteLists = [];
     await noteListRef.get().then((snapshot) => {
@@ -1285,6 +1310,7 @@ router.get("/:userID/note/:noteID/delete", async (req, res, next) => {
       });
     });
 
+    // ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
     const contactlists = [];
@@ -1355,6 +1381,8 @@ router.get("/:userID/note/:noteID/delete", async (req, res, next) => {
 router.get("/:userID/note/add", async (req, res, next) => {
   try {
     const getUserID = req.params.userID;
+
+    // ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
     const contactlists = [];
@@ -1424,9 +1452,11 @@ router.post("/:userID/note/add", async (req, res, next) => {
   try {
     const getUserID = req.params.userID;
 
+    // รับข้อมูลมาจาก front-end
     const createContent = req.body.create_content;
     const createHeader = req.body.create_header;
 
+    // Add Note ลง  DB
     const oldNote = [];
     const oldNoteID = await db
       .collection("User")
@@ -1495,6 +1525,7 @@ router.post("/:userID/note/add", async (req, res, next) => {
       });
     });
 
+    // ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
     const contactlists = [];
