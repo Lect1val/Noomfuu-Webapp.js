@@ -46,7 +46,7 @@
                     <div class="col-md-9">
                         <% include component/profileNav%>
 
-                            <div style="font-size: 32px; font-weight: 700; color: #6E89EA;"><%= contactlists.find(el => el.userID === getUserID).nickName %></div>
+                            <div style="font-size: 32px; font-weight: 700; color: #6E89EA;"><%= contactlists.find(el => el.userID === getUserID).lineName %></div>
                             <hr>
                             <!--Profile Data-->
                             
@@ -68,7 +68,7 @@
                                 <tr>
                                     <td class="data_head">Nickname : </td>
                                     <td>
-                                        <div class="textbox shadow-sm"><%= contactlists.find(el => el.userID === getUserID).nickName %></div>
+                                        <div class="textbox shadow-sm"><%= profileList.find(el => el.userID === getUserID).nickname %></div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -127,7 +127,7 @@
                                                         <tr>
                                                             <td class="data_head">Nickname</td>
                                                             <td style="width:75%"><input type="text" class="text_field" name="new_nickname"
-                                                                    value="<%= contactlists.find(el => el.userID === getUserID).nickName %>"></td>
+                                                                    value="<%= profileList.find(el => el.userID === getUserID).nickname %>"></td>
                                                         </tr>
                                                         <tr>
                                                             <td class="data_head">Tel</td>

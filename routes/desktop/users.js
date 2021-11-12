@@ -45,6 +45,8 @@ router.get("/:userID", async (req, res, next) => {
             TelNo: doc.data().TelNo,
             Email: doc.data().Email,
             contactNote: doc.data().contactNote,
+            lineName: doc.data().lineName,
+            nickname: doc.data().nickname,
           });
         }
       });
@@ -1089,7 +1091,7 @@ router.get("/:userID/note/:noteID/content/edit", async (req, res, next) => {
     const getUserID = req.params.userID;
     const getNoteID = req.params.noteID;
 
-    // ดึงข้อมูล Note ไป show ที่หน้า Edit Note 
+    // ดึงข้อมูล Note ไป show ที่หน้า Edit Note
     const noteListRef = db.collection("User").doc(getUserID).collection("note");
     const noteLists = [];
     await noteListRef.get().then((snapshot) => {
