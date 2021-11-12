@@ -116,6 +116,8 @@ router.post("/add", async (req, res, next) => {
           appointmentEnd: doc.data().appointEnd,
           type: doc.data().type,
           timestamp: doc.data().timestamp,
+          status: "ongoing",
+          meetingurl: ""
         });
       });
     });
