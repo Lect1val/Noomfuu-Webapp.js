@@ -1031,6 +1031,8 @@ router.get("/:userID/note/:noteID/content", async (req, res, next) => {
             contactlists_temp.push({
               userID: doc.data().userID,
               lineName: doc.data().lineName,
+              firstName: doc.data().firstName,
+              lastName: doc.data().lastName,
             });
           }
         });
@@ -1049,6 +1051,8 @@ router.get("/:userID/note/:noteID/content", async (req, res, next) => {
               contactlists.push({
                 userID: doc.data().userID,
                 lineName: doc.data().lineName,
+                firstName: doc.data().firstName,
+                lastName: doc.data().lastName,
               });
             }
           }
@@ -1068,6 +1072,8 @@ router.get("/:userID/note/:noteID/content", async (req, res, next) => {
             contactlists.push({
               userID: doc.data().userID,
               lineName: doc.data().lineName,
+              firstName: doc.data().firstName,
+              lastName: doc.data().lastName,
             });
           }
         });
@@ -1229,6 +1235,8 @@ router.post("/:userID/note/:noteID/content", async (req, res, next) => {
             contactlists_temp.push({
               userID: doc.data().userID,
               lineName: doc.data().lineName,
+              firstName: doc.data().firstName,
+              lastName: doc.data().lastName,
             });
           }
         });
@@ -1247,6 +1255,8 @@ router.post("/:userID/note/:noteID/content", async (req, res, next) => {
               contactlists.push({
                 userID: doc.data().userID,
                 lineName: doc.data().lineName,
+                firstName: doc.data().firstName,
+                lastName: doc.data().lastName,
               });
             }
           }
@@ -1266,6 +1276,8 @@ router.post("/:userID/note/:noteID/content", async (req, res, next) => {
             contactlists.push({
               userID: doc.data().userID,
               lineName: doc.data().lineName,
+              firstName: doc.data().firstName,
+              lastName: doc.data().lastName,
             });
           }
         });
