@@ -83,7 +83,6 @@ router.get("/add", (req, res, next) => {
 
 router.post("/add", async (req, res, next) => {
   const userID = req.query.id;
-  console.log(userID);
   const appointStdID = req.body.appointStdID;
   const appointName = req.body.appointName;
   const appointDate = req.body.appointDate;
@@ -116,15 +115,15 @@ router.post("/add", async (req, res, next) => {
           appointmentEnd: doc.data().appointEnd,
           type: doc.data().type,
           timestamp: doc.data().timestamp,
-          status: "ongoing",
-          meetingurl: ""
+          status: doc.data().status,
+          meetingurl: doc.data().meetingurl,
         });
       });
     });
 
   if (oldAppointment[0] == undefined) {
     const data = {
-      appointID: "1",
+      appointID: 1,
       userID: userID,
       studentID: appointStdID,
       fullname: appointName,
@@ -132,6 +131,8 @@ router.post("/add", async (req, res, next) => {
       appointmentEnd: appointEnd,
       type: type,
       timestamp: FieldValue.serverTimestamp(),
+      status: "ongoing",
+      meetingurl: "",
     };
 
     await db
@@ -141,10 +142,7 @@ router.post("/add", async (req, res, next) => {
       .doc("1")
       .set(data);
   } else if (oldAppointment[0] != undefined) {
-    const newAppointmentID = (
-      Number(oldAppointment[0].appointID) + 1
-    ).toString();
-
+    const newAppointmentID = oldAppointment[0].appointID + 1;
     const data = {
       appointID: newAppointmentID,
       userID: userID,
@@ -154,13 +152,15 @@ router.post("/add", async (req, res, next) => {
       appointmentEnd: appointEnd,
       type: type,
       timestamp: FieldValue.serverTimestamp(),
+      status: "ongoing",
+      meetingurl: "",
     };
 
     await db
       .collection("User")
       .doc(userID)
       .collection("appointment")
-      .doc(newAppointmentID)
+      .doc(newAppointmentID.toString())
       .set(data);
   }
 

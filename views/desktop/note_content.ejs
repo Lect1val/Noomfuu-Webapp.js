@@ -52,7 +52,7 @@
           <% include component/profileNav%>
           <div class="row">
             <div class="col-md-6 note_header">
-              <%= noteLists.find(el => el.noteID === getNoteID).header%>
+              <%= noteLists.find(el => el.noteID === Number(getNoteID)).header%>
             </div>
             <div
               class="col-md-6"
@@ -65,13 +65,16 @@
               "
             >
               <% var creatorID = noteLists.find(el => el.noteID ===
-              getNoteID).creatorID %> <%= contactlists.find(el => el.userID ===
-              creatorID).lineName %>
+              Number(getNoteID)).creatorID %> <%= contactlists.find(el =>
+              el.userID === creatorID).lineName %>
             </div>
           </div>
           <hr />
           <div class="row note_content">
-            <p><%= noteLists.find(el => el.noteID === getNoteID).content %></p>
+            <p>
+              <%= noteLists.find(el => el.noteID === Number(getNoteID)).content
+              %>
+            </p>
           </div>
           <div class="row">
             <div class="col-md-6 note_owner">
@@ -81,9 +84,9 @@
             </div>
             <div class="col-md-6 modify_status">
               Last Modify: <%= noteLists.find(el => el.noteID ===
-              getNoteID).timestamp.toDate().toDateString() %> <%=
+              Number(getNoteID)).timestamp.toDate().toDateString() %> <%=
               noteLists.find(el => el.noteID ===
-              getNoteID).timestamp.toDate().toLocaleTimeString() %>
+              Number(getNoteID)).timestamp.toDate().toLocaleTimeString() %>
             </div>
           </div>
           <div class="footer mt-auto py-3">

@@ -40,10 +40,10 @@ router.get("/", async (req, res, next) => {
       statusRecord = "Danger";
     }
 
-    //* Logic Add Assessment 
+    //* Logic Add Assessment
     if (oldAssessment[0] == undefined) {
       const data = {
-        assessmentID: "1",
+        assessmentID: 1,
         userID: userID,
         type: "depress",
         score: assessmentScore,
@@ -58,10 +58,7 @@ router.get("/", async (req, res, next) => {
         .doc("1")
         .set(data);
     } else if (oldAssessment[0] != undefined) {
-      const newAssessmentID = (
-        Number(oldAssessment[0].assessmentID) + 1
-      ).toString();
-
+      const newAssessmentID = oldAssessment[0].assessmentID + 1;
       const data = {
         assessmentID: newAssessmentID,
         userID: userID,
@@ -76,7 +73,7 @@ router.get("/", async (req, res, next) => {
         .collection("User")
         .doc(userID)
         .collection("assessment")
-        .doc(newAssessmentID)
+        .doc(newAssessmentID.toString())
         .set(data);
     }
   }

@@ -199,7 +199,7 @@ router.post("/:userID", async (req, res, next) => {
 
     await profileListRef.get().then((snapshot) => {
       snapshot.forEach((doc) => {
-        if (doc.data().userID == getUserID) {
+        if (doc.data().userID == getUserID.toString()) {
           profileList.push({
             userID: doc.data().userID,
             firstName: doc.data().firstName,
@@ -1496,7 +1496,7 @@ router.post("/:userID/note/add", async (req, res, next) => {
         content: createContent,
         creatorID: getUserID,
         header: createHeader,
-        noteID: "1",
+        noteID: 1,
         timestamp: FieldValue.serverTimestamp(),
       };
 
@@ -1507,7 +1507,7 @@ router.post("/:userID/note/add", async (req, res, next) => {
         .doc("1")
         .set(data);
     } else if (oldNote[0] != undefined) {
-      const newNoteID = (Number(oldNote[0].noteID) + 1).toString();
+      let newNoteID = oldNote[0].noteID + 1;
 
       const data = {
         content: createContent,
@@ -1521,7 +1521,7 @@ router.post("/:userID/note/add", async (req, res, next) => {
         .collection("User")
         .doc(getUserID)
         .collection("note")
-        .doc(newNoteID)
+        .doc(newNoteID.toString())
         .set(data);
     }
 

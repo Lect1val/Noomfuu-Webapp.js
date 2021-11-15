@@ -60,7 +60,7 @@
                 <input
                   id="new_content_header"
                   type="text"
-                  value="<%= noteLists.find(el => el.noteID === getNoteID).header%>"
+                  value="<%= noteLists.find(el => el.noteID === Number(getNoteID)).header%>"
                   class="note_header"
                   style="border: none"
                   name="new_header"
@@ -76,8 +76,8 @@
                   padding-right: 3%;
                 "
               >
-                <% var creatorID = noteLists.find(el => el.noteID ===
-                getNoteID).creatorID %> <%= contactlists.find(el => el.userID
+                <% var creatorID = noteLists.find(el => el.noteID === Number
+                (getNoteID)).creatorID %> <%= contactlists.find(el => el.userID
                 === creatorID).lineName %>
               </div>
             </div>
@@ -90,7 +90,7 @@
                 class="note_content"
                 id="new_content"
               >
-              <%= noteLists.find(el => el.noteID === getNoteID).content %>
+              <%= noteLists.find(el => el.noteID === Number(getNoteID)).content %>
               </textarea>
               <!--code of auto resize textarea-->
               <script>

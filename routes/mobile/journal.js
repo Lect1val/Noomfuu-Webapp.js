@@ -23,8 +23,6 @@ router.get("/:userID", async (req, res, next) => {
     });
   });
 
-  console.log(journals);
-
   res.render("mobile/journal", { journals, userID });
 });
 
@@ -60,12 +58,12 @@ router.post("/:userID/add", async (req, res, next) => {
     const data = {
       content: content,
       timestamp: FieldValue.serverTimestamp(),
-      journalID: "1",
+      journalID: 1,
     };
 
     db.collection("User").doc(userID).collection("journal").doc("1").set(data);
   } else if (oldJournal[0] != undefined) {
-    const newJournalID = (Number(oldJournal[0].journalID) + 1).toString();
+    const newJournalID = oldJournal[0].journalID + 1;
     console.log(newJournalID);
     const data = {
       content: content,
@@ -76,7 +74,7 @@ router.post("/:userID/add", async (req, res, next) => {
     db.collection("User")
       .doc(userID)
       .collection("journal")
-      .doc(newJournalID)
+      .doc(newJournalID.toString())
       .set(data);
   }
 
