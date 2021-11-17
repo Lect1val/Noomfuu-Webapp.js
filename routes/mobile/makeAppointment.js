@@ -93,6 +93,10 @@ router.post("/add", async (req, res, next) => {
   const appointEnd = new Date(
     new Date(appointStart).setHours(appointStart.getHours() + 1)
   );
+  console.log(Date.parse(appointStart) < Date.now())
+
+
+    res.render("mobile/appointDetail", { userID });
 
   console.log(appointStart, appointEnd);
 
@@ -165,6 +169,8 @@ router.post("/add", async (req, res, next) => {
   }
 
   res.render("mobile/appointDetail", { userID });
+
+  
 });
 
 router.get("/googleAdd", (req, res, next) => {
