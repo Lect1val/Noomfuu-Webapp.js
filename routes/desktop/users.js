@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-// var moment = require("moment");
+var moment = require("moment");
 const { db, FieldValue } = require("../../Database/database");
 
 //* เข้าหน้า User Profile
@@ -845,51 +845,51 @@ router.get("/:userID/appointment", async (req, res, next) => {
   try {
     const getUserID = req.params.userID;
 
-    // const appointmentListRef = db
-    //   .collection("User")
-    //   .doc(getUserID)
-    //   .collection("appointment")
-    //   .orderBy("appointID", "asc");
-    // const appointmentOngoingLists = [];
-    // const appointmentLists = [];
+    const appointmentListRef = db
+      .collection("User")
+      .doc(getUserID)
+      .collection("appointment")
+      .orderBy("appointID", "asc");
+    const appointmentOngoingLists = [];
+    const appointmentLists = [];
 
-    // await appointmentListRef.get().then((snapshot) => {
-    //   snapshot.forEach((doc) => {
-    //     if (doc.data().status == "ongoing") {
-    //       appointmentOngoingLists.push({
-    //         appointID: doc.data().appointID,
-    //         userID: doc.data().userID,
-    //         studentID: doc.data().studentID,
-    //         fullname: doc.data().fullname,
-    //         appointmentStart: doc.data().appointmentStart,
-    //         appointmentEnd: doc.data().appointmentEnd,
-    //         type: doc.data().type,
-    //         timestamp: doc.data().timestamp,
-    //         status: doc.data().status,
-    //         meetingurl: doc.data().meetingurl,
-    //       });
-    //     } else if (
-    //       doc.data().status == "done" ||
-    //       doc.data().status == "cancel"
-    //     ) {
-    //       appointmentLists.push({
-    //         appointID: doc.data().appointID,
-    //         userID: doc.data().userID,
-    //         studentID: doc.data().studentID,
-    //         fullname: doc.data().fullname,
-    //         appointmentStart: doc.data().appointmentStart,
-    //         appointmentEnd: doc.data().appointmentEnd,
-    //         type: doc.data().type,
-    //         timestamp: doc.data().timestamp,
-    //         status: doc.data().status,
-    //         meetingurl: doc.data().meetingurl,
-    //       });
-    //     }
-    //   });
-    // });
+    await appointmentListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().status == "ongoing") {
+          appointmentOngoingLists.push({
+            appointID: doc.data().appointID,
+            userID: doc.data().userID,
+            studentID: doc.data().studentID,
+            fullname: doc.data().fullname,
+            appointmentStart: doc.data().appointmentStart,
+            appointmentEnd: doc.data().appointmentEnd,
+            type: doc.data().type,
+            timestamp: doc.data().timestamp,
+            status: doc.data().status,
+            meetingurl: doc.data().meetingurl,
+          });
+        } else if (
+          doc.data().status == "done" ||
+          doc.data().status == "cancel"
+        ) {
+          appointmentLists.push({
+            appointID: doc.data().appointID,
+            userID: doc.data().userID,
+            studentID: doc.data().studentID,
+            fullname: doc.data().fullname,
+            appointmentStart: doc.data().appointmentStart,
+            appointmentEnd: doc.data().appointmentEnd,
+            type: doc.data().type,
+            timestamp: doc.data().timestamp,
+            status: doc.data().status,
+            meetingurl: doc.data().meetingurl,
+          });
+        }
+      });
+    });
 
-    // console.log(appointmentOngoingLists);
-    // console.log(appointmentLists);
+    console.log(appointmentOngoingLists);
+    console.log(appointmentLists);
 
     // ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
@@ -934,8 +934,8 @@ router.get("/:userID/appointment", async (req, res, next) => {
         contactlists,
         getUserID,
         appointmentLists,
-        // appointmentOngoingLists,
-        // moment: moment,
+        appointmentOngoingLists,
+        moment: moment,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -953,8 +953,8 @@ router.get("/:userID/appointment", async (req, res, next) => {
         contactlists,
         getUserID,
         appointmentLists,
-        // appointmentOngoingLists,
-        // moment: moment,
+        appointmentOngoingLists,
+        moment: moment,
       });
     }
   } catch (error) {
@@ -962,9 +962,9 @@ router.get("/:userID/appointment", async (req, res, next) => {
   }
 });
 
-//* เข้าหน้าแก้ไข Note
+//* เข้าหน้าแก้ไข Appointment
 router.get("/:userID/appointment/edit", async (req, res, next) => {
-  //:appointID/
+  // /:appointID
   try {
     const getUserID = req.params.userID;
 
