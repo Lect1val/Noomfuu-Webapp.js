@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const contactListController = require("../../controller/contactlist");
+var moment = require("moment");
 const { db } = require("../../Database/database");
 
 /* GET home page. */
@@ -24,6 +25,66 @@ const { db } = require("../../Database/database");
 
 router.get("/", async (req, res, next) => {
   try {
+    const userListRef = db.collection("User");
+    const userLists = [];
+    await userListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        userLists.push({
+          userID: doc.data().userID,
+          lineName: doc.data().lineName,
+        });
+      });
+    });
+
+    console.log(userLists);
+    let messageUserListRef;
+    const messageUserLists = [];
+    const assessmentUserLists = [];
+    for (let x = 0; x < userLists.length; x++) {
+      messageUserListRef = db
+        .collection("User")
+        .doc(userLists[x].userID)
+        .collection("message");
+      await messageUserListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          messageUserLists.push({
+            lineName: userLists[x].lineName,
+            emotion: doc.data().emotion,
+            timestamp: doc.data().timestamp,
+          });
+        });
+      });
+    }
+    console.log(messageUserLists);
+
+    const feelingDownLists = [];
+    let scoreEmotion = 0;
+    let countIndexList = 0;
+    for (let L = 0; L < messageUserLists.length; L++) {
+      if (L == 0) {
+        feelingDownLists[0] = messageUserLists[0];
+        scoreEmotion = Number(messageUserLists[0].emotion);
+        feelingDownLists[0].emotion = scoreEmotion;
+      } else if (L != 0) {
+        if (messageUserLists[L - 1].lineName != messageUserLists[L].lineName) {
+          countIndexList++;
+          feelingDownLists[countIndexList] = messageUserLists[L];
+          scoreEmotion = Number(messageUserLists[L].emotion);
+          feelingDownLists[countIndexList].emotion = scoreEmotion;
+        } else if (
+          messageUserLists[L - 1].lineName == messageUserLists[L].lineName
+        ) {
+          scoreEmotion = scoreEmotion + Number(messageUserLists[L].emotion);
+          feelingDownLists[countIndexList].emotion = scoreEmotion;
+        }
+      }
+    }
+
+    console.log(feelingDownLists);
+    feelingDownLists.sort(function (a, b) {
+      return a.emotion - b.emotion;
+    });
+    console.log("-" + feelingDownLists.length);
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
     const contactlists = [];
@@ -64,6 +125,7 @@ router.get("/", async (req, res, next) => {
 
       res.render("desktop/index", {
         contactlists,
+        feelingDownLists,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -79,6 +141,7 @@ router.get("/", async (req, res, next) => {
 
       res.render("desktop/index", {
         contactlists,
+        feelingDownLists,
       });
     }
   } catch (error) {

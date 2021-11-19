@@ -146,16 +146,49 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <h2>Feeling Down</h2>
-                                <div class="card shadow-sm risk_card">
-                                    <div class="row" style="font-size: 20px;">
-                                        <div class="col-md-10 appoint_user">
-                                            Pang
-                                        </div>
-                                        <div class="col-md-2 text-danger" style="font-weight: 600;">
-                                            -20
+                                <% var countFeeling = 3 %>
+                                <% if(feelingDownLists.length > 3) { %>
+                                    <% for(let x = 0;x< 3;x++) {%>
+                                        <% if(feelingDownLists[x].emotion <= -5){ %>
+                                            <div class="card shadow-sm risk_card">
+                                                <div class="row" style="font-size: 20px;">
+                                                    <div class="col-md-10 appoint_user">
+                                                        <%= feelingDownLists[x].lineName %>
+                                                    </div>
+                                                    <div class="col-md-2 text-danger" style="font-weight: 600;">
+                                                        <%= feelingDownLists[x].emotion %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% countFeeling-- %>
+                                        <% } %>
+                                    <% } %>
+                                <%} else if(feelingDownLists.length <= 3) {%>
+                                    <% for(let x = 0;x< feelingDownLists.length;x++) {%>
+                                        <% if(feelingDownLists[x].emotion <= -5){ %>
+                                            <div class="card shadow-sm risk_card">
+                                                <div class="row" style="font-size: 20px;">
+                                                    <div class="col-md-10 appoint_user">
+                                                        <%= feelingDownLists[x].lineName %>
+                                                    </div>
+                                                    <div class="col-md-2 text-danger" style="font-weight: 600;">
+                                                        <%= feelingDownLists[x].emotion %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% countFeeling-- %>
+                                        <% } %>
+                                    <% } %>
+                                <% } %>
+                                <% if(countFeeling == 0){%>
+                                    <div class="card shadow-sm risk_card">
+                                        <div class="row" style="font-size: 20px;">
+                                            <div class="col-md-10 appoint_user">
+                                                No Feeling Down User Now
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                <% }%>                                
                             </div>
                             <div class="col-md-6">
                                 <h2>Risk assessment result</h2>
