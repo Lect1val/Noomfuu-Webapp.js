@@ -1,223 +1,220 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <%- include component/import%>
-        <style>
-            /*Style of Appointment card*/
-            .state_online {
-                color: #2ABD4A;
-                font-weight: 700;
-            }
+    <style>
+      /*Style of Appointment card*/
+      .state_online {
+        color: #2abd4a;
+        font-weight: 700;
+      }
 
-            .state_on_site {
-                color: #DAAA00;
-                font-weight: 700;
-            }
+      .state_on_site {
+        color: #daaa00;
+        font-weight: 700;
+      }
 
-            .appoint_date {
-                color: #223E63;
-                font-weight: 500;
-            }
+      .appoint_date {
+        color: #223e63;
+        font-weight: 500;
+      }
 
-            .appoint_time {
-                color: #223E63;
-                font-weight: 300;
-            }
+      .appoint_time {
+        color: #223e63;
+        font-weight: 300;
+      }
 
-            .appoint_user {
-                color: #223E63;
-                font-weight: 300;
-            }
+      .appoint_user {
+        color: #223e63;
+        font-weight: 300;
+      }
 
-            .risk_card {
-                margin: 5%;
-                padding: 3%;
-                background-color: #c9e8ff;
-                border: none;
-            }
-        </style>
-</head>
+      .risk_card {
+        margin: 5%;
+        padding: 3%;
+        background-color: #c9e8ff;
+        border: none;
+      }
+    </style>
+  </head>
 
-<body>
+  <body>
     <%- include component/navbar%>
-        <div class="container-fluid">
-            <div class="row">
-                <%- include component/contactList%>
-                    <div class="col-md-9">
+    <div class="container-fluid">
+      <div class="row">
+        <%- include component/contactList%>
+        <div class="col-md-9">
+          <h1>Up Coming Appointment</h1>
+          <hr />
 
-                        <h1>Up Coming Appointment</h1>
-                        <hr>
+          <!--Appointment Card-->
+          <a href="#">
+            <div class="card shadow-sm card_style">
+              <Table style="width: 100%">
+                <tr>
+                  <td class="state_online">ONLINE</td>
+                  <td class="appoint_date" style="text-align: right">
+                    23/03/2021
+                  </td>
+                </tr>
+                <tr>
+                  <td class="appoint_user">
+                    Nattawanee Srikoseat (Line username)
+                  </td>
+                  <td class="appoint_time" style="text-align: right">12.30</td>
+                </tr>
+              </Table>
+            </div>
+          </a>
 
-                        <!--Appointment Card-->
-                        <a href="#">
-                            <div class="card shadow-sm card_style">
-                                <Table style="width: 100%;">
-                                    <tr>
-                                        <td class="state_online">
-                                            ONLINE
-                                        </td>
-                                        <td class="appoint_date" style="text-align: right;">
-                                            23/03/2021
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="appoint_user">
-                                            Nattawanee Srikoseat (Line username)
-                                        </td>
-                                        <td class="appoint_time" style="text-align: right;">
-                                            12.30
-                                        </td>
-                                    </tr>
-                                </Table>
-                            </div>
-                        </a>
+          <a href="#">
+            <div class="card shadow-sm card_style">
+              <Table style="width: 100%">
+                <tr>
+                  <td class="state_on_site">ON SITE</td>
+                  <td class="appoint_date" style="text-align: right">
+                    24/03/2021
+                  </td>
+                </tr>
+                <tr>
+                  <td class="appoint_user">
+                    Thananan Jomtrirat (Line username)
+                  </td>
+                  <td class="appoint_time" style="text-align: right">14.00</td>
+                </tr>
+              </Table>
+            </div>
+          </a>
 
-                        <a href="#">
-                            <div class="card shadow-sm card_style">
-                                <Table style="width: 100%;">
-                                    <tr>
-                                        <td class="state_on_site">
-                                            ON SITE
-                                        </td>
-                                        <td class="appoint_date" style="text-align: right;">
-                                            24/03/2021
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="appoint_user">
-                                            Thananan Jomtrirat (Line username)
-                                        </td>
-                                        <td class="appoint_time" style="text-align: right;">
-                                            14.00
-                                        </td>
-                                    </tr>
-                                </Table>
-                            </div>
-                        </a>
+          <a href="#">
+            <div class="card shadow-sm card_style">
+              <Table style="width: 100%">
+                <tr>
+                  <td class="state_online">ONLINE</td>
+                  <td class="appoint_date" style="text-align: right">
+                    24/03/2021
+                  </td>
+                </tr>
+                <tr>
+                  <td class="appoint_user">Thanakorn Sutad (Line username)</td>
+                  <td class="appoint_time" style="text-align: right">15.30</td>
+                </tr>
+              </Table>
+            </div>
+          </a>
+          <!--End of Appointment Card-->
+          <hr />
 
-                        <a href="#">
-                            <div class="card shadow-sm card_style">
-                                <Table style="width: 100%;">
-                                    <tr>
-                                        <td class="state_online">
-                                            ONLINE
-                                        </td>
-                                        <td class="appoint_date" style="text-align: right;">
-                                            24/03/2021
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="appoint_user">
-                                            Thanakorn Sutad (Line username)
-                                        </td>
-                                        <td class="appoint_time" style="text-align: right;">
-                                            15.30
-                                        </td>
-                                    </tr>
-                                </Table>
-                            </div>
-                        </a>
-                        <!--End of Appointment Card-->
-                        <hr>
+          <div id="loading">loading...</div>
+          <div id="calendar"></div>
 
-                        <div id='loading'>loading...</div>
-                        <div id='calendar'></div>
-                        
-                        <!--download .ics button-->
-                        <div style="text-align: right; margin-top: 1%;">
-                            <form
-                                action="https://calendar.google.com/calendar/ical/en.th%23holiday%40group.v.calendar.google.com/public/basic.ics">
-                                <button class="download_ics" type="submit" value="sync">sync with your
-                                    calendar</button>
-                            </form>
-                        </div>
+          <!--download .ics button-->
+          <div style="text-align: right; margin-top: 1%">
+            <form
+              action="https://calendar.google.com/calendar/ical/en.th%23holiday%40group.v.calendar.google.com/public/basic.ics"
+            >
+              <button class="download_ics" type="submit" value="sync">
+                sync with your calendar
+              </button>
+            </form>
+          </div>
 
-                        <!--google carlendar-->
-                        <!--<span>
+          <!--google carlendar-->
+          <!--<span>
                             <iframe
                                 src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=Asia%2FBangkok&src=bmF0dGF3YW5lZS5za3NAbWFpbC5rbXV0dC5hYy50aA&src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=bWFpbC5rbXV0dC5hYy50aF9jbGFzc3Jvb21hNGU1MzY0MEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4udGgjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&src=bWFpbC5rbXV0dC5hYy50aF9jbGFzc3Jvb20xMDFhZjc4MUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=bWFpbC5rbXV0dC5hYy50aF9jbGFzc3Jvb204OTNiYzg2NUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=bWFpbC5rbXV0dC5hYy50aF9jbGFzc3Jvb20wZTIzYzIzMkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=bWFpbC5rbXV0dC5hYy50aF9jbGFzc3Jvb21iYjk4MWVjM0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZXRia2VqY2Vhbms4NjhyOWp0M3JqaGk0OG1ia2ozMmtAaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039BE5&color=%2333B679&color=%237627bb&color=%230B8043&color=%231c3aa9&color=%231c3aa9&color=%23c26401&color=%23c26401&color=%23F09300&showTitle=0&showNav=1&showTz=0&showCalendars=0&showPrint=0&showTabs=1&showDate=1"
                                 style="border-width:0 ;" width="100%" height="600" frameborder="0"
                                 scrolling="no"></iframe>
                         </span>-->
 
-                        <h1>Risk User</h1>
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h2>Feeling Down</h2>
-                                <% var countFeeling = 3 %>
-                                <% if(feelingDownLists.length > 3) { %>
-                                    <% for(let x = 0;x< 3;x++) {%>
-                                        <% if(feelingDownLists[x].emotion <= -5){ %>
-                                            <div class="card shadow-sm risk_card">
-                                                <div class="row" style="font-size: 20px;">
-                                                    <div class="col-md-10 appoint_user">
-                                                        <%= feelingDownLists[x].lineName %>
-                                                    </div>
-                                                    <div class="col-md-2 text-danger" style="font-weight: 600;">
-                                                        <%= feelingDownLists[x].emotion %>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <% countFeeling-- %>
-                                        <% } %>
-                                    <% } %>
-                                <%} else if(feelingDownLists.length <= 3) {%>
-                                    <% for(let x = 0;x< feelingDownLists.length;x++) {%>
-                                        <% if(feelingDownLists[x].emotion <= -5){ %>
-                                            <div class="card shadow-sm risk_card">
-                                                <div class="row" style="font-size: 20px;">
-                                                    <div class="col-md-10 appoint_user">
-                                                        <%= feelingDownLists[x].lineName %>
-                                                    </div>
-                                                    <div class="col-md-2 text-danger" style="font-weight: 600;">
-                                                        <%= feelingDownLists[x].emotion %>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <% countFeeling-- %>
-                                        <% } %>
-                                    <% } %>
-                                <% } %>
-                                <% if(countFeeling == 0){%>
-                                    <div class="card shadow-sm risk_card">
-                                        <div class="row" style="font-size: 20px;">
-                                            <div class="col-md-10 appoint_user">
-                                                No Feeling Down User Now
-                                            </div>
-                                        </div>
-                                    </div>
-                                <% }%>                                
-                            </div>
-                            <div class="col-md-6">
-                                <h2>Risk assessment result</h2>
-                                <div class="card shadow-sm risk_card">
-                                    <div class="row" style="font-size: 20px;">
-                                        <div class="col-md-10 appoint_user">
-                                            Plai
-                                        </div>
-                                        <div class="col-md-2 text-danger" style="font-weight: 600;">
-                                            38
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card shadow-sm risk_card">
-                                    <div class="row" style="font-size: 20px;">
-                                        <div class="col-md-10 appoint_user">
-                                            Oat
-                                        </div>
-                                        <div class="col-md-2 text-danger" style="font-weight: 600;">
-                                            30
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+          <h1>Risk User</h1>
+          <hr />
+          <div class="row">
+            <div class="col-md-6">
+              <h2>Feeling Down</h2>
+              <% var countFeeling = 3 %> <% if(feelingDownLists.length > 3) { %>
+              <% for(let x = 0;x< 3;x++) {%> <% if(feelingDownLists[x].emotion
+              <= -5){ %>
+              <div class="card shadow-sm risk_card">
+                <div class="row" style="font-size: 20px">
+                  <div class="col-md-10 appoint_user">
+                    <%= feelingDownLists[x].lineName %>
+                  </div>
+                  <div class="col-md-2 text-danger" style="font-weight: 600">
+                    <%= feelingDownLists[x].emotion %>
+                  </div>
+                </div>
+              </div>
+              <% countFeeling-- %> <% } %> <% } %> <%} else
+              if(feelingDownLists.length <= 3) {%> <% for(let x = 0;x<
+              feelingDownLists.length;x++) {%> <% if(feelingDownLists[x].emotion
+              <= -5){ %>
+              <div class="card shadow-sm risk_card">
+                <div class="row" style="font-size: 20px">
+                  <div class="col-md-10 appoint_user">
+                    <%= feelingDownLists[x].lineName %>
+                  </div>
+                  <div class="col-md-2 text-danger" style="font-weight: 600">
+                    <%= feelingDownLists[x].emotion %>
+                  </div>
+                </div>
+              </div>
+              <% countFeeling-- %> <% } %> <% } %> <% } %> <% if(countFeeling ==
+              0){%>
+              <div class="card shadow-sm risk_card">
+                <div class="row" style="font-size: 20px">
+                  <div class="col-md-10 appoint_user">
+                    No Feeling Down User Now
+                  </div>
+                </div>
+              </div>
+              <% }%>
+            </div>
+            <div class="col-md-6">
+              <h2>Risk assessment result</h2>
+              <% var countRisk = 3 %> <% if(riskUserLists.length > 3) { %> <%
+              for(let x = 0;x< 3;x++) {%>
+              <div class="card shadow-sm risk_card">
+                <div class="row" style="font-size: 20px">
+                  <div class="col-md-10 appoint_user">
+                    <%= riskUserLists[x].lineName %>
+                  </div>
+                  <div class="col-md-2 text-danger" style="font-weight: 600">
+                    <%= riskUserLists[x].score %> <%=
+                    riskUserLists[x].scoreTotal %>
+                  </div>
+                </div>
+              </div>
+              <% countRisk-- %> <% } %> <%} else if(feelingDownLists.length <=
+              3) {%> <% for(let x = 0;x< feelingDownLists.length;x++) {%>
+              <div class="card shadow-sm risk_card">
+                <div class="row" style="font-size: 20px">
+                  <div class="col-md-10 appoint_user">
+                    <%= riskUserLists[x].lineName %>
+                  </div>
+                  <div class="col-md-2 text-danger" style="font-weight: 600">
+                    <%= riskUserLists[x].score %> <%=
+                    riskUserLists[x].scoreTotal %>
+                  </div>
+                </div>
+              </div>
+              <% countRisk-- %> <% } %> <% } %> <% if(countRisk == 0){%>
+              <div class="card shadow-sm risk_card">
+                <div class="row" style="font-size: 20px">
+                  <div class="col-md-10 appoint_user">No Danger User Now</div>
+                </div>
+              </div>
+              <% }%>
+            </div>
+          </div>
 
-                        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
-                            integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
-                            crossorigin="anonymous"></script>
-</body>
-
+          <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+            crossorigin="anonymous"
+          ></script>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
