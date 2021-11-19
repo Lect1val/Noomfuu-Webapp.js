@@ -14,30 +14,48 @@
                     <div class="col-md-9">
                         <% include component/profileNav%>
 
-                            <div style="font-size: 32px; font-weight: 700; color: #6E89EA;"><%= contactlists.find(el => el.userID === getUserID).nickName %></div>
+                            <div style="font-size: 32px; font-weight: 700; color: #6E89EA;"><%= contactlists.find(el => el.userID === getUserID).lineName %></div>
                             <hr>
-
+                            
                             <div>
                                 <canvas id="myChart" style="height:50vh; width:80vw"></canvas>
                                 <script>
+                                  let labelsList = [];
+                                  let dataList = []
+                                  let maxIndex =  0
+                                  '<% if (timeList.length <= 14){ %>'
+                                    '<% for (var maxIndex = 0; maxIndex < timeList.length ; maxIndex++){ %>'
+                                      labelsList[maxIndex] = '<%= timeList[maxIndex].timestamp.toDate().toDateString() %>'
+                                      dataList[maxIndex] = '<%= emotionList[maxIndex] %>'
+                                      maxIndex++
+                                    '<% } %>'
+                                  '<% }else if (timeList.length > 14){ %>'
+                                    '<% for (var maxIndex = timeList.length-14; maxIndex < timeList.length ; maxIndex++){ %>'
+                                      labelsList[maxIndex] = '<%= timeList[maxIndex].timestamp.toDate().toDateString() %>'
+                                      dataList[maxIndex] = '<%= emotionList[maxIndex] %>'
+                                      maxIndex++
+                                    '<% } %>'
+                                  '<% } %>'
+                                   console.log(labelsList)
                                     var ctx = document.getElementById('myChart').getContext('2d');
                                     var myChart = new Chart(ctx, {
                                         type: 'line',
                                         data: {
-                                            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                                            labels: labelsList,
                                             datasets: [{
                                                 label: 'scale of user feeling',
-                                                data: [12, 19, -3, 5, 2, -3],
+                                                data: dataList,
                                                 borderColor: [
                                                     'rgba(191, 186, 255, 1)'
                                                 ],
-                                                borderWidth: 1.5,
-                                                tension: 0.3
+                                                borderWidth: 5,
+                                                tension: 0.3,
+                                                fill: false,
 
                                             }]
                                         },
                                         options: {
-
+                                          
                                         },
                                     });
                                 </script>
@@ -53,7 +71,6 @@
                                 </tr>
                                 <!--Begining of Chat Loop-->
                                 <% for(let x = 0 ; x< chatList.length;x++) {%>
-
                                   <tr>
                                     <% if(x==0) {%>
                                     <td id="chat_date">

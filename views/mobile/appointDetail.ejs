@@ -108,11 +108,11 @@
             font-family: "Kanit", sans-serif;
         }
 
-        .inputHeader{
+        .inputHeader {
             font-size: 20px;
         }
 
-        .submit{
+        .submit {
             background-color: white;
             border: none;
             width: 100%;
@@ -123,18 +123,19 @@
             border-radius: 20px;
             font-family: "Kanit", sans-serif;
         }
-
     </style>
 </head>
 
 <body>
 
     <script>
+
         function nextGoogle() {
             window.location.href = "/appointment/googleAdd";
         }
         function next() {
-            window.location.href = "/appointment/add";
+            console.log(process)
+            window.location.href = "/appointment/add?id=<%= userID %>";
         }
     </script>
 
@@ -142,24 +143,26 @@
         <h1>Make Appointment</h1>
     </div>
     <div style="text-align: center;">
-        <form method="post" id="appoint" action="/appointment/add?id=<%= userID %>">
+        <div id="error">
+        </div>
+        <form method="post" id="appoint" action="#" onsubmit="next()">
             <div class="inputHeader">รหัสนักศึกษา</div>
-            <div><input type="number" class="inputbox" name="appointStdID" id="appointStdID" required/></div>
+            <div><input type="number" class="inputbox" name="appointStdID" id="appointStdID" required /></div>
 
             <div class="inputHeader">ชื่อ-นามสกุล</div>
-            <div><input type="text" class="inputbox" name="appointName" id="appointName" required/></div>
+            <div><input type="text" class="inputbox" name="appointName" id="appointName" required /></div>
 
             <div class="inputHeader">วันนัดหมาย</div>
-            <div><input type="date" class="inputbox" name="appointDate" id="appointDate" required/></div>
+            <div><input type="date" class="inputbox" name="appointDate" id="appointDate" required /></div>
 
             <div class="inputHeader">เวลา</div>
-            <div><input type="time" list="times" step=“600” class="inputbox" name="appointTime" id="appointTime" min="09:00" max="18:00" required/></div>
+            <div><input type="time" list="times" class="inputbox" name="appointTime" id="appointTime" required /></div>
 
             <div class="inputHeader">ช่องทางปรึกษา</div>
             <select class="inputbox" id="type" name="type">
                 <option value="online">Online</option>
                 <option value="onsite">On site ที่มหาวิทยาลัย</option>
-              </select>
+            </select>
 
             <datalist id="times">
                 <option value="12:00:00">
@@ -170,7 +173,7 @@
                 <option value="14:30:00">
             </datalist>
 
-            <button class="submit" type="submit" form="appoint">
+            <button id="submitbtn" class="submit" type="submit" form="appoint">
                 ดำเนินการนัดหมาย
             </button>
         </form>

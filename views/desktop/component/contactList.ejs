@@ -8,27 +8,16 @@
     </tr>
 
     <tr>
-      <td
-        style="
+      <td style="
           padding-bottom: 5%;
           padding-right: 2%;
           padding-left: 2%;
           padding-top: 5%;
-        "
-      >
+        ">
         <form class="d-flex" id="search" action="./">
-          <input
-            class="search_contact"
-            type="search"
-            placeholder="Line Username"
-            aria-label="Search"
-            name="search"
-          />
-          <button
-            class="btn btn-outline-primary"
-            type="submit"
-            style="margin-left: 2%"
-          >
+          <input class="search_contact" type="search" placeholder="Line Username" aria-label="Search" name="search"
+            id="search" autocomplete="on" />
+          <button class="btn btn-outline-primary" type="submit" style="margin-left: 2%">
             Search
           </button>
         </form>
@@ -36,19 +25,15 @@
     </tr>
     <!--have to be loop of getUsername-->
     <form action="/profile" method="POST"></form>
-      <% for(let i = 0 ; i< contactlists.length;i++) {%>
-      <tr>
-        <td class="contact_list">
-          <a
-            href="/profile/<%= contactlists[i].userID %>"
-            
-            class="contact_username"
-          >
-          &#8226; &nbsp;&nbsp;<%= contactlists[i].nickName%>
-          </a>
-        </td>
-      </tr>
-      <%} %>
+      <% for(let i=0 ; i< contactlists.length;i++) {%>
+        <tr>
+          <td class="contact_list">
+            <a href="/profile/<%= contactlists[i].userID %>" class="contact_username">
+              &#8226; &nbsp;&nbsp;<%= contactlists[i].lineName%>
+            </a>
+          </td>
+        </tr>
+        <%} %>
     </form>
     <!--ending loop-->
   </table>

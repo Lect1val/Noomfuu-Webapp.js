@@ -14,8 +14,11 @@
           <% include component/profileNav%>
 
           <div class="row">
-            <h1>Depression Assessment</h1>
+            <div style="font-size: 32px; font-weight: 700; color: #6e89ea">
+              <%= contactlists.find(el => el.userID === getUserID).lineName %>
+            </div>
             <hr />
+            <h1>Depression Assessment</h1>
             <div
               style="
                 padding-bottom: 2%;
@@ -30,13 +33,14 @@
                   type="search"
                   placeholder="search"
                   aria-label="Search"
+                  name="searchassessment"
                 />
                 <select
                   class="btn-outline-primary form-select"
                   aria-label="Default select example"
                   style="width: 20%; margin-left: 2%"
+                  name="filter"
                 >
-                  <option selected>search by</option>
                   <option value="type">type</option>
                   <option value="state">state</option>
                 </select>

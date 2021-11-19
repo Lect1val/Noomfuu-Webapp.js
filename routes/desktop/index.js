@@ -25,37 +25,62 @@ const { db } = require("../../Database/database");
 router.get("/", async (req, res, next) => {
   try {
     const contactListRef = db.collection("User");
+    const contactlists_temp = [];
     const contactlists = [];
 
     const search_name = req.query.search;
 
     if (search_name != null) {
-      await contactListRef.where('nickName', '>=', search_name).get().then((snapshot) => {
+      console.log(search_name);
+      await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
-          if (doc.data().nickName != null && doc.data().nickName != "") {
-            contactlists.push({
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists_temp.push({
               userID: doc.data().userID,
-              nickName: doc.data().nickName,
+              lineName: doc.data().lineName,
             });
           }
         });
+      });
+      let i = 0;
+
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            i++;
+            if (
+              contactlists_temp[i - 1].lineName
+                .toLowerCase()
+                .includes(search_name.toLowerCase())
+            ) {
+              contactlists.push({
+                userID: doc.data().userID,
+                lineName: doc.data().lineName,
+              });
+            }
+          }
+        });
+      });
+
+      res.render("desktop/index", {
+        contactlists,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
-          if (doc.data().nickName != null && doc.data().nickName != "") {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
             contactlists.push({
               userID: doc.data().userID,
-              nickName: doc.data().nickName,
+              lineName: doc.data().lineName,
             });
           }
         });
       });
-    }
 
-    res.render("desktop/index", {
-      contactlists,
-    });
+      res.render("desktop/index", {
+        contactlists,
+      });
+    }
   } catch (error) {
     console.log(error);
   }

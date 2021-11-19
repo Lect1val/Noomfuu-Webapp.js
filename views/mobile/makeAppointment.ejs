@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -73,11 +74,12 @@
         }
     </style>
 </head>
+
 <body>
 
     <script>
 
-var userProfile = null;
+        var userProfile = null;
         var displayName = null;
         var statusMessage = null;
         var pictureUrl = null;
@@ -109,10 +111,10 @@ var userProfile = null;
             console.log("null")
         }
 
-        function nextGoogle(){
+        function nextGoogle() {
             window.location.href = "/appointment/googleAdd";
         }
-        function next(){
+        function next() {
             window.location.href = "/appointment/add?id=" + userProfile;
         }
     </script>
@@ -120,6 +122,7 @@ var userProfile = null;
     <div style="padding-top: 8%;">
         <h1>Make Appointment</h1>
     </div>
-        <div class="content_box"><a onclick='next()'>กดเพื่อดูเนื้อหา</a></div>
+    <div class="content_box"><a onclick='next()'>เริ่มการนัดหมาย</a></div>
 </body>
+
 </html>
