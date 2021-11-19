@@ -1007,11 +1007,11 @@ router.get("/:userID/appointment/edit", async (req, res, next) => {
         });
       });
 
-      res.render("desktop/note_edit", {
+      res.render("desktop/edit_appointment", {
         contactlists,
-        noteLists,
+
         getUserID,
-        getNoteID,
+
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -1025,11 +1025,9 @@ router.get("/:userID/appointment/edit", async (req, res, next) => {
         });
       });
 
-      res.render("desktop/note_edit", {
+      res.render("desktop/edit_appointment", {
         contactlists,
-        noteLists,
-        getUserID,
-        getNoteID,
+        getUserID
       });
     }
   } catch (error) {
