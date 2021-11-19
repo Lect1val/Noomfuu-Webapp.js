@@ -83,6 +83,7 @@ router.get("/add", (req, res, next) => {
 
 router.post("/add", async (req, res, next) => {
   const userID = req.query.id;
+
   const appointStdID = req.body.appointStdID;
   const appointName = req.body.appointName;
   const appointDate = req.body.appointDate;
