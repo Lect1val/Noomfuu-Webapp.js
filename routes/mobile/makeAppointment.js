@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const { db, FieldValue } = require("../../Database/database");
+var moment = require("moment");
 //const { calendar } = require("../../controller/calendar");
 
 const fs = require("fs");
@@ -87,87 +88,86 @@ router.post("/add", async (req, res, next) => {
   const appointStdID = req.body.appointStdID;
   const appointName = req.body.appointName;
   const appointDate = req.body.appointDate;
-  const appointTime = req.body.appointTime + ":00+0700Z";
+  const appointTime = req.body.appointTime + ":0000";
   const type = req.body.type;
 
   const appointStart = new Date(appointDate + " " + appointTime);
   const appointEnd = new Date(
     new Date(appointStart).setHours(appointStart.getHours() + 1)
   );
-  console.log(Date.parse(appointStart) < Date.now());
+  if (Date.parse(appointStart) < Date.now()) {
+    console.log(appointStart, appointEnd);
 
-  res.render("mobile/appointDetail", { userID });
-
-  console.log(appointStart, appointEnd);
-
-  const oldAppointment = [];
-  const oldAppointmentID = await db
-    .collection("User")
-    .doc(userID)
-    .collection("appointment")
-    .orderBy("appointID", "desc")
-    .limit(1)
-    .get()
-    .then((snapshot) => {
-      snapshot.forEach((doc) => {
-        oldAppointment.push({
-          appointID: doc.data().appointID,
-          userID: doc.data().userID,
-          studentID: doc.data().studentID,
-          fullname: doc.data().fullname,
-          appointmentStart: doc.data().appointmentStart,
-          appointmentEnd: doc.data().appointmentEnd,
-          type: doc.data().type,
-          timestamp: doc.data().timestamp,
-          status: doc.data().status,
-          meetingurl: doc.data().meetingurl,
+    const oldAppointment = [];
+    const oldAppointmentID = await db
+      .collection("User")
+      .doc(userID)
+      .collection("appointment")
+      .orderBy("appointID", "desc")
+      .limit(1)
+      .get()
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          oldAppointment.push({
+            appointID: doc.data().appointID,
+            userID: doc.data().userID,
+            studentID: doc.data().studentID,
+            fullname: doc.data().fullname,
+            appointmentStart: doc.data().appointmentStart,
+            appointmentEnd: doc.data().appointmentEnd,
+            type: doc.data().type,
+            timestamp: doc.data().timestamp,
+            status: doc.data().status,
+            meetingurl: doc.data().meetingurl,
+          });
         });
       });
-    });
 
-  if (oldAppointment[0] == undefined) {
-    const data = {
-      appointID: 1,
-      userID: userID,
-      studentID: appointStdID,
-      fullname: appointName,
-      appointmentStart: appointStart,
-      appointmentEnd: appointEnd,
-      type: type,
-      timestamp: FieldValue.serverTimestamp(),
-      status: "ongoing",
-      meetingurl: "",
-    };
+    if (oldAppointment[0] == undefined) {
+      const data = {
+        appointID: 1,
+        userID: userID,
+        studentID: appointStdID,
+        fullname: appointName,
+        appointmentStart: moment(appointStart),
+        appointmentEnd: moment(appointEnd),
+        type: type,
+        timestamp: FieldValue.serverTimestamp(),
+        status: "ongoing",
+        meetingurl: "",
+      };
 
-    await db
-      .collection("User")
-      .doc(userID)
-      .collection("appointment")
-      .doc("1")
-      .set(data);
-  } else if (oldAppointment[0] != undefined) {
-    const newAppointmentID = Number(oldAppointment[0].appointID) + 1;
-    const data = {
-      appointID: newAppointmentID,
-      userID: userID,
-      studentID: appointStdID,
-      fullname: appointName,
-      appointmentStart: appointStart,
-      appointmentEnd: appointEnd,
-      type: type,
-      timestamp: FieldValue.serverTimestamp(),
-      status: "ongoing",
-      meetingurl: "",
-    };
+      await db
+        .collection("User")
+        .doc(userID)
+        .collection("appointment")
+        .doc("1")
+        .set(data);
+    } else if (oldAppointment[0] != undefined) {
+      const newAppointmentID = Number(oldAppointment[0].appointID) + 1;
+      const data = {
+        appointID: newAppointmentID,
+        userID: userID,
+        studentID: appointStdID,
+        fullname: appointName,
+        appointmentStart: moment(appointStart),
+        appointmentEnd: moment(appointEnd),
+        type: type,
+        timestamp: FieldValue.serverTimestamp(),
+        status: "ongoing",
+        meetingurl: "",
+      };
 
-    await db
-      .collection("User")
-      .doc(userID)
-      .collection("appointment")
-      .doc(newAppointmentID.toString())
-      .set(data);
+      await db
+        .collection("User")
+        .doc(userID)
+        .collection("appointment")
+        .doc(newAppointmentID.toString())
+        .set(data);
+    }
+
+    res.render("mobile/appointDetail", { userID });
   }
-
   res.render("mobile/appointDetail", { userID });
 });
 
