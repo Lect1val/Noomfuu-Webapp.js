@@ -98,6 +98,78 @@ router.get("/:userID", async (req, res, next) => {
       }
     }
 
+    const forcheckAppoinmentListRef = db
+      .collection("User")
+      .doc(getUserID)
+      .collection("appointment");
+    const forcheckAppoinmentList = [];
+
+    await forcheckAppoinmentListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        forcheckAppoinmentList.push({
+          appointID: doc.data().appointID,
+          userID: doc.data().userID,
+          studentID: doc.data().studentID,
+          fullname: doc.data().fullname,
+          appointmentStart: doc.data().appointmentStart,
+          appointmentEnd: doc.data().appointmentEnd,
+          type: doc.data().type,
+          timestamp: doc.data().timestamp,
+          status: doc.data().status,
+          meetingurl: doc.data().meetingurl,
+        });
+      });
+    });
+
+    let date = moment();
+    for (let f = 0; f < forcheckAppoinmentList.length; f++) {
+      if (
+        forcheckAppoinmentList[f].status == "ongoing" ||
+        forcheckAppoinmentList[f].status == "done"
+      ) {
+        if (
+          date.isAfter(
+            forcheckAppoinmentList[f].appointmentEnd.toDate().toUTCString()
+          )
+        ) {
+          const autoUpdateAppointment = db
+            .collection("User")
+            .doc(getUserID)
+            .collection("appointment")
+            .doc(forcheckAppoinmentList[f].appointID.toString());
+          await autoUpdateAppointment.update({
+            status: "done",
+          });
+        }
+      }
+    }
+
+    const appointmentListRef = db
+      .collection("User")
+      .doc(getUserID)
+      .collection("appointment")
+      .orderBy("appointmentStart", "asc");
+    const appointmentOngoingLists = [];
+
+    await appointmentListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().status == "ongoing") {
+          appointmentOngoingLists.push({
+            appointID: doc.data().appointID,
+            userID: doc.data().userID,
+            studentID: doc.data().studentID,
+            fullname: doc.data().fullname,
+            appointmentStart: doc.data().appointmentStart,
+            appointmentEnd: doc.data().appointmentEnd,
+            type: doc.data().type,
+            timestamp: doc.data().timestamp,
+            status: doc.data().status,
+            meetingurl: doc.data().meetingurl,
+          });
+        }
+      });
+    });
+
     //ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
@@ -145,6 +217,8 @@ router.get("/:userID", async (req, res, next) => {
         timeList,
         chartList,
         urlPic,
+        appointmentOngoingLists,
+        moment: moment,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -166,6 +240,8 @@ router.get("/:userID", async (req, res, next) => {
         timeList,
         chartList,
         urlPic,
+        appointmentOngoingLists,
+        moment: moment,
       });
     }
   } catch (error) {
@@ -212,6 +288,52 @@ router.post("/:userID", async (req, res, next) => {
         }
       });
     });
+
+    const forcheckAppoinmentListRef = db
+      .collection("User")
+      .doc(getUserID)
+      .collection("appointment");
+    const forcheckAppoinmentList = [];
+
+    await forcheckAppoinmentListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        forcheckAppoinmentList.push({
+          appointID: doc.data().appointID,
+          userID: doc.data().userID,
+          studentID: doc.data().studentID,
+          fullname: doc.data().fullname,
+          appointmentStart: doc.data().appointmentStart,
+          appointmentEnd: doc.data().appointmentEnd,
+          type: doc.data().type,
+          timestamp: doc.data().timestamp,
+          status: doc.data().status,
+          meetingurl: doc.data().meetingurl,
+        });
+      });
+    });
+
+    let date = moment();
+    for (let f = 0; f < forcheckAppoinmentList.length; f++) {
+      if (
+        forcheckAppoinmentList[f].status == "ongoing" ||
+        forcheckAppoinmentList[f].status == "done"
+      ) {
+        if (
+          date.isAfter(
+            forcheckAppoinmentList[f].appointmentEnd.toDate().toUTCString()
+          )
+        ) {
+          const autoUpdateAppointment = db
+            .collection("User")
+            .doc(getUserID)
+            .collection("appointment")
+            .doc(forcheckAppoinmentList[f].appointID.toString());
+          await autoUpdateAppointment.update({
+            status: "done",
+          });
+        }
+      }
+    }
 
     //ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
@@ -845,11 +967,57 @@ router.get("/:userID/appointment", async (req, res, next) => {
   try {
     const getUserID = req.params.userID;
 
+    const forcheckAppoinmentListRef = db
+      .collection("User")
+      .doc(getUserID)
+      .collection("appointment");
+    const forcheckAppoinmentList = [];
+
+    await forcheckAppoinmentListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        forcheckAppoinmentList.push({
+          appointID: doc.data().appointID,
+          userID: doc.data().userID,
+          studentID: doc.data().studentID,
+          fullname: doc.data().fullname,
+          appointmentStart: doc.data().appointmentStart,
+          appointmentEnd: doc.data().appointmentEnd,
+          type: doc.data().type,
+          timestamp: doc.data().timestamp,
+          status: doc.data().status,
+          meetingurl: doc.data().meetingurl,
+        });
+      });
+    });
+
+    let date = moment();
+    for (let f = 0; f < forcheckAppoinmentList.length; f++) {
+      if (
+        forcheckAppoinmentList[f].status == "ongoing" ||
+        forcheckAppoinmentList[f].status == "done"
+      ) {
+        if (
+          date.isAfter(
+            forcheckAppoinmentList[f].appointmentEnd.toDate().toUTCString()
+          )
+        ) {
+          const autoUpdateAppointment = db
+            .collection("User")
+            .doc(getUserID)
+            .collection("appointment")
+            .doc(forcheckAppoinmentList[f].appointID.toString());
+          await autoUpdateAppointment.update({
+            status: "done",
+          });
+        }
+      }
+    }
+
     const appointmentListRef = db
       .collection("User")
       .doc(getUserID)
       .collection("appointment")
-      .orderBy("appointID", "asc");
+      .orderBy("appointmentStart", "asc");
     const appointmentOngoingLists = [];
     const appointmentLists = [];
 
@@ -1093,6 +1261,52 @@ router.post("/:userID/appointment/:appointID", async (req, res, next) => {
       });
     }
 
+    const forcheckAppoinmentListRef = db
+      .collection("User")
+      .doc(getUserID)
+      .collection("appointment");
+    const forcheckAppoinmentList = [];
+
+    await forcheckAppoinmentListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        forcheckAppoinmentList.push({
+          appointID: doc.data().appointID,
+          userID: doc.data().userID,
+          studentID: doc.data().studentID,
+          fullname: doc.data().fullname,
+          appointmentStart: doc.data().appointmentStart,
+          appointmentEnd: doc.data().appointmentEnd,
+          type: doc.data().type,
+          timestamp: doc.data().timestamp,
+          status: doc.data().status,
+          meetingurl: doc.data().meetingurl,
+        });
+      });
+    });
+
+    let date = moment();
+    for (let f = 0; f < forcheckAppoinmentList.length; f++) {
+      if (
+        forcheckAppoinmentList[f].status == "ongoing" ||
+        forcheckAppoinmentList[f].status == "done"
+      ) {
+        if (
+          date.isAfter(
+            forcheckAppoinmentList[f].appointmentEnd.toDate().toUTCString()
+          )
+        ) {
+          const autoUpdateAppointment = db
+            .collection("User")
+            .doc(getUserID)
+            .collection("appointment")
+            .doc(forcheckAppoinmentList[f].appointID.toString());
+          await autoUpdateAppointment.update({
+            status: "done",
+          });
+        }
+      }
+    }
+
     const appointmentListRef = db
       .collection("User")
       .doc(getUserID)
@@ -1100,7 +1314,7 @@ router.post("/:userID/appointment/:appointID", async (req, res, next) => {
       .orderBy("appointmentStart", "asc");
     const appointmentOngoingLists = [];
     const appointmentLists = [];
-
+    
     await appointmentListRef.get().then((snapshot) => {
       snapshot.forEach((doc) => {
         if (doc.data().status == "ongoing") {
