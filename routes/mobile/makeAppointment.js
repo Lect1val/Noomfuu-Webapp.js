@@ -15,23 +15,17 @@ const SCOPE = ["https://www.googleapis.com/auth/calendar"];
 // time.
 const TOKEN_PATH = "token.json";
 
-const client_id =
-  "856329999838-indv4mv7k2oa39iatapono29kj4l5c6m.apps.googleusercontent.com";
+const client_id = "856329999838-indv4mv7k2oa39iatapono29kj4l5c6m.apps.googleusercontent.com";
 const project_id = "noomfuu-jfge";
 const auth_uri = "https://accounts.google.com/o/oauth2/auth";
 const token_uri = "https://oauth2.googleapis.com/token";
-const auth_provider_x509_cert_url =
-  "https://www.googleapis.com/oauth2/v1/certs";
+const auth_provider_x509_cert_url = "https://www.googleapis.com/oauth2/v1/certs";
 const client_secret = "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";
 const javascript_origins = ["https://noomfuu-webapp-js.herokuapp.com"];
 
 function authorize(credentials, callback) {
   client_secret, client_id, (redirect_uris = credentials.installed);
-  const oAuth2Client = new google.auth.OAuth2(
-    client_id,
-    client_secret,
-    redirect_uris[0]
-  );
+  const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
 
   // Check if we have previously stored a token.
   fs.readFile(TOKEN_PATH, (err, token) => {
@@ -92,9 +86,7 @@ router.post("/add", async (req, res, next) => {
   const type = req.body.type;
 
   const appointStart = new Date(appointDate + " " + appointTime);
-  const appointEnd = new Date(
-    new Date(appointStart).setHours(appointStart.getHours() + 1)
-  );
+  const appointEnd = new Date(new Date(appointStart).setHours(appointStart.getHours() + 1));
   if (Date.parse(appointStart) < Date.now()) {
     console.log(appointStart, appointEnd);
 
@@ -137,12 +129,7 @@ router.post("/add", async (req, res, next) => {
         meetingurl: "",
       };
 
-      await db
-        .collection("User")
-        .doc(userID)
-        .collection("appointment")
-        .doc("1")
-        .set(data);
+      await db.collection("User").doc(userID).collection("appointment").doc("1").set(data);
     } else if (oldAppointment[0] != undefined) {
       const newAppointmentID = Number(oldAppointment[0].appointID) + 1;
       const data = {
@@ -158,12 +145,7 @@ router.post("/add", async (req, res, next) => {
         meetingurl: "",
       };
 
-      await db
-        .collection("User")
-        .doc(userID)
-        .collection("appointment")
-        .doc(newAppointmentID.toString())
-        .set(data);
+      await db.collection("User").doc(userID).collection("appointment").doc(newAppointmentID.toString()).set(data);
     }
 
     res.render("mobile/appointDetail", { userID });
@@ -185,9 +167,7 @@ router.get("/googleAdd", (req, res, next) => {
       timeZone: "America/Los_Angeles",
     },
     recurrence: ["RRULE:FREQ=DAILY;COUNT=2"],
-    attendees: [
-      { email: "srud8mm07ss8rkfs04kkcj3oac@group.calendar.google.com" },
-    ],
+    attendees: [{ email: "srud8mm07ss8rkfs04kkcj3oac@group.calendar.google.com" }],
     reminders: {
       useDefault: false,
       overrides: [
@@ -208,9 +188,7 @@ router.get("/googleAdd", (req, res, next) => {
     },
     function (err, event) {
       if (err) {
-        console.log(
-          "There was an error contacting the Calendar service: " + err
-        );
+        console.log("There was an error contacting the Calendar service: " + err);
         return;
       }
       console.log("Event created: %s", event.htmlLink);

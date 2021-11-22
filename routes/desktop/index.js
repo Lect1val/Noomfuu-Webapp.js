@@ -40,10 +40,7 @@ router.get("/", async (req, res, next) => {
     const forcheckAppoinmentList = [];
     for (let y = 0; y < userLists.length; y++) {
       if (userLists[y].lineName != "") {
-        forcheckAppoinmentListRef = db
-          .collection("User")
-          .doc(userLists[y].userID)
-          .collection("appointment");
+        forcheckAppoinmentListRef = db.collection("User").doc(userLists[y].userID).collection("appointment");
 
         await forcheckAppoinmentListRef.get().then((snapshot) => {
           snapshot.forEach((doc) => {
@@ -66,20 +63,9 @@ router.get("/", async (req, res, next) => {
 
     let date = moment();
     for (let f = 0; f < forcheckAppoinmentList.length; f++) {
-      if (
-        forcheckAppoinmentList[f].status == "ongoing" ||
-        forcheckAppoinmentList[f].status == "done"
-      ) {
-        if (
-          date.isAfter(
-            forcheckAppoinmentList[f].appointmentEnd.toDate().toUTCString()
-          )
-        ) {
-          const autoUpdateAppointment = db
-            .collection("User")
-            .doc(forcheckAppoinmentList[f].userID)
-            .collection("appointment")
-            .doc(forcheckAppoinmentList[f].appointID.toString());
+      if (forcheckAppoinmentList[f].status == "ongoing" || forcheckAppoinmentList[f].status == "done") {
+        if (date.isAfter(forcheckAppoinmentList[f].appointmentEnd.toDate().toUTCString())) {
+          const autoUpdateAppointment = db.collection("User").doc(forcheckAppoinmentList[f].userID).collection("appointment").doc(forcheckAppoinmentList[f].appointID.toString());
           await autoUpdateAppointment.update({
             status: "done",
           });
@@ -95,10 +81,7 @@ router.get("/", async (req, res, next) => {
     const appointmentUserLists = [];
     for (let x = 0; x < userLists.length; x++) {
       if (userLists[x].lineName != "") {
-        messageUserListRef = db
-          .collection("User")
-          .doc(userLists[x].userID)
-          .collection("message");
+        messageUserListRef = db.collection("User").doc(userLists[x].userID).collection("message");
         await messageUserListRef.get().then((snapshot) => {
           snapshot.forEach((doc) => {
             messageUserLists.push({
@@ -109,11 +92,7 @@ router.get("/", async (req, res, next) => {
           });
         });
 
-        assessmentUserListsRef = db
-          .collection("User")
-          .doc(userLists[x].userID)
-          .collection("assessment")
-          .where("status", "==", "Danger");
+        assessmentUserListsRef = db.collection("User").doc(userLists[x].userID).collection("assessment").where("status", "==", "Danger");
 
         await assessmentUserListsRef.get().then((snapshot) => {
           snapshot.forEach((doc) => {
@@ -126,10 +105,7 @@ router.get("/", async (req, res, next) => {
                 Ascore: doc.data().Ascore,
                 Dscore: doc.data().Dscore,
                 Sscore: doc.data().Sscore,
-                scoreTotal:
-                  Number(doc.data().Ascore) +
-                  Number(doc.data().Dscore) +
-                  Number(doc.data().Sscore),
+                scoreTotal: Number(doc.data().Ascore) + Number(doc.data().Dscore) + Number(doc.data().Sscore),
               });
             } else if (doc.data().type == "depress") {
               assessmentUserLists.push({
@@ -143,11 +119,7 @@ router.get("/", async (req, res, next) => {
           });
         });
 
-        appointmentUserListsRef = db
-          .collection("User")
-          .doc(userLists[x].userID)
-          .collection("appointment")
-          .orderBy("appointmentStart", "asc");
+        appointmentUserListsRef = db.collection("User").doc(userLists[x].userID).collection("appointment").orderBy("appointmentStart", "asc");
         await appointmentUserListsRef.get().then((snapshot) => {
           snapshot.forEach((doc) => {
             if (doc.data().status == "ongoing") {
@@ -176,11 +148,7 @@ router.get("/", async (req, res, next) => {
 
     console.log("----");
     console.log(appointmentUserLists);
-    console.log(
-      moment(appointmentUserLists[0].timestamp.toDate().toDateString()).format(
-        "ddd DD MMM YYYY"
-      )
-    );
+    console.log(moment(appointmentUserLists[0].timestamp.toDate().toDateString()).format("ddd DD MMM YYYY"));
 
     // ดึงข้อมูล Feeling down ไปแสดงในหน้า  Index
     const feelingDownLists = [];
@@ -197,9 +165,7 @@ router.get("/", async (req, res, next) => {
           feelingDownLists[countIndexList] = messageUserLists[L];
           scoreEmotion = Number(messageUserLists[L].emotion);
           feelingDownLists[countIndexList].emotion = scoreEmotion;
-        } else if (
-          messageUserLists[L - 1].lineName == messageUserLists[L].lineName
-        ) {
+        } else if (messageUserLists[L - 1].lineName == messageUserLists[L].lineName) {
           scoreEmotion = scoreEmotion + Number(messageUserLists[L].emotion);
           feelingDownLists[countIndexList].emotion = scoreEmotion;
         }
@@ -226,9 +192,7 @@ router.get("/", async (req, res, next) => {
           riskUserLists[0].score = score;
         }
       } else if (K != 0) {
-        if (
-          assessmentUserLists[K - 1].lineName != assessmentUserLists[K].lineName
-        ) {
+        if (assessmentUserLists[K - 1].lineName != assessmentUserLists[K].lineName) {
           countIndexLists++;
           if (assessmentUserLists[K].type == "dass") {
             riskUserLists[countIndexLists] = assessmentUserLists[K];
@@ -239,9 +203,7 @@ router.get("/", async (req, res, next) => {
             score = Number(assessmentUserLists[K].score);
             riskUserLists[countIndexLists].score = score;
           }
-        } else if (
-          assessmentUserLists[K - 1].lineName == assessmentUserLists[K].lineName
-        ) {
+        } else if (assessmentUserLists[K - 1].lineName == assessmentUserLists[K].lineName) {
           if (assessmentUserLists[K].type == "dass") {
             score = score + Number(assessmentUserLists[K].scoreTotal);
             riskUserLists[countIndexLists].scoreTotal = score;
@@ -280,11 +242,7 @@ router.get("/", async (req, res, next) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
             i++;
-            if (
-              contactlists_temp[i - 1].lineName
-                .toLowerCase()
-                .includes(search_name.toLowerCase())
-            ) {
+            if (contactlists_temp[i - 1].lineName.toLowerCase().includes(search_name.toLowerCase())) {
               contactlists.push({
                 userID: doc.data().userID,
                 lineName: doc.data().lineName,

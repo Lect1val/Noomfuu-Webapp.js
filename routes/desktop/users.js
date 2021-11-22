@@ -54,11 +54,7 @@ router.get("/:userID", async (req, res, next) => {
     });
 
     // ดึงข้อมูล chart emotion 7 วัน ไป show ในหน้า user profile
-    const chartListRef = await db
-      .collection("User")
-      .doc(getUserID)
-      .collection("message")
-      .orderBy("timestamp", "asc");
+    const chartListRef = await db.collection("User").doc(getUserID).collection("message").orderBy("timestamp", "asc");
     const chartList = [];
 
     await chartListRef.get().then((snapshot) => {
@@ -80,18 +76,12 @@ router.get("/:userID", async (req, res, next) => {
         scoreEmotion = Number(chartList[0].emotion);
         emotionList[0] = scoreEmotion;
       } else if (L != 0) {
-        if (
-          chartList[L - 1].timestamp.toDate().toDateString() !=
-          chartList[L].timestamp.toDate().toDateString()
-        ) {
+        if (chartList[L - 1].timestamp.toDate().toDateString() != chartList[L].timestamp.toDate().toDateString()) {
           countIndexList++;
           timeList[countIndexList] = chartList[L];
           scoreEmotion = Number(chartList[L].emotion);
           emotionList[countIndexList] = scoreEmotion;
-        } else if (
-          chartList[L - 1].timestamp.toDate().toDateString() ==
-          chartList[L].timestamp.toDate().toDateString()
-        ) {
+        } else if (chartList[L - 1].timestamp.toDate().toDateString() == chartList[L].timestamp.toDate().toDateString()) {
           scoreEmotion = scoreEmotion + Number(chartList[L].emotion);
           emotionList[countIndexList] = scoreEmotion;
         }
@@ -99,10 +89,7 @@ router.get("/:userID", async (req, res, next) => {
     }
 
     // Auto Update Appointment Status ตามเวลานัดหมาย
-    const forcheckAppoinmentListRef = db
-      .collection("User")
-      .doc(getUserID)
-      .collection("appointment");
+    const forcheckAppoinmentListRef = db.collection("User").doc(getUserID).collection("appointment");
     const forcheckAppoinmentList = [];
 
     await forcheckAppoinmentListRef.get().then((snapshot) => {
@@ -124,20 +111,9 @@ router.get("/:userID", async (req, res, next) => {
 
     let date = moment();
     for (let f = 0; f < forcheckAppoinmentList.length; f++) {
-      if (
-        forcheckAppoinmentList[f].status == "ongoing" ||
-        forcheckAppoinmentList[f].status == "done"
-      ) {
-        if (
-          date.isAfter(
-            forcheckAppoinmentList[f].appointmentEnd.toDate().toUTCString()
-          )
-        ) {
-          const autoUpdateAppointment = db
-            .collection("User")
-            .doc(getUserID)
-            .collection("appointment")
-            .doc(forcheckAppoinmentList[f].appointID.toString());
+      if (forcheckAppoinmentList[f].status == "ongoing" || forcheckAppoinmentList[f].status == "done") {
+        if (date.isAfter(forcheckAppoinmentList[f].appointmentEnd.toDate().toUTCString())) {
+          const autoUpdateAppointment = db.collection("User").doc(getUserID).collection("appointment").doc(forcheckAppoinmentList[f].appointID.toString());
           await autoUpdateAppointment.update({
             status: "done",
           });
@@ -146,11 +122,7 @@ router.get("/:userID", async (req, res, next) => {
     }
 
     // ดึงข้อมูล Appointment ที่เป็น on going
-    const appointmentListRef = db
-      .collection("User")
-      .doc(getUserID)
-      .collection("appointment")
-      .orderBy("appointmentStart", "asc");
+    const appointmentListRef = db.collection("User").doc(getUserID).collection("appointment").orderBy("appointmentStart", "asc");
     const appointmentOngoingLists = [];
 
     await appointmentListRef.get().then((snapshot) => {
@@ -197,11 +169,7 @@ router.get("/:userID", async (req, res, next) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
             i++;
-            if (
-              contactlists_temp[i - 1].lineName
-                .toLowerCase()
-                .includes(search_name.toLowerCase())
-            ) {
+            if (contactlists_temp[i - 1].lineName.toLowerCase().includes(search_name.toLowerCase())) {
               contactlists.push({
                 userID: doc.data().userID,
                 lineName: doc.data().lineName,
@@ -292,10 +260,7 @@ router.post("/:userID", async (req, res, next) => {
     });
 
     // Auto Update Appointment Status ตามเวลานัดหมาย
-    const forcheckAppoinmentListRef = db
-      .collection("User")
-      .doc(getUserID)
-      .collection("appointment");
+    const forcheckAppoinmentListRef = db.collection("User").doc(getUserID).collection("appointment");
     const forcheckAppoinmentList = [];
 
     await forcheckAppoinmentListRef.get().then((snapshot) => {
@@ -317,20 +282,9 @@ router.post("/:userID", async (req, res, next) => {
 
     let date = moment();
     for (let f = 0; f < forcheckAppoinmentList.length; f++) {
-      if (
-        forcheckAppoinmentList[f].status == "ongoing" ||
-        forcheckAppoinmentList[f].status == "done"
-      ) {
-        if (
-          date.isAfter(
-            forcheckAppoinmentList[f].appointmentEnd.toDate().toUTCString()
-          )
-        ) {
-          const autoUpdateAppointment = db
-            .collection("User")
-            .doc(getUserID)
-            .collection("appointment")
-            .doc(forcheckAppoinmentList[f].appointID.toString());
+      if (forcheckAppoinmentList[f].status == "ongoing" || forcheckAppoinmentList[f].status == "done") {
+        if (date.isAfter(forcheckAppoinmentList[f].appointmentEnd.toDate().toUTCString())) {
+          const autoUpdateAppointment = db.collection("User").doc(getUserID).collection("appointment").doc(forcheckAppoinmentList[f].appointID.toString());
           await autoUpdateAppointment.update({
             status: "done",
           });
@@ -363,11 +317,7 @@ router.post("/:userID", async (req, res, next) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
             i++;
-            if (
-              contactlists_temp[i - 1].lineName
-                .toLowerCase()
-                .includes(search_name.toLowerCase())
-            ) {
+            if (contactlists_temp[i - 1].lineName.toLowerCase().includes(search_name.toLowerCase())) {
               contactlists.push({
                 userID: doc.data().userID,
                 lineName: doc.data().lineName,
@@ -403,12 +353,7 @@ router.get("/:userID/analytic", async (req, res, next) => {
     const getUserID = req.params.userID;
 
     // ดึงข้อมูล Assessment 3 อันดับล่าสุด ไป show ใน หน้า Analytic
-    const assessmentListRef = await db
-      .collection("User")
-      .doc(getUserID)
-      .collection("assessment")
-      .orderBy("timestamp", "desc")
-      .limit(3);
+    const assessmentListRef = await db.collection("User").doc(getUserID).collection("assessment").orderBy("timestamp", "desc").limit(3);
     const assessmentList = [];
 
     await assessmentListRef.get().then((snapshot) => {
@@ -438,11 +383,7 @@ router.get("/:userID/analytic", async (req, res, next) => {
     });
 
     // ดึงข้อมูล chart emotion 14 วัน ไป show ในหน้า Analytic
-    const chartListRef = await db
-      .collection("User")
-      .doc(getUserID)
-      .collection("message")
-      .orderBy("timestamp", "asc");
+    const chartListRef = await db.collection("User").doc(getUserID).collection("message").orderBy("timestamp", "asc");
     const chartList = [];
 
     await chartListRef.get().then((snapshot) => {
@@ -464,18 +405,12 @@ router.get("/:userID/analytic", async (req, res, next) => {
         scoreEmotion = Number(chartList[0].emotion);
         emotionList[0] = scoreEmotion;
       } else if (L != 0) {
-        if (
-          chartList[L - 1].timestamp.toDate().toDateString() !=
-          chartList[L].timestamp.toDate().toDateString()
-        ) {
+        if (chartList[L - 1].timestamp.toDate().toDateString() != chartList[L].timestamp.toDate().toDateString()) {
           countIndexList++;
           timeList[countIndexList] = chartList[L];
           scoreEmotion = Number(chartList[L].emotion);
           emotionList[countIndexList] = scoreEmotion;
-        } else if (
-          chartList[L - 1].timestamp.toDate().toDateString() ==
-          chartList[L].timestamp.toDate().toDateString()
-        ) {
+        } else if (chartList[L - 1].timestamp.toDate().toDateString() == chartList[L].timestamp.toDate().toDateString()) {
           scoreEmotion = scoreEmotion + Number(chartList[L].emotion);
           emotionList[countIndexList] = scoreEmotion;
         }
@@ -483,12 +418,7 @@ router.get("/:userID/analytic", async (req, res, next) => {
     }
 
     // ดึงข้อมูล chat 3 อันดับล่าสุด ไป show ในหน้า Analytic
-    const chatListRef = await db
-      .collection("User")
-      .doc(getUserID)
-      .collection("message")
-      .orderBy("timestamp", "desc")
-      .limit(3);
+    const chatListRef = await db.collection("User").doc(getUserID).collection("message").orderBy("timestamp", "desc").limit(3);
     const chatList = [];
 
     await chatListRef.get().then((snapshot) => {
@@ -527,11 +457,7 @@ router.get("/:userID/analytic", async (req, res, next) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
             i++;
-            if (
-              contactlists_temp[i - 1].lineName
-                .toLowerCase()
-                .includes(search_name.toLowerCase())
-            ) {
+            if (contactlists_temp[i - 1].lineName.toLowerCase().includes(search_name.toLowerCase())) {
               contactlists.push({
                 userID: doc.data().userID,
                 lineName: doc.data().lineName,
@@ -583,11 +509,7 @@ router.get("/:userID/assessment", async (req, res, next) => {
     const getUserID = req.params.userID;
 
     // ดึงข้อมูล Assessment ทั้งหมด ไป show ใน หน้า All Assessment และ search assessment
-    const assessmentListRef = await db
-      .collection("User")
-      .doc(getUserID)
-      .collection("assessment")
-      .orderBy("timestamp", "desc");
+    const assessmentListRef = await db.collection("User").doc(getUserID).collection("assessment").orderBy("timestamp", "desc");
 
     const search_assessment_name = req.query.searchassessment;
     const filter = req.query.filter;
@@ -627,15 +549,9 @@ router.get("/:userID/assessment", async (req, res, next) => {
         await assessmentListRef.get().then((snapshot) => {
           snapshot.forEach((doc) => {
             console.log(assessmentList_temp[i].status.toLowerCase());
-            console.log(
-              assessmentList_temp[i].status.toLowerCase() ==
-                search_assessment_name
-            );
+            console.log(assessmentList_temp[i].status.toLowerCase() == search_assessment_name);
             i++;
-            if (
-              assessmentList_temp[i - 1].status.toLowerCase() ==
-              search_assessment_name
-            ) {
+            if (assessmentList_temp[i - 1].status.toLowerCase() == search_assessment_name) {
               if (doc.data().type == "dass") {
                 console.log("dass");
                 assessmentList.push({
@@ -748,11 +664,7 @@ router.get("/:userID/assessment", async (req, res, next) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
             i++;
-            if (
-              contactlists_temp[i - 1].lineName
-                .toLowerCase()
-                .includes(search_name.toLowerCase())
-            ) {
+            if (contactlists_temp[i - 1].lineName.toLowerCase().includes(search_name.toLowerCase())) {
               contactlists.push({
                 userID: doc.data().userID,
                 lineName: doc.data().lineName,
@@ -796,11 +708,7 @@ router.get("/:userID/chat", async (req, res, next) => {
     const getUserID = req.params.userID;
 
     // ดึงข้อมูล chat ทั้งหมด ไป show ใน หน้า All Chat และ search chat
-    const chatListRef = await db
-      .collection("User")
-      .doc(getUserID)
-      .collection("message")
-      .orderBy("timestamp", "desc");
+    const chatListRef = await db.collection("User").doc(getUserID).collection("message").orderBy("timestamp", "desc");
 
     const search_chat_name = req.query.searchchat;
     const filter = req.query.filter;
@@ -824,17 +732,9 @@ router.get("/:userID/chat", async (req, res, next) => {
         await chatListRef.get().then((snapshot) => {
           snapshot.forEach((doc) => {
             console.log(chatList_temp[i].content.toLowerCase());
-            console.log(
-              chatList_temp[i].content
-                .toLowerCase()
-                .includes(search_chat_name.toLowerCase())
-            );
+            console.log(chatList_temp[i].content.toLowerCase().includes(search_chat_name.toLowerCase()));
             i++;
-            if (
-              chatList_temp[i - 1].content
-                .toLowerCase()
-                .includes(search_chat_name.toLowerCase())
-            ) {
+            if (chatList_temp[i - 1].content.toLowerCase().includes(search_chat_name.toLowerCase())) {
               chatList.push({
                 messageID: doc.data().messageID,
                 emotion: doc.data().emotion,
@@ -871,10 +771,7 @@ router.get("/:userID/chat", async (req, res, next) => {
             console.log(chatList_temp[i].emotion.toLowerCase());
             console.log(chatList_temp[i].emotion.toLowerCase() == emotion);
             i++;
-            if (
-              chatList_temp[i - 1].emotion.toLowerCase().toLowerCase() ==
-              emotion
-            ) {
+            if (chatList_temp[i - 1].emotion.toLowerCase().toLowerCase() == emotion) {
               chatList.push({
                 messageID: doc.data().messageID,
                 emotion: doc.data().emotion,
@@ -923,11 +820,7 @@ router.get("/:userID/chat", async (req, res, next) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
             i++;
-            if (
-              contactlists_temp[i - 1].lineName
-                .toLowerCase()
-                .includes(search_name.toLowerCase())
-            ) {
+            if (contactlists_temp[i - 1].lineName.toLowerCase().includes(search_name.toLowerCase())) {
               contactlists.push({
                 userID: doc.data().userID,
                 lineName: doc.data().lineName,
@@ -971,10 +864,7 @@ router.get("/:userID/appointment", async (req, res, next) => {
     const getUserID = req.params.userID;
 
     // Auto Update Appointment Status ตามเวลานัดหมาย
-    const forcheckAppoinmentListRef = db
-      .collection("User")
-      .doc(getUserID)
-      .collection("appointment");
+    const forcheckAppoinmentListRef = db.collection("User").doc(getUserID).collection("appointment");
     const forcheckAppoinmentList = [];
 
     await forcheckAppoinmentListRef.get().then((snapshot) => {
@@ -996,20 +886,9 @@ router.get("/:userID/appointment", async (req, res, next) => {
 
     let date = moment();
     for (let f = 0; f < forcheckAppoinmentList.length; f++) {
-      if (
-        forcheckAppoinmentList[f].status == "ongoing" ||
-        forcheckAppoinmentList[f].status == "done"
-      ) {
-        if (
-          date.isAfter(
-            forcheckAppoinmentList[f].appointmentEnd.toDate().toUTCString()
-          )
-        ) {
-          const autoUpdateAppointment = db
-            .collection("User")
-            .doc(getUserID)
-            .collection("appointment")
-            .doc(forcheckAppoinmentList[f].appointID.toString());
+      if (forcheckAppoinmentList[f].status == "ongoing" || forcheckAppoinmentList[f].status == "done") {
+        if (date.isAfter(forcheckAppoinmentList[f].appointmentEnd.toDate().toUTCString())) {
+          const autoUpdateAppointment = db.collection("User").doc(getUserID).collection("appointment").doc(forcheckAppoinmentList[f].appointID.toString());
           await autoUpdateAppointment.update({
             status: "done",
           });
@@ -1017,12 +896,8 @@ router.get("/:userID/appointment", async (req, res, next) => {
       }
     }
 
-    // ดึงข้อมูล appointment 
-    const appointmentListRef = db
-      .collection("User")
-      .doc(getUserID)
-      .collection("appointment")
-      .orderBy("appointmentStart", "asc");
+    // ดึงข้อมูล appointment
+    const appointmentListRef = db.collection("User").doc(getUserID).collection("appointment").orderBy("appointmentStart", "asc");
     const appointmentOngoingLists = [];
     const appointmentLists = [];
 
@@ -1041,10 +916,7 @@ router.get("/:userID/appointment", async (req, res, next) => {
             status: doc.data().status,
             meetingurl: doc.data().meetingurl,
           });
-        } else if (
-          doc.data().status == "done" ||
-          doc.data().status == "cancel"
-        ) {
+        } else if (doc.data().status == "done" || doc.data().status == "cancel") {
           appointmentLists.push({
             appointID: doc.data().appointID,
             userID: doc.data().userID,
@@ -1086,11 +958,7 @@ router.get("/:userID/appointment", async (req, res, next) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
             i++;
-            if (
-              contactlists_temp[i - 1].lineName
-                .toLowerCase()
-                .includes(search_name.toLowerCase())
-            ) {
+            if (contactlists_temp[i - 1].lineName.toLowerCase().includes(search_name.toLowerCase())) {
               contactlists.push({
                 userID: doc.data().userID,
                 lineName: doc.data().lineName,
@@ -1139,10 +1007,7 @@ router.get("/:userID/appointment/:appointID/edit", async (req, res, next) => {
     const getAppointID = Number(req.params.appointID);
 
     // ดึงข้อมูล appointment
-    const appointListRef = db
-      .collection("User")
-      .doc(getUserID)
-      .collection("appointment");
+    const appointListRef = db.collection("User").doc(getUserID).collection("appointment");
     const appointLists = [];
     await appointListRef.get().then((snapshot) => {
       snapshot.forEach((doc) => {
@@ -1186,11 +1051,7 @@ router.get("/:userID/appointment/:appointID/edit", async (req, res, next) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
             i++;
-            if (
-              contactlists_temp[i - 1].lineName
-                .toLowerCase()
-                .includes(search_name.toLowerCase())
-            ) {
+            if (contactlists_temp[i - 1].lineName.toLowerCase().includes(search_name.toLowerCase())) {
               contactlists.push({
                 userID: doc.data().userID,
                 lineName: doc.data().lineName,
@@ -1246,17 +1107,11 @@ router.post("/:userID/appointment/:appointID", async (req, res, next) => {
     const newType = req.body.new_type;
     const newStatus = req.body.new_status;
 
-    const newAppointStart = new Date(
-      newAppointDate + " " + newAppointStartTime
-    );
+    const newAppointStart = new Date(newAppointDate + " " + newAppointStartTime);
     const newAppointEnd = new Date(newAppointDate + " " + newAppointEndTime);
 
     if (Date.parse(newAppointStart) > Date.now()) {
-      const updateAppointment = db
-        .collection("User")
-        .doc(getUserID)
-        .collection("appointment")
-        .doc(getAppointID.toString());
+      const updateAppointment = db.collection("User").doc(getUserID).collection("appointment").doc(getAppointID.toString());
       const res = await updateAppointment.update({
         appointmentStart: moment(newAppointStart),
         appointmentEnd: moment(newAppointEnd),
@@ -1268,10 +1123,7 @@ router.post("/:userID/appointment/:appointID", async (req, res, next) => {
     }
 
     // Auto Update Appointment Status ตามเวลานัดหมาย
-    const forcheckAppoinmentListRef = db
-      .collection("User")
-      .doc(getUserID)
-      .collection("appointment");
+    const forcheckAppoinmentListRef = db.collection("User").doc(getUserID).collection("appointment");
     const forcheckAppoinmentList = [];
 
     await forcheckAppoinmentListRef.get().then((snapshot) => {
@@ -1293,20 +1145,9 @@ router.post("/:userID/appointment/:appointID", async (req, res, next) => {
 
     let date = moment();
     for (let f = 0; f < forcheckAppoinmentList.length; f++) {
-      if (
-        forcheckAppoinmentList[f].status == "ongoing" ||
-        forcheckAppoinmentList[f].status == "done"
-      ) {
-        if (
-          date.isAfter(
-            forcheckAppoinmentList[f].appointmentEnd.toDate().toUTCString()
-          )
-        ) {
-          const autoUpdateAppointment = db
-            .collection("User")
-            .doc(getUserID)
-            .collection("appointment")
-            .doc(forcheckAppoinmentList[f].appointID.toString());
+      if (forcheckAppoinmentList[f].status == "ongoing" || forcheckAppoinmentList[f].status == "done") {
+        if (date.isAfter(forcheckAppoinmentList[f].appointmentEnd.toDate().toUTCString())) {
+          const autoUpdateAppointment = db.collection("User").doc(getUserID).collection("appointment").doc(forcheckAppoinmentList[f].appointID.toString());
           await autoUpdateAppointment.update({
             status: "done",
           });
@@ -1315,14 +1156,10 @@ router.post("/:userID/appointment/:appointID", async (req, res, next) => {
     }
 
     // ดึงข้อมูล appointment
-    const appointmentListRef = db
-      .collection("User")
-      .doc(getUserID)
-      .collection("appointment")
-      .orderBy("appointmentStart", "asc");
+    const appointmentListRef = db.collection("User").doc(getUserID).collection("appointment").orderBy("appointmentStart", "asc");
     const appointmentOngoingLists = [];
     const appointmentLists = [];
-    
+
     await appointmentListRef.get().then((snapshot) => {
       snapshot.forEach((doc) => {
         if (doc.data().status == "ongoing") {
@@ -1338,10 +1175,7 @@ router.post("/:userID/appointment/:appointID", async (req, res, next) => {
             status: doc.data().status,
             meetingurl: doc.data().meetingurl,
           });
-        } else if (
-          doc.data().status == "done" ||
-          doc.data().status == "cancel"
-        ) {
+        } else if (doc.data().status == "done" || doc.data().status == "cancel") {
           appointmentLists.push({
             appointID: doc.data().appointID,
             userID: doc.data().userID,
@@ -1383,11 +1217,7 @@ router.post("/:userID/appointment/:appointID", async (req, res, next) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
             i++;
-            if (
-              contactlists_temp[i - 1].lineName
-                .toLowerCase()
-                .includes(search_name.toLowerCase())
-            ) {
+            if (contactlists_temp[i - 1].lineName.toLowerCase().includes(search_name.toLowerCase())) {
               contactlists.push({
                 userID: doc.data().userID,
                 lineName: doc.data().lineName,
@@ -1475,11 +1305,7 @@ router.get("/:userID/note", async (req, res, next) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
             i++;
-            if (
-              contactlists_temp[i - 1].lineName
-                .toLowerCase()
-                .includes(search_name.toLowerCase())
-            ) {
+            if (contactlists_temp[i - 1].lineName.toLowerCase().includes(search_name.toLowerCase())) {
               contactlists.push({
                 userID: doc.data().userID,
                 lineName: doc.data().lineName,
@@ -1565,11 +1391,7 @@ router.get("/:userID/note/:noteID/content", async (req, res, next) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
             i++;
-            if (
-              contactlists_temp[i - 1].lineName
-                .toLowerCase()
-                .includes(search_name.toLowerCase())
-            ) {
+            if (contactlists_temp[i - 1].lineName.toLowerCase().includes(search_name.toLowerCase())) {
               contactlists.push({
                 userID: doc.data().userID,
                 lineName: doc.data().lineName,
@@ -1586,6 +1408,7 @@ router.get("/:userID/note/:noteID/content", async (req, res, next) => {
         noteLists,
         getUserID,
         getNoteID,
+        moment: moment,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -1606,6 +1429,7 @@ router.get("/:userID/note/:noteID/content", async (req, res, next) => {
         noteLists,
         getUserID,
         getNoteID,
+        moment: moment,
       });
     }
   } catch (error) {
@@ -1659,11 +1483,7 @@ router.get("/:userID/note/:noteID/content/edit", async (req, res, next) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
             i++;
-            if (
-              contactlists_temp[i - 1].lineName
-                .toLowerCase()
-                .includes(search_name.toLowerCase())
-            ) {
+            if (contactlists_temp[i - 1].lineName.toLowerCase().includes(search_name.toLowerCase())) {
               contactlists.push({
                 userID: doc.data().userID,
                 lineName: doc.data().lineName,
@@ -1715,11 +1535,7 @@ router.post("/:userID/note/:noteID/content", async (req, res, next) => {
       const newHeader = req.body.new_header;
       const newContent = req.body.new_content;
 
-      const updateContent = db
-        .collection("User")
-        .doc(getUserID)
-        .collection("note")
-        .doc(getNoteID.toString());
+      const updateContent = db.collection("User").doc(getUserID).collection("note").doc(getNoteID.toString());
       const res = await updateContent.update({
         content: newContent,
         header: newHeader,
@@ -1769,11 +1585,7 @@ router.post("/:userID/note/:noteID/content", async (req, res, next) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
             i++;
-            if (
-              contactlists_temp[i - 1].lineName
-                .toLowerCase()
-                .includes(search_name.toLowerCase())
-            ) {
+            if (contactlists_temp[i - 1].lineName.toLowerCase().includes(search_name.toLowerCase())) {
               contactlists.push({
                 userID: doc.data().userID,
                 lineName: doc.data().lineName,
@@ -1790,6 +1602,7 @@ router.post("/:userID/note/:noteID/content", async (req, res, next) => {
         noteLists,
         getUserID,
         getNoteID,
+        moment: moment,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -1810,6 +1623,7 @@ router.post("/:userID/note/:noteID/content", async (req, res, next) => {
         noteLists,
         getUserID,
         getNoteID,
+        moment: moment,
       });
     }
   } catch (error) {
@@ -1824,11 +1638,7 @@ router.get("/:userID/note/:noteID/delete", async (req, res, next) => {
     const getNoteID = Number(req.params.noteID);
 
     // ลบ note ออหจาห DB
-    const deleteContent = db
-      .collection("User")
-      .doc(getUserID)
-      .collection("note")
-      .doc(getNoteID.toString());
+    const deleteContent = db.collection("User").doc(getUserID).collection("note").doc(getNoteID.toString());
     const response = await deleteContent.delete();
 
     // ดึงข้อมูล Note หลังจากลบ ไป show ที่หน้า All Note
@@ -1871,11 +1681,7 @@ router.get("/:userID/note/:noteID/delete", async (req, res, next) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
             i++;
-            if (
-              contactlists_temp[i - 1].lineName
-                .toLowerCase()
-                .includes(search_name.toLowerCase())
-            ) {
+            if (contactlists_temp[i - 1].lineName.toLowerCase().includes(search_name.toLowerCase())) {
               contactlists.push({
                 userID: doc.data().userID,
                 lineName: doc.data().lineName,
@@ -1943,11 +1749,7 @@ router.get("/:userID/note/add", async (req, res, next) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
             i++;
-            if (
-              contactlists_temp[i - 1].lineName
-                .toLowerCase()
-                .includes(search_name.toLowerCase())
-            ) {
+            if (contactlists_temp[i - 1].lineName.toLowerCase().includes(search_name.toLowerCase())) {
               contactlists.push({
                 userID: doc.data().userID,
                 lineName: doc.data().lineName,
@@ -2022,12 +1824,7 @@ router.post("/:userID/note/add", async (req, res, next) => {
         timestamp: FieldValue.serverTimestamp(),
       };
 
-      await db
-        .collection("User")
-        .doc(getUserID)
-        .collection("note")
-        .doc("1")
-        .set(data);
+      await db.collection("User").doc(getUserID).collection("note").doc("1").set(data);
     } else if (oldNote[0] != undefined) {
       let newNoteID = Number(oldNote[0].noteID) + 1;
 
@@ -2039,12 +1836,7 @@ router.post("/:userID/note/add", async (req, res, next) => {
         timestamp: FieldValue.serverTimestamp(),
       };
 
-      await db
-        .collection("User")
-        .doc(getUserID)
-        .collection("note")
-        .doc(newNoteID.toString())
-        .set(data);
+      await db.collection("User").doc(getUserID).collection("note").doc(newNoteID.toString()).set(data);
     }
 
     const noteListRef = db.collection("User").doc(getUserID).collection("note");
@@ -2086,11 +1878,7 @@ router.post("/:userID/note/add", async (req, res, next) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
             i++;
-            if (
-              contactlists_temp[i - 1].lineName
-                .toLowerCase()
-                .includes(search_name.toLowerCase())
-            ) {
+            if (contactlists_temp[i - 1].lineName.toLowerCase().includes(search_name.toLowerCase())) {
               contactlists.push({
                 userID: doc.data().userID,
                 lineName: doc.data().lineName,

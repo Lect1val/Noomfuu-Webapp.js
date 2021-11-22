@@ -48,55 +48,29 @@
           <hr />
 
           <!--Appointment Card-->
-          <% if(appointmentUserLists.length > 3 ) { %> <% for(let s=0 ; s <
-          3;s++) { %>
+          <% if(appointmentUserLists.length > 3 ) { %> <% for(let s=0 ; s < 3;s++) { %>
           <div class="card shadow-sm card_style">
             <Table style="width: 100%">
               <tr>
-                <td class="state_online">
-                  <%= appointmentUserLists[s].type.toUpperCase() %>
-                </td>
-                <td class="appoint_date" style="text-align: right">
-                  <%=
-                  moment(appointmentUserLists[s].appointmentStart.toDate().toDateString())
-                  .format("ddd DD MMM YYYY") %>
-                </td>
+                <td class="state_online"><%= appointmentUserLists[s].type.toUpperCase() %></td>
+                <td class="appoint_date" style="text-align: right"><%= moment(appointmentUserLists[s].appointmentStart.toDate().toDateString()).format("ddd DD MMM YYYY") %></td>
               </tr>
               <tr>
-                <td class="appoint_user">
-                  <%= appointmentUserLists[s].lineName %>
-                </td>
-                <td class="appoint_time" style="text-align: right">
-                  <%= moment(
-                  appointmentUserLists[s].appointmentStart.toDate().toUTCString())
-                  .format('kk:mm น.')%>
-                </td>
+                <td class="appoint_user"><%= appointmentUserLists[s].lineName %></td>
+                <td class="appoint_time" style="text-align: right"><%= moment( appointmentUserLists[s].appointmentStart.toDate().toUTCString()).format('kk:mm น.')%></td>
               </tr>
             </Table>
           </div>
-          <% } %> <% }else if(appointmentUserLists.length <= 3 ) { %> <% for(let
-          s=0 ; s < appointmentUserLists.length ;s++) { %>
+          <% } %> <% }else if(appointmentUserLists.length <= 3 ) { %> <% for(let s=0 ; s < appointmentUserLists.length ;s++) { %>
           <div class="card shadow-sm card_style">
             <Table style="width: 100%">
               <tr>
-                <td class="state_online">
-                  <%= appointmentUserLists[s].type.toUpperCase() %>
-                </td>
-                <td class="appoint_date" style="text-align: right">
-                  <%=
-                  moment(appointmentUserLists[s].appointmentStart.toDate().toDateString())
-                  .format("ddd DD MMM YYYY") %>
-                </td>
+                <td class="state_online"><%= appointmentUserLists[s].type.toUpperCase() %></td>
+                <td class="appoint_date" style="text-align: right"><%= moment(appointmentUserLists[s].appointmentStart.toDate().toDateString()).format("ddd DD MMM YYYY") %></td>
               </tr>
               <tr>
-                <td class="appoint_user">
-                  <%= appointmentUserLists[s].lineName %>
-                </td>
-                <td class="appoint_time" style="text-align: right">
-                  <%= moment(
-                  appointmentUserLists[s].appointmentStart.toDate().toUTCString())
-                  .format('kk:mm น.')%>
-                </td>
+                <td class="appoint_user"><%= appointmentUserLists[s].lineName %></td>
+                <td class="appoint_time" style="text-align: right"><%= moment( appointmentUserLists[s].appointmentStart.toDate().toUTCString()).format('kk:mm น.')%></td>
               </tr>
             </Table>
           </div>
@@ -110,12 +84,8 @@
 
           <!--download .ics button-->
           <div style="text-align: right; margin-top: 1%">
-            <form
-              action="https://calendar.google.com/calendar/ical/en.th%23holiday%40group.v.calendar.google.com/public/basic.ics"
-            >
-              <button class="download_ics" type="submit" value="sync">
-                sync with your calendar
-              </button>
+            <form action="https://calendar.google.com/calendar/ical/en.th%23holiday%40group.v.calendar.google.com/public/basic.ics">
+              <button class="download_ics" type="submit" value="sync">sync with your calendar</button>
             </form>
           </div>
 
@@ -132,70 +102,42 @@
           <div class="row">
             <div class="col-md-6">
               <h2>Feeling Down</h2>
-              <% var countFeeling = 3 %> <% if(feelingDownLists.length > 3) { %>
-              <% for(let x = 0;x< 3;x++) { %> <% if(feelingDownLists[x].emotion
-              <= -5){ %>
+              <% var countFeeling = 3 %> <% if(feelingDownLists.length > 3) { %> <% for(let x = 0;x< 3;x++) { %> <% if(feelingDownLists[x].emotion <= -5){ %>
               <div class="card shadow-sm risk_card">
                 <div class="row" style="font-size: 20px">
-                  <div class="col-md-10 appoint_user">
-                    <%= feelingDownLists[x].lineName %>
-                  </div>
-                  <div class="col-md-2 text-danger" style="font-weight: 600">
-                    <%= feelingDownLists[x].emotion %>
-                  </div>
+                  <div class="col-md-10 appoint_user"><%= feelingDownLists[x].lineName %></div>
+                  <div class="col-md-2 text-danger" style="font-weight: 600"><%= feelingDownLists[x].emotion %></div>
                 </div>
               </div>
-              <% countFeeling-- %> <% } %> <% } %> <% } else
-              if(feelingDownLists.length <= 3) { %> <% for(let x = 0;x<
-              feelingDownLists.length;x++) { %> <%
-              if(feelingDownLists[x].emotion <= -5){ %>
+              <% countFeeling-- %> <% } %> <% } %> <% } else if(feelingDownLists.length <= 3) { %> <% for(let x = 0;x< feelingDownLists.length;x++) { %> <% if(feelingDownLists[x].emotion <= -5){ %>
               <div class="card shadow-sm risk_card">
                 <div class="row" style="font-size: 20px">
-                  <div class="col-md-10 appoint_user">
-                    <%= feelingDownLists[x].lineName %>
-                  </div>
-                  <div class="col-md-2 text-danger" style="font-weight: 600">
-                    <%= feelingDownLists[x].emotion %>
-                  </div>
+                  <div class="col-md-10 appoint_user"><%= feelingDownLists[x].lineName %></div>
+                  <div class="col-md-2 text-danger" style="font-weight: 600"><%= feelingDownLists[x].emotion %></div>
                 </div>
               </div>
-              <% countFeeling-- %> <% } %> <% } %> <% } %> <% if(countFeeling ==
-              0){ %>
+              <% countFeeling-- %> <% } %> <% } %> <% } %> <% if(countFeeling == 0){ %>
               <div class="card shadow-sm risk_card">
                 <div class="row" style="font-size: 20px">
-                  <div class="col-md-10 appoint_user">
-                    No Feeling Down User Now
-                  </div>
+                  <div class="col-md-10 appoint_user">No Feeling Down User Now</div>
                 </div>
               </div>
               <% } %>
             </div>
             <div class="col-md-6">
               <h2>Risk assessment result</h2>
-              <% var countRisk = 3 %> <% if(riskUserLists.length > 3) { %> <%
-              for(let x = 0;x< 3;x++) { %>
+              <% var countRisk = 3 %> <% if(riskUserLists.length > 3) { %> <% for(let x = 0;x< 3;x++) { %>
               <div class="card shadow-sm risk_card">
                 <div class="row" style="font-size: 20px">
-                  <div class="col-md-10 appoint_user">
-                    <%= riskUserLists[x].lineName %>
-                  </div>
-                  <div class="col-md-2 text-danger" style="font-weight: 600">
-                    <%= riskUserLists[x].score %> <%=
-                    riskUserLists[x].scoreTotal %>
-                  </div>
+                  <div class="col-md-10 appoint_user"><%= riskUserLists[x].lineName %></div>
+                  <div class="col-md-2 text-danger" style="font-weight: 600"><%= riskUserLists[x].score %> <%= riskUserLists[x].scoreTotal %></div>
                 </div>
               </div>
-              <% countRisk-- %> <% } %> <% } else if(feelingDownLists.length <=
-              3) { %> <% for(let x = 0;x< feelingDownLists.length;x++) { %>
+              <% countRisk-- %> <% } %> <% } else if(feelingDownLists.length <= 3) { %> <% for(let x = 0;x< feelingDownLists.length;x++) { %>
               <div class="card shadow-sm risk_card">
                 <div class="row" style="font-size: 20px">
-                  <div class="col-md-10 appoint_user">
-                    <%= riskUserLists[x].lineName %>
-                  </div>
-                  <div class="col-md-2 text-danger" style="font-weight: 600">
-                    <%= riskUserLists[x].score %> <%=
-                    riskUserLists[x].scoreTotal %>
-                  </div>
+                  <div class="col-md-10 appoint_user"><%= riskUserLists[x].lineName %></div>
+                  <div class="col-md-2 text-danger" style="font-weight: 600"><%= riskUserLists[x].score %> <%= riskUserLists[x].scoreTotal %></div>
                 </div>
               </div>
               <% countRisk-- %> <% } %> <% } %> <% if(countRisk == 0){ %>

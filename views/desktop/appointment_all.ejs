@@ -1,338 +1,290 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <%- include component/import%>
-        <style>
-            .st-bg {
-                border-left: none;
-            }
+    <style>
+      .st-bg {
+        border-left: none;
+      }
 
-            .st-dtitle {
-                border: none;
-                background: white;
-            }
+      .st-dtitle {
+        border: none;
+        background: white;
+      }
 
-            .appoint_date {
-                color: #223E63;
-                font-weight: 600;
-                font-size: 18px;
-            }
+      .appoint_date {
+        color: #223e63;
+        font-weight: 600;
+        font-size: 18px;
+      }
 
-            .appoint_time {
-                color: #223E63;
-                font-weight: 300;
-                font-size: 16px;
-            }
+      .appoint_time {
+        color: #223e63;
+        font-weight: 300;
+        font-size: 16px;
+      }
 
-            .appoint_place {
-                color: #223E63;
-                font-weight: 300;
-                font-size: 16px;
-            }
+      .appoint_place {
+        color: #223e63;
+        font-weight: 300;
+        font-size: 16px;
+      }
 
-            .appoint_online {
-                color: #2ABD4A;
-                font-weight: 700;
-                font-size: 18px;
-            }
+      .appoint_online {
+        color: #2abd4a;
+        font-weight: 700;
+        font-size: 18px;
+      }
 
-            .appoint_onsite {
-                color: #DAAA00;
-                font-weight: 700;
-                font-size: 18px;
-            }
+      .appoint_onsite {
+        color: #daaa00;
+        font-weight: 700;
+        font-size: 18px;
+      }
 
-            .appoint_ongoing {
-                color: #DAAA00;
-                font-weight: 500;
-                font-size: 16px;
-            }
+      .appoint_ongoing {
+        color: #daaa00;
+        font-weight: 500;
+        font-size: 16px;
+      }
 
-            .appoint_done {
-                color: #2ABD4A;
-                font-weight: 500;
-                font-size: 16px;
-            }
+      .appoint_done {
+        color: #2abd4a;
+        font-weight: 500;
+        font-size: 16px;
+      }
 
-            .appoint_canceled {
-                color: #E34545;
-                font-weight: 500;
-                font-size: 16px;
-            }
+      .appoint_canceled {
+        color: #e34545;
+        font-weight: 500;
+        font-size: 16px;
+      }
 
-            .modal-appoint {
-                background-color: #fefefe;
-                margin: 15% auto;
-                /* 15% from the top and centered */
-                padding: 20px;
-                border: 1px solid #888;
-                width: 60%;
-                /* Could be more or less, depending on screen size */
-            }
-        </style>
-</head>
+      .modal-appoint {
+        background-color: #fefefe;
+        margin: 15% auto;
+        /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 60%;
+        /* Could be more or less, depending on screen size */
+      }
+    </style>
+  </head>
 
-<body>
+  <body>
     <%- include component/navbar%>
-        <div class="container-fluid">
-            <div class="row">
-                <%- include component/contactList%>
-                    <div class="col-md-9">
-                        <% include component/profileNav%>
+    <div class="container-fluid">
+      <div class="row">
+        <%- include component/contactList%>
+        <div class="col-md-9">
+          <% include component/profileNav%>
 
-                            <div style="font-size: 32px; font-weight: 700; color: #6E89EA;">
-                                <%= contactlists.find(el=> el.userID === getUserID).lineName %>
-                            </div>
-                            <hr>
+          <div style="font-size: 32px; font-weight: 700; color: #6e89ea"><%= contactlists.find(el=> el.userID === getUserID).lineName %></div>
+          <hr />
 
-                            <h1>Appointment</h1>             
-                            <!--Appointment row 1-->
-                            <% var cardTop = 1 %>
-                            <% for(let x=0 ; x< appointmentOngoingLists.length;x++) { %> 
-                                <% if(cardTop==1){ %>
-                                    <% if(appointmentOngoingLists[x].type=="online"){ %>
-                                        <div class="row">
-                                            <!--Appointment Card 1-->
-                                            <div class="col-md-6">
-                                                <a href="/profile/<%= getUserID %>/appointment/<%= appointmentOngoingLists[x].appointID %>/edit">
-                                                    <div class="card shadow-sm card_style" id="myBtn<%= x %>">
-                                                        <Table
-                                                            style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
-                                                            <tr>
-                                                                <td class="appoint_date"><%= appointmentOngoingLists[x].appointmentStart.toDate().toDateString() %></td>
-                                                                <td class="appoint_online" style="text-align: right;"><%= appointmentOngoingLists[x].type.toUpperCase() %>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="appoint_time"><%= appointmentOngoingLists[x].appointmentStart.toDate().toLocaleTimeString() %></td></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="appoint_ongoing"><%= appointmentOngoingLists[x].status %></td>
-                                                                <% if(appointmentOngoingLists[x].meetingurl!=""){ %>
-                                                                    <td style="text-align: right;"><a href="https:/<%= appointmentOngoingLists[x].meetingurl %>/"><button type="button"
-                                                                        class="btn btn-light">Enter Meeting</button></a></td>
-                                                                <% }else if(appointmentOngoingLists[x].meetingurl=="") { %>
-                                                                    <td style="text-align: right;"><a href="#"><button type="button"
-                                                                        class="btn btn-light">Enter Meeting</button></a></td>
-                                                                <% } %> 
-                                                            </tr>
-                                                        </Table>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        <% cardTop++ %>
-                                    <% }else if(appointmentOngoingLists[x].type=="onsite") { %>
-                                        <div class="row">
-                                            <!--Appointment Card 1-->
-                                            <div class="col-md-6">
-                                                <a href="/profile/<%= getUserID %>/appointment/<%= appointmentOngoingLists[x].appointID %>/edit">
-                                                    <div class="card shadow-sm card_style" id="myBtn<%= x %>">
-                                                        <Table
-                                                            style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
-                                                            <tr>
-                                                                <td class="appoint_date"><%= appointmentOngoingLists[x].appointmentStart.toDate().toDateString() %></td>
-                                                                <td class="appoint_online" style="text-align: right;"><%= appointmentOngoingLists[x].type.toUpperCase() %>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="appoint_time"><%= appointmentOngoingLists[x].appointmentStart.toDate().toLocaleTimeString() %></td></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="appoint_ongoing"><%= appointmentOngoingLists[x].status %></td>
-                                                                <td class="appoint_place" style="text-align: right;">ห้องพยาบาล
-                                                                    อาคารเรียนรวม 2<br>
-                                                                    มจธ. บางมด</td>
-                                                            </tr>
-                                                        </Table>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        <% cardTop++ %>
-                                    <% } %> 
-                                <% }else if(cardTop==2) { %>
-                                    <% if(appointmentOngoingLists[x].type=="online"){ %>
-                                        <div class="col-md-6">
-                                            <a href="/profile/<%= getUserID %>/appointment/<%= appointmentOngoingLists[x].appointID %>/edit">
-                                            <div class="card shadow-sm card_style" id="myBtn<%= x %>">
-                                                <Table
-                                                    style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
-                                                    <tr>
-                                                        <td class="appoint_date"><%= appointmentOngoingLists[x].appointmentStart.toDate().toDateString() %></td>
-                                                        <td class="appoint_online" style="text-align: right;"><%= appointmentOngoingLists[x].type.toUpperCase() %>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="appoint_time"><%= appointmentOngoingLists[x].appointmentStart.toDate().toLocaleTimeString() %></td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="appoint_ongoing"><%= appointmentOngoingLists[x].status %></td>
-                                                        <% if(appointmentOngoingLists[x].meetingurl!=""){ %>
-                                                            <td style="text-align: right;"><a href="<%= appointmentOngoingLists[x].meetingurl %>"><button type="button"
-                                                                class="btn btn-light">Enter Meeting</button></a></td>
-                                                        <% }else if(appointmentOngoingLists[x].meetingurl=="") { %>
-                                                            <td style="text-align: right;"><a href="#"><button type="button"
-                                                                class="btn btn-light">Enter Meeting</button></a></td>
-                                                        <% } %> 
-                                                    </tr>
-                                                </Table>
-                                            </div>
-                                        </a>
-                                        </div>
-                                    </div>
-                                        <% cardTop=1 %>    
-                                    <% }else if(appointmentOngoingLists[x].type=="onsite") { %>
-                                        <div class="col-md-6">
-                                            <a href="/profile/<%= getUserID %>/appointment/<%= appointmentOngoingLists[x].appointID %>/edit">
-                                            <div class="card shadow-sm card_style" id="myBtn<%= x %>">
-                                                <Table
-                                                    style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
-                                                    <tr>
-                                                        <td class="appoint_date"><%= appointmentOngoingLists[x].appointmentStart.toDate().toDateString() %></td>
-                                                        <td class="appoint_online" style="text-align: right;"><%= appointmentOngoingLists[x].type.toUpperCase() %>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="appoint_time"><%= appointmentOngoingLists[x].appointmentStart.toDate().toLocaleTimeString() %></td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="appoint_ongoing"><%= appointmentOngoingLists[x].status %></td>
-                                                        <td class="appoint_place" style="text-align: right;">ห้องพยาบาล
-                                                            อาคารเรียนรวม 2<br>
-                                                            มจธ. บางมด</td>
-                                                    </tr>
-                                                </Table>
-                                            </div>
-                                        </a>
-                                        </div>
-                                    </div>
-                                        <% cardTop=1 %>
-                                    <% } %> 
-                                <% } %> 
-                            <% } %>
-                            <div id='loading'>loading...</div>
-                            <div id='calendar'></div>
-
-                            <!--download .ics button-->
-                            <div style="text-align: right; margin-top: 1%;">
-                                <form
-                                    action="https://calendar.google.com/calendar/ical/en.th%23holiday%40group.v.calendar.google.com/public/basic.ics">
-                                    <button class="download_ics" type="submit" value="sync">sync with your
-                                        calendar</button>
-                                </form>
-                            </div>
-
-                            <h1>Appointment History</h1>
-                            <hr>
-                            <% var card = 1 %>
-                            <% for(let y=0 ; y< appointmentLists.length;y++) { %>
-                                <% if(card==1){ %>
-                                    <% if(appointmentLists[y].status=="done"){ %>
-                                        <div class="row">
-                                            <!--Appointment Card 1-->
-                                            <div class="col-md-6">
-                                                
-                                                    <div class="card shadow-sm card_style">
-                                                        <Table
-                                                            style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
-                                                            <tr>
-                                                                <td class="appoint_date"><%= appointmentLists[y].appointmentStart.toDate().toDateString()%></td>
-                                                                <td class="appoint_online" style="text-align: right;"><%= appointmentLists[y].type %>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="appoint_time"><%= appointmentLists[y].appointmentStart.toDate().toLocaleTimeString() %></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="appoint_done" style="padding-top: 10px;"><%= appointmentLists[y].status %></td>
-                                                            </tr>
-                                                        </Table>
-                                                    </div>
-                                               
-                                            </div>
-                                            <% card++ %>
-                                    <% } else if(appointmentLists[y].status=="cancel") { %>    
-                                        <div class="row">
-                                            <!--Appointment Card 1-->
-                                            <div class="col-md-6">
-                                                
-                                                    <div class="card shadow-sm card_style">
-                                                        <Table
-                                                            style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
-                                                            <tr>
-                                                                <td class="appoint_date"><%= appointmentLists[y].appointmentStart.toDate().toDateString()%></td>
-                                                                <td class="appoint_online" style="text-align: right;"><%= appointmentLists[y].type %>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="appoint_time"><%= appointmentLists[y].appointmentStart.toDate().toLocaleTimeString() %></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="appoint_canceled" style="padding-top: 10px;"><%= appointmentLists[y].status %></td>
-                                                            </tr>
-                                                        </Table>
-                                                    </div>
-                                                
-                                            </div>
-                                        <% card++ %>
-                                    <% } %>
-                                <% } else if(card==2) { %>
-                                    <% if(appointmentLists[y].status=="done"){ %>
-                                        <div class="col-md-6">
-                                            
-                                                <div class="card shadow-sm card_style">
-                                                    <Table
-                                                        style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
-                                                        <tr>
-                                                            <td class="appoint_date"><%= appointmentLists[y].appointmentStart.toDate().toDateString()%></td>
-                                                            <td class="appoint_online" style="text-align: right;"><%= appointmentLists[y].type %>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="appoint_time"><%= appointmentLists[y].appointmentStart.toDate().toLocaleTimeString() %>.</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="appoint_done" style="padding-top: 10px;"><%= appointmentLists[y].status %>
-                                                            </td>
-                                                        </tr>
-                                                    </Table>
-                                                </div>
-                                          
-                                        </div>
-                                    </div>
-                                        <% card=1 %>
-                                    <% } else if(appointmentLists[y].status=="cancel") { %> 
-                                        <div class="col-md-6">
-                                      
-                                                <div class="card shadow-sm card_style">
-                                                    <Table
-                                                        style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
-                                                        <tr>
-                                                            <td class="appoint_date"><%= appointmentLists[y].appointmentStart.toDate().toDateString()%></td>
-                                                            <td class="appoint_online" style="text-align: right;"><%= appointmentLists[y].type %>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="appoint_time"><%= appointmentLists[y].appointmentStart.toDate().toLocaleTimeString() %>.</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="appoint_canceled" style="padding-top: 10px;"><%= appointmentLists[y].status %>
-                                                            </td>
-                                                        </tr>
-                                                    </Table>
-                                                </div>
-                                         
-                                        </div>
-                                    </div>
-                                           
-                                        <% card=1 %> 
-                                    <% } %>
-                                <% } %>
-                            <% } %>
+          <h1>Appointment</h1>
+          <!--Appointment row 1-->
+          <% var cardTop = 1 %> <% for(let x=0 ; x< appointmentOngoingLists.length;x++) { %> <% if(cardTop==1){ %> <% if(appointmentOngoingLists[x].type=="online"){ %>
+          <div class="row">
+            <!--Appointment Card 1-->
+            <div class="col-md-6">
+              <a href="/profile/<%= getUserID %>/appointment/<%= appointmentOngoingLists[x].appointID %>/edit">
+                <div class="card shadow-sm card_style" id="myBtn<%= x %>">
+                  <Table style="width: 100%; text-align: left; vertical-align: middle; padding: 3%">
+                    <tr>
+                      <td class="appoint_date"><%= appointmentOngoingLists[x].appointmentStart.toDate().toDateString() %></td>
+                      <td class="appoint_online" style="text-align: right"><%= appointmentOngoingLists[x].type.toUpperCase() %></td>
+                    </tr>
+                    <tr>
+                      <td class="appoint_time"><%= appointmentOngoingLists[x].appointmentStart.toDate().toLocaleTimeString() %></td>
+                    </tr>
+                    <tr>
+                      <td class="appoint_ongoing"><%= appointmentOngoingLists[x].status %></td>
+                      <% if(appointmentOngoingLists[x].meetingurl!=""){ %>
+                      <td style="text-align: right">
+                        <a href="https:/<%= appointmentOngoingLists[x].meetingurl %>/"><button type="button" class="btn btn-light">Enter Meeting</button></a>
+                      </td>
+                      <% }else if(appointmentOngoingLists[x].meetingurl=="") { %>
+                      <td style="text-align: right">
+                        <a href="#"><button type="button" class="btn btn-light">Enter Meeting</button></a>
+                      </td>
+                      <% } %>
+                    </tr>
+                  </Table>
+                </div>
+              </a>
             </div>
+            <% cardTop++ %> <% }else if(appointmentOngoingLists[x].type=="onsite") { %>
+            <div class="row">
+              <!--Appointment Card 1-->
+              <div class="col-md-6">
+                <a href="/profile/<%= getUserID %>/appointment/<%= appointmentOngoingLists[x].appointID %>/edit">
+                  <div class="card shadow-sm card_style" id="myBtn<%= x %>">
+                    <Table style="width: 100%; text-align: left; vertical-align: middle; padding: 3%">
+                      <tr>
+                        <td class="appoint_date"><%= appointmentOngoingLists[x].appointmentStart.toDate().toDateString() %></td>
+                        <td class="appoint_online" style="text-align: right"><%= appointmentOngoingLists[x].type.toUpperCase() %></td>
+                      </tr>
+                      <tr>
+                        <td class="appoint_time"><%= appointmentOngoingLists[x].appointmentStart.toDate().toLocaleTimeString() %></td>
+                      </tr>
+                      <tr>
+                        <td class="appoint_ongoing"><%= appointmentOngoingLists[x].status %></td>
+                        <td class="appoint_place" style="text-align: right">
+                          ห้องพยาบาล อาคารเรียนรวม 2<br />
+                          มจธ. บางมด
+                        </td>
+                      </tr>
+                    </Table>
+                  </div>
+                </a>
+              </div>
+              <% cardTop++ %> <% } %> <% }else if(cardTop==2) { %> <% if(appointmentOngoingLists[x].type=="online"){ %>
+              <div class="col-md-6">
+                <a href="/profile/<%= getUserID %>/appointment/<%= appointmentOngoingLists[x].appointID %>/edit">
+                  <div class="card shadow-sm card_style" id="myBtn<%= x %>">
+                    <Table style="width: 100%; text-align: left; vertical-align: middle; padding: 3%">
+                      <tr>
+                        <td class="appoint_date"><%= appointmentOngoingLists[x].appointmentStart.toDate().toDateString() %></td>
+                        <td class="appoint_online" style="text-align: right"><%= appointmentOngoingLists[x].type.toUpperCase() %></td>
+                      </tr>
+                      <tr>
+                        <td class="appoint_time"><%= appointmentOngoingLists[x].appointmentStart.toDate().toLocaleTimeString() %></td>
+                      </tr>
 
+                      <tr>
+                        <td class="appoint_ongoing"><%= appointmentOngoingLists[x].status %></td>
+                        <% if(appointmentOngoingLists[x].meetingurl!=""){ %>
+                        <td style="text-align: right">
+                          <a href="<%= appointmentOngoingLists[x].meetingurl %>"><button type="button" class="btn btn-light">Enter Meeting</button></a>
+                        </td>
+                        <% }else if(appointmentOngoingLists[x].meetingurl=="") { %>
+                        <td style="text-align: right">
+                          <a href="#"><button type="button" class="btn btn-light">Enter Meeting</button></a>
+                        </td>
+                        <% } %>
+                      </tr>
+                    </Table>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <% cardTop=1 %> <% }else if(appointmentOngoingLists[x].type=="onsite") { %>
+            <div class="col-md-6">
+              <a href="/profile/<%= getUserID %>/appointment/<%= appointmentOngoingLists[x].appointID %>/edit">
+                <div class="card shadow-sm card_style" id="myBtn<%= x %>">
+                  <Table style="width: 100%; text-align: left; vertical-align: middle; padding: 3%">
+                    <tr>
+                      <td class="appoint_date"><%= appointmentOngoingLists[x].appointmentStart.toDate().toDateString() %></td>
+                      <td class="appoint_online" style="text-align: right"><%= appointmentOngoingLists[x].type.toUpperCase() %></td>
+                    </tr>
+                    <tr>
+                      <td class="appoint_time"><%= appointmentOngoingLists[x].appointmentStart.toDate().toLocaleTimeString() %></td>
+                    </tr>
+                    <tr>
+                      <td class="appoint_ongoing"><%= appointmentOngoingLists[x].status %></td>
+                      <td class="appoint_place" style="text-align: right">
+                        ห้องพยาบาล อาคารเรียนรวม 2<br />
+                        มจธ. บางมด
+                      </td>
+                    </tr>
+                  </Table>
+                </div>
+              </a>
+            </div>
+          </div>
+          <% cardTop=1 %> <% } %> <% } %> <% } %>
+          <div id="loading">loading...</div>
+          <div id="calendar"></div>
+
+          <!--download .ics button-->
+          <div style="text-align: right; margin-top: 1%">
+            <form action="https://calendar.google.com/calendar/ical/en.th%23holiday%40group.v.calendar.google.com/public/basic.ics">
+              <button class="download_ics" type="submit" value="sync">sync with your calendar</button>
+            </form>
+          </div>
+
+          <h1>Appointment History</h1>
+          <hr />
+          <% var card = 1 %> <% for(let y=0 ; y< appointmentLists.length;y++) { %> <% if(card==1){ %> <% if(appointmentLists[y].status=="done"){ %>
+          <div class="row">
+            <!--Appointment Card 1-->
+            <div class="col-md-6">
+              <div class="card shadow-sm card_style">
+                <Table style="width: 100%; text-align: left; vertical-align: middle; padding: 3%">
+                  <tr>
+                    <td class="appoint_date"><%= appointmentLists[y].appointmentStart.toDate().toDateString()%></td>
+                    <td class="appoint_online" style="text-align: right"><%= appointmentLists[y].type %></td>
+                  </tr>
+                  <tr>
+                    <td class="appoint_time"><%= appointmentLists[y].appointmentStart.toDate().toLocaleTimeString() %></td>
+                  </tr>
+                  <tr>
+                    <td class="appoint_done" style="padding-top: 10px"><%= appointmentLists[y].status %></td>
+                  </tr>
+                </Table>
+              </div>
+            </div>
+            <% card++ %> <% } else if(appointmentLists[y].status=="cancel") { %>
+            <div class="row">
+              <!--Appointment Card 1-->
+              <div class="col-md-6">
+                <div class="card shadow-sm card_style">
+                  <Table style="width: 100%; text-align: left; vertical-align: middle; padding: 3%">
+                    <tr>
+                      <td class="appoint_date"><%= appointmentLists[y].appointmentStart.toDate().toDateString()%></td>
+                      <td class="appoint_online" style="text-align: right"><%= appointmentLists[y].type %></td>
+                    </tr>
+                    <tr>
+                      <td class="appoint_time"><%= appointmentLists[y].appointmentStart.toDate().toLocaleTimeString() %></td>
+                    </tr>
+                    <tr>
+                      <td class="appoint_canceled" style="padding-top: 10px"><%= appointmentLists[y].status %></td>
+                    </tr>
+                  </Table>
+                </div>
+              </div>
+              <% card++ %> <% } %> <% } else if(card==2) { %> <% if(appointmentLists[y].status=="done"){ %>
+              <div class="col-md-6">
+                <div class="card shadow-sm card_style">
+                  <Table style="width: 100%; text-align: left; vertical-align: middle; padding: 3%">
+                    <tr>
+                      <td class="appoint_date"><%= appointmentLists[y].appointmentStart.toDate().toDateString()%></td>
+                      <td class="appoint_online" style="text-align: right"><%= appointmentLists[y].type %></td>
+                    </tr>
+                    <tr>
+                      <td class="appoint_time"><%= appointmentLists[y].appointmentStart.toDate().toLocaleTimeString() %>.</td>
+                    </tr>
+                    <tr>
+                      <td class="appoint_done" style="padding-top: 10px"><%= appointmentLists[y].status %></td>
+                    </tr>
+                  </Table>
+                </div>
+              </div>
+            </div>
+            <% card=1 %> <% } else if(appointmentLists[y].status=="cancel") { %>
+            <div class="col-md-6">
+              <div class="card shadow-sm card_style">
+                <Table style="width: 100%; text-align: left; vertical-align: middle; padding: 3%">
+                  <tr>
+                    <td class="appoint_date"><%= appointmentLists[y].appointmentStart.toDate().toDateString()%></td>
+                    <td class="appoint_online" style="text-align: right"><%= appointmentLists[y].type %></td>
+                  </tr>
+                  <tr>
+                    <td class="appoint_time"><%= appointmentLists[y].appointmentStart.toDate().toLocaleTimeString() %></td>
+                  </tr>
+                  <tr>
+                    <td class="appoint_canceled" style="padding-top: 10px"><%= appointmentLists[y].status %></td>
+                  </tr>
+                </Table>
+              </div>
+            </div>
+          </div>
+
+          <% card=1 %> <% } %> <% } %> <% } %>
         </div>
-        </div>>
-</body>
-
+      </div>
+    </div>
+  </body>
 </html>

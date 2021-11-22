@@ -1,314 +1,319 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <%- include component/import%>
-        <style>
-            .appoint_date {
-                color: #223E63;
-                font-weight: 600;
-                font-size: 18px;
-            }
+    <style>
+      .appoint_date {
+        color: #223e63;
+        font-weight: 600;
+        font-size: 18px;
+      }
 
-            .appoint_time {
-                color: #223E63;
-                font-weight: 300;
-                font-size: 16px;
-            }
+      .appoint_time {
+        color: #223e63;
+        font-weight: 300;
+        font-size: 16px;
+      }
 
-            .appoint_place {
-                color: #223E63;
-                font-weight: 300;
-                font-size: 16px;
-            }
+      .appoint_place {
+        color: #223e63;
+        font-weight: 300;
+        font-size: 16px;
+      }
 
-            .appoint_online {
-                color: #2ABD4A;
-                font-weight: 700;
-                font-size: 18px;
-            }
+      .appoint_online {
+        color: #2abd4a;
+        font-weight: 700;
+        font-size: 18px;
+      }
 
-            .appoint_ongoing,
-            .appoint_onsite {
-                color: #DAAA00;
-                font-weight: 500;
-                font-size: 16px;
-            }
-        </style>
-</head>
+      .appoint_ongoing,
+      .appoint_onsite {
+        color: #daaa00;
+        font-weight: 500;
+        font-size: 16px;
+      }
+    </style>
+  </head>
 
-<body>
+  <body>
     <%- include component/navbar%>
-        <div class="container-fluid">
-            <div class="row">
-                <%- include component/contactList%>
+    <div class="container-fluid">
+      <div class="row">
+        <%- include component/contactList%>
 
-                    <div class="col-md-9">
-                        <% include component/profileNav%>
+        <div class="col-md-9">
+          <% include component/profileNav%>
 
-                            <div style="font-size: 32px; font-weight: 700; color: #6E89EA;"><%= contactlists.find(el => el.userID === getUserID).lineName %></div>
-                            <hr>
-                            <!--Profile Data-->
-                            
-                            <table style="width: 100%;">
-                                <tr>
-                                    <td rowspan="5" style="text-align: center;width: 30%;">
-                                        <% if(urlPic!=""){ %>
-                                            <img src="<%= urlPic%>" class="profile_crop">
-                                        <% }else if(urlPic==""){ %>
-                                            <img src="/images/user.png" class="profile_crop">
-                                        <% } %>
-                                    </td>
-                                    <td style="width: 15%;" class="data_head">Fullname : </td>
-                                    <td>
-                                        <div class="textbox shadow-sm"> <%= profileList.find(el => el.userID === getUserID).firstName %> <%= profileList.find(el => el.userID ===
-                                            getUserID).lastName %></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="data_head">Nickname : </td>
-                                    <td>
-                                        <div class="textbox shadow-sm"><%= profileList.find(el => el.userID === getUserID).nickname %></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="data_head">Tel : </td>
-                                    <td>
-                                        <div class="textbox shadow-sm"><%= profileList.find(el => el.userID ===
-                                            getUserID).TelNo %></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="data_head">Email : </td>
-                                    <td>
-                                        <div class="textbox shadow-sm"><%= profileList.find(el => el.userID ===
-                                            getUserID).Email %></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" class="data_head">Additional Information : </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td colspan="2" class="textbox shadow-sm"
-                                        style="height: 150px; vertical-align: top;">
-                                        <%= profileList.find(el => el.userID ===
-                                        getUserID).contactNote %>
-                                    </td>
-                                </tr>
-                           
-                                
-                                <tr>
-                                    <td colspan="3" style="text-align: right; padding: 2%;">
-                                        <button id="myBtn" class="btn btn-outline-primary">
-                                            <img src="/images/Edit.png"> Edit Profile
-                                        </button>
-                                        <div id="myModal" class="modal">
+          <div style="font-size: 32px; font-weight: 700; color: #6e89ea"><%= contactlists.find(el => el.userID === getUserID).lineName %></div>
+          <hr />
+          <!--Profile Data-->
 
-                                            <!-- Modal content -->
-                                            <div class="modal-content">
-                                                <span class="close">&times;</span>
-                                                <h3 style="text-align: center;">Edit Profile</h3>
-                                                <hr>
-                                                <form method="POST" action="/profile/<%= getUserID %>" id="edit_profile">
-                                                    <table style="width: 100%;">
-                                                        <tr>
-                                                            <td class="data_head">First Name</td>
-                                                            <td style="width:75%"><input type="text" class="text_field" name="new_firstName"
-                                                                    value="<%= profileList.find(el => el.userID ===
-                                                                    getUserID).firstName %>"></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="data_head">Last Name</td>
-                                                            <td style="width:75%"><input type="text" class="text_field" name="new_lastName"
-                                                                    value="<%= profileList.find(el => el.userID ===
-                                                                    getUserID).lastName %>"></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="data_head">Nickname</td>
-                                                            <td style="width:75%"><input type="text" class="text_field" name="new_nickname"
-                                                                    value="<%= profileList.find(el => el.userID === getUserID).nickname %>"></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="data_head">Tel</td>
-                                                            <td style="width:75%"><input type="text" name="new_tel"
-                                                                    class="text_field shadow-sm" value="<%= profileList.find(el => el.userID ===
-                                                                    getUserID).TelNo %>"></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="data_head">Email</td>
-                                                            <td style="width:75%"><input type="text" name="new_email"
-                                                                    class="text_field shadow-sm" value="<%= profileList.find(el => el.userID ===
-                                                                    getUserID).Email %>"></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="data_head">Additional Information</td>
-                                                            <td style="width:75%"><input type="text"  name="new_contactNote"
-                                                                    class="text_field shadow-sm" value="<%= profileList.find(el => el.userID ===
-                                                                    getUserID).contactNote %>"></td>
-                                                        </tr>
-                                                    </table>
-                                                    <div class="d-grid gap-2" style="margin:3%;">
-                                                        <button type="submit" form="edit_profile"
-                                                            class="btn btn-outline-success">
-                                                            Save
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
+          <table style="width: 100%">
+            <tr>
+              <td rowspan="5" style="text-align: center; width: 30%">
+                <% if(urlPic!=""){ %>
+                <img src="<%= urlPic%>" class="profile_crop" />
+                <% }else if(urlPic==""){ %>
+                <img src="/images/user.png" class="profile_crop" />
+                <% } %>
+              </td>
+              <td style="width: 15%" class="data_head">Fullname :</td>
+              <td>
+                <div class="textbox shadow-sm"><%= profileList.find(el => el.userID === getUserID).firstName %> <%= profileList.find(el => el.userID === getUserID).lastName %></div>
+              </td>
+            </tr>
+            <tr>
+              <td class="data_head">Nickname :</td>
+              <td>
+                <div class="textbox shadow-sm"><%= profileList.find(el => el.userID === getUserID).nickname %></div>
+              </td>
+            </tr>
+            <tr>
+              <td class="data_head">Tel :</td>
+              <td>
+                <div class="textbox shadow-sm"><%= profileList.find(el => el.userID === getUserID).TelNo %></div>
+              </td>
+            </tr>
+            <tr>
+              <td class="data_head">Email :</td>
+              <td>
+                <div class="textbox shadow-sm"><%= profileList.find(el => el.userID === getUserID).Email %></div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="data_head">Additional Information :</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td colspan="2" class="textbox shadow-sm" style="height: 150px; vertical-align: top"><%= profileList.find(el => el.userID === getUserID).contactNote %></td>
+            </tr>
 
-                                        <script>
-                                            // Get the modal
-                                            var modal = document.getElementById("myModal");
-
-                                            // Get the button that opens the modal
-                                            var btn = document.getElementById("myBtn");
-
-                                            // Get the <span> element that closes the modal
-                                            var span = document.getElementsByClassName("close")[0];
-
-                                            // When the user clicks on the button, open the modal
-                                            btn.onclick = function () {
-                                                modal.style.display = "block";
-                                            }
-
-                                            // When the user clicks on <span> (x), close the modal
-                                            span.onclick = function () {
-                                                modal.style.display = "none";
-                                            }
-
-                                            // When the user clicks anywhere outside of the modal, close it
-                                            window.onclick = function (event) {
-                                                if (event.target == modal) {
-                                                    modal.style.display = "none";
-                                                }
-                                            }
-                                            
-                                        </script>
-                                    </td>
-                                </tr>
-                                
-                            </table>
-                            
-                            <!--End of Profile Data-->
-
-                            <table>
-                                <tr style="font-weight: 600; font-size: 24px; color: #786EEA;">
-                                    <td>Emotion Summary</td>
-                                    <td>Appointment Card</td>
-                                </tr>
-                                <tr>
-                                    <!--Emotion Graph-->
-                                    <td style="vertical-align: top;">
-                                        <div>
-                                            <canvas id="myChart" style="height:40vh; width:30vw"></canvas>
-                                            <script>
-                                                let labelsList = [];
-                                                let dataList = []
-                                                let maxIndex =  0
-                                                '<% if (timeList.length <= 7){ %>'
-                                                  '<% for (var maxIndex = 0; maxIndex < timeList.length ; maxIndex++){ %>'
-                                                    labelsList[maxIndex] = '<%= timeList[maxIndex].timestamp.toDate().toDateString() %>'
-                                                    dataList[maxIndex] = '<%= emotionList[maxIndex] %>'
-                                                    maxIndex++
-                                                  '<% } %>'
-                                                '<% }else if (timeList.length > 7){ %>'
-                                                  '<% for (var maxIndex = timeList.length-7; maxIndex < timeList.length ; maxIndex++){ %>'
-                                                    labelsList[maxIndex] = '<%= timeList[maxIndex].timestamp.toDate().toDateString() %>'
-                                                    dataList[maxIndex] = '<%= emotionList[maxIndex] %>'
-                                                    maxIndex++
-                                                  '<% } %>'
-                                                '<% } %>'
-                                                 console.log(labelsList)
-                                                  var ctx = document.getElementById('myChart').getContext('2d');
-                                                  var myChart = new Chart(ctx, {
-                                                      type: 'line',
-                                                      data: {
-                                                          labels: labelsList,
-                                                          datasets: [{
-                                                              label: 'scale of user feeling',
-                                                              data: dataList,
-                                                              borderColor: [
-                                                                  'rgba(191, 186, 255, 1)'
-                                                              ],
-                                                              borderWidth: 5,
-                                                              tension: 0.3,
-                                                              fill: false,
-              
-                                                          }]
-                                                      },
-                                                      options: {
-                                                        
-                                                      },
-                                                  });
-                                              </script>
-                                        </div>
-                                    </td>
-                                    <!--End of Emotion Graph-->
-
-                                    <!--Appointment Card-->
-                                    <td style="width: 55%; text-align: center;">
-                                    <% if(appointmentOngoingLists.length > 3 ) { %>
-                                        <% for(let f=0 ; f< 3 ; f++) { %> 
-                                            <div class="card shadow-sm card_style">
-                                                <Table
-                                                    style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
-                                                    <tr>
-                                                        <td class="appoint_date"><%= moment(appointmentOngoingLists[f].appointmentStart.toDate().toDateString()).format('ddd DD MMM YYYY') %></td>
-                                                        <td class="appoint_online" style="text-align: right;"><%= appointmentOngoingLists[f].type.toUpperCase() %>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="appoint_time"><%= moment(appointmentOngoingLists[f].appointmentStart.toDate().toUTCString()).format('kk:mm น.') %></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="appoint_ongoing"><%= appointmentOngoingLists[f].status %></td>
-                                                        <% if(appointmentOngoingLists[f].meetingurl!=""){ %>
-                                                            <td style="text-align: right;"><a href="https:/<%= appointmentOngoingLists[f].meetingurl %>/"><button type="button"
-                                                                class="btn btn-light">Enter Meeting</button></a></td>
-                                                        <% }else if(appointmentOngoingLists[f].meetingurl=="") { %>
-                                                            <td style="text-align: right;"><a href="#"><button type="button"
-                                                                class="btn btn-light">Enter Meeting</button></a></td>
-                                                        <% } %> 
-                                                    </tr>
-                                                </Table>
-                                            </div>
-                                            <% } %>
-                                    <% } else if(appointmentOngoingLists.length <= 3) { %>
-                                        <% for(let f=0 ; f< appointmentOngoingLists.length ; f++) { %> 
-                                            <div class="card shadow-sm card_style">
-                                                <Table
-                                                    style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
-                                                    <tr>
-                                                        <td class="appoint_date"><%= moment(appointmentOngoingLists[f].appointmentStart.toDate().toDateString()).format('ddd DD MMM YYYY') %></td>
-                                                        <td class="appoint_online" style="text-align: right;"><%= appointmentOngoingLists[f].type.toUpperCase() %>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="appoint_time"><%= moment(appointmentOngoingLists[f].appointmentStart.toDate().toUTCString()).format('kk:mm น.') %></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="appoint_ongoing"><%= appointmentOngoingLists[f].status %></td>
-                                                        <% if(appointmentOngoingLists[f].meetingurl!=""){ %>
-                                                            <td style="text-align: right;"><a href="https:/<%= appointmentOngoingLists[f].meetingurl %>/"><button type="button"
-                                                                class="btn btn-light">Enter Meeting</button></a></td>
-                                                        <% }else if(appointmentOngoingLists[f].meetingurl=="") { %>
-                                                            <td style="text-align: right;"><a href="#"><button type="button"
-                                                                class="btn btn-light">Enter Meeting</button></a></td>
-                                                        <% } %> 
-                                                    </tr>
-                                                </Table>
-                                            </div>
-                                            <% } %>
-                                    <% } %>
-                                       
-                                    <!--End of Appointent Card-->
-                                </tr>
-                            </table>
-                    </div>
+            <tr>
+              <td colspan="3" style="text-align: right; padding: 2%">
+                <button id="myBtn" class="btn btn-outline-primary"><img src="/images/Edit.png" /> Edit Profile</button>
+                <div id="myModal" class="modal">
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h3 style="text-align: center">Edit Profile</h3>
+                    <hr />
+                    <form method="POST" action="/profile/<%= getUserID %>" id="edit_profile">
+                      <table style="width: 100%">
+                        <tr>
+                          <td class="data_head">First Name</td>
+                          <td style="width: 75%">
+                            <input
+                              type="text"
+                              class="text_field"
+                              name="new_firstName"
+                              value="<%= profileList.find(el => el.userID ===
+                                                                    getUserID).firstName %>"
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="data_head">Last Name</td>
+                          <td style="width: 75%">
+                            <input
+                              type="text"
+                              class="text_field"
+                              name="new_lastName"
+                              value="<%= profileList.find(el => el.userID ===
+                                                                    getUserID).lastName %>"
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="data_head">Nickname</td>
+                          <td style="width: 75%"><input type="text" class="text_field" name="new_nickname" value="<%= profileList.find(el => el.userID === getUserID).nickname %>" /></td>
+                        </tr>
+                        <tr>
+                          <td class="data_head">Tel</td>
+                          <td style="width: 75%">
+                            <input
+                              type="text"
+                              name="new_tel"
+                              class="text_field shadow-sm"
+                              value="<%= profileList.find(el => el.userID ===
+                                                                    getUserID).TelNo %>"
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="data_head">Email</td>
+                          <td style="width: 75%">
+                            <input
+                              type="text"
+                              name="new_email"
+                              class="text_field shadow-sm"
+                              value="<%= profileList.find(el => el.userID ===
+                                                                    getUserID).Email %>"
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="data_head">Additional Information</td>
+                          <td style="width: 75%">
+                            <input
+                              type="text"
+                              name="new_contactNote"
+                              class="text_field shadow-sm"
+                              value="<%= profileList.find(el => el.userID ===
+                                                                    getUserID).contactNote %>"
+                            />
+                          </td>
+                        </tr>
+                      </table>
+                      <div class="d-grid gap-2" style="margin: 3%">
+                        <button type="submit" form="edit_profile" class="btn btn-outline-success">Save</button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
-         
-</body>
 
+                <script>
+                  // Get the modal
+                  var modal = document.getElementById("myModal");
+
+                  // Get the button that opens the modal
+                  var btn = document.getElementById("myBtn");
+
+                  // Get the <span> element that closes the modal
+                  var span = document.getElementsByClassName("close")[0];
+
+                  // When the user clicks on the button, open the modal
+                  btn.onclick = function () {
+                    modal.style.display = "block";
+                  };
+
+                  // When the user clicks on <span> (x), close the modal
+                  span.onclick = function () {
+                    modal.style.display = "none";
+                  };
+
+                  // When the user clicks anywhere outside of the modal, close it
+                  window.onclick = function (event) {
+                    if (event.target == modal) {
+                      modal.style.display = "none";
+                    }
+                  };
+                </script>
+              </td>
+            </tr>
+          </table>
+
+          <!--End of Profile Data-->
+
+          <table>
+            <tr style="font-weight: 600; font-size: 24px; color: #786eea">
+              <td>Emotion Summary</td>
+              <td>Appointment Card</td>
+            </tr>
+            <tr>
+              <!--Emotion Graph-->
+              <td style="vertical-align: top">
+                <div>
+                  <canvas id="myChart" style="height: 40vh; width: 30vw"></canvas>
+                  <script>
+                    let labelsList = [];
+                    let dataList = [];
+                    let maxIndex = 0;
+                    ("<% if (timeList.length <= 7){ %>");
+                    ("<% for (var maxIndex = 0; maxIndex < timeList.length ; maxIndex++){ %>");
+                    labelsList[maxIndex] = "<%= timeList[maxIndex].timestamp.toDate().toDateString() %>";
+                    dataList[maxIndex] = "<%= emotionList[maxIndex] %>";
+                    maxIndex++;
+                    ("<% } %>");
+                    ("<% }else if (timeList.length > 7){ %>");
+                    ("<% for (var maxIndex = timeList.length-7; maxIndex < timeList.length ; maxIndex++){ %>");
+                    labelsList[maxIndex] = "<%= timeList[maxIndex].timestamp.toDate().toDateString() %>";
+                    dataList[maxIndex] = "<%= emotionList[maxIndex] %>";
+                    maxIndex++;
+                    ("<% } %>");
+                    ("<% } %>");
+                    console.log(labelsList);
+                    var ctx = document.getElementById("myChart").getContext("2d");
+                    var myChart = new Chart(ctx, {
+                      type: "line",
+                      data: {
+                        labels: labelsList,
+                        datasets: [
+                          {
+                            label: "scale of user feeling",
+                            data: dataList,
+                            borderColor: ["rgba(191, 186, 255, 1)"],
+                            borderWidth: 5,
+                            tension: 0.3,
+                            fill: false,
+                          },
+                        ],
+                      },
+                      options: {},
+                    });
+                  </script>
+                </div>
+              </td>
+              <!--End of Emotion Graph-->
+
+              <!--Appointment Card-->
+              <td style="width: 55%; text-align: center">
+                <% if(appointmentOngoingLists.length > 3 ) { %> <% for(let f=0 ; f< 3 ; f++) { %>
+                <div class="card shadow-sm card_style">
+                  <Table style="width: 100%; text-align: left; vertical-align: middle; padding: 3%">
+                    <tr>
+                      <td class="appoint_date"><%= moment(appointmentOngoingLists[f].appointmentStart.toDate().toDateString()).format('ddd DD MMM YYYY') %></td>
+                      <td class="appoint_online" style="text-align: right"><%= appointmentOngoingLists[f].type.toUpperCase() %></td>
+                    </tr>
+                    <tr>
+                      <td class="appoint_time"><%= moment(appointmentOngoingLists[f].appointmentStart.toDate().toUTCString()).format('kk:mm น.') %></td>
+                    </tr>
+                    <tr>
+                      <td class="appoint_ongoing"><%= appointmentOngoingLists[f].status %></td>
+                      <% if(appointmentOngoingLists[f].meetingurl!=""){ %>
+                      <td style="text-align: right">
+                        <a href="https:/<%= appointmentOngoingLists[f].meetingurl %>/"><button type="button" class="btn btn-light">Enter Meeting</button></a>
+                      </td>
+                      <% }else if(appointmentOngoingLists[f].meetingurl=="") { %>
+                      <td style="text-align: right">
+                        <a href="#"><button type="button" class="btn btn-light">Enter Meeting</button></a>
+                      </td>
+                      <% } %>
+                    </tr>
+                  </Table>
+                </div>
+                <% } %> <% } else if(appointmentOngoingLists.length <= 3) { %> <% for(let f=0 ; f< appointmentOngoingLists.length ; f++) { %>
+                <div class="card shadow-sm card_style">
+                  <Table style="width: 100%; text-align: left; vertical-align: middle; padding: 3%">
+                    <tr>
+                      <td class="appoint_date"><%= moment(appointmentOngoingLists[f].appointmentStart.toDate().toDateString()).format('ddd DD MMM YYYY') %></td>
+                      <td class="appoint_online" style="text-align: right"><%= appointmentOngoingLists[f].type.toUpperCase() %></td>
+                    </tr>
+                    <tr>
+                      <td class="appoint_time"><%= moment(appointmentOngoingLists[f].appointmentStart.toDate().toUTCString()).format('kk:mm น.') %></td>
+                    </tr>
+                    <tr>
+                      <td class="appoint_ongoing"><%= appointmentOngoingLists[f].status %></td>
+                      <% if(appointmentOngoingLists[f].meetingurl!=""){ %>
+                      <td style="text-align: right">
+                        <a href="https:/<%= appointmentOngoingLists[f].meetingurl %>/"><button type="button" class="btn btn-light">Enter Meeting</button></a>
+                      </td>
+                      <% }else if(appointmentOngoingLists[f].meetingurl=="") { %>
+                      <td style="text-align: right">
+                        <a href="#"><button type="button" class="btn btn-light">Enter Meeting</button></a>
+                      </td>
+                      <% } %>
+                    </tr>
+                  </Table>
+                </div>
+                <% } %> <% } %>
+
+                <!--End of Appointent Card-->
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

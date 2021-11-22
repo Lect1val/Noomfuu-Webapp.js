@@ -1,192 +1,142 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <%- include component/import%>
-    
-</head>
+  </head>
 
-<body>
+  <body>
     <%- include component/navbar%>
-        <div class="container-fluid">
-            <div class="row">
-                <%- include component/contactList%>
-                    <div class="col-md-9">
-                        <% include component/profileNav%>
+    <div class="container-fluid">
+      <div class="row">
+        <%- include component/contactList%>
+        <div class="col-md-9">
+          <% include component/profileNav%>
 
-                            <div style="font-size: 32px; font-weight: 700; color: #6E89EA;"><%= contactlists.find(el => el.userID === getUserID).lineName %></div>
-                            <hr>
-                            
-                            <div>
-                                <canvas id="myChart" style="height:50vh; width:80vw"></canvas>
-                                <script>
-                                  let labelsList = [];
-                                  let dataList = []
-                                  let maxIndex =  0
-                                  '<% if (timeList.length <= 14){ %>'
-                                    '<% for (var maxIndex = 0; maxIndex < timeList.length ; maxIndex++){ %>'
-                                      labelsList[maxIndex] = '<%= timeList[maxIndex].timestamp.toDate().toDateString() %>'
-                                      dataList[maxIndex] = '<%= emotionList[maxIndex] %>'
-                                      maxIndex++
-                                    '<% } %>'
-                                  '<% }else if (timeList.length > 14){ %>'
-                                    '<% for (var maxIndex = timeList.length-14; maxIndex < timeList.length ; maxIndex++){ %>'
-                                      labelsList[maxIndex] = '<%= timeList[maxIndex].timestamp.toDate().toDateString() %>'
-                                      dataList[maxIndex] = '<%= emotionList[maxIndex] %>'
-                                      maxIndex++
-                                    '<% } %>'
-                                  '<% } %>'
-                                   console.log(labelsList)
-                                    var ctx = document.getElementById('myChart').getContext('2d');
-                                    var myChart = new Chart(ctx, {
-                                        type: 'line',
-                                        data: {
-                                            labels: labelsList,
-                                            datasets: [{
-                                                label: 'scale of user feeling',
-                                                data: dataList,
-                                                borderColor: [
-                                                    'rgba(191, 186, 255, 1)'
-                                                ],
-                                                borderWidth: 5,
-                                                tension: 0.3,
-                                                fill: false,
+          <div style="font-size: 32px; font-weight: 700; color: #6e89ea"><%= contactlists.find(el => el.userID === getUserID).lineName %></div>
+          <hr />
 
-                                            }]
-                                        },
-                                        options: {
-                                          
-                                        },
-                                    });
-                                </script>
-                            </div>
+          <div>
+            <canvas id="myChart" style="height: 50vh; width: 80vw"></canvas>
+            <script>
+              let labelsList = [];
+              let dataList = [];
+              let maxIndex = 0;
+              ("<% if (timeList.length <= 14){ %>");
+              ("<% for (var maxIndex = 0; maxIndex < timeList.length ; maxIndex++){ %>");
+              labelsList[maxIndex] = "<%= timeList[maxIndex].timestamp.toDate().toDateString() %>";
+              dataList[maxIndex] = "<%= emotionList[maxIndex] %>";
+              maxIndex++;
+              ("<% } %>");
+              ("<% }else if (timeList.length > 14){ %>");
+              ("<% for (var maxIndex = timeList.length-14; maxIndex < timeList.length ; maxIndex++){ %>");
+              labelsList[maxIndex] = "<%= timeList[maxIndex].timestamp.toDate().toDateString() %>";
+              dataList[maxIndex] = "<%= emotionList[maxIndex] %>";
+              maxIndex++;
+              ("<% } %>");
+              ("<% } %>");
+              console.log(labelsList);
+              var ctx = document.getElementById("myChart").getContext("2d");
+              var myChart = new Chart(ctx, {
+                type: "line",
+                data: {
+                  labels: labelsList,
+                  datasets: [
+                    {
+                      label: "scale of user feeling",
+                      data: dataList,
+                      borderColor: ["rgba(191, 186, 255, 1)"],
+                      borderWidth: 5,
+                      tension: 0.3,
+                      fill: false,
+                    },
+                  ],
+                },
+                options: {},
+              });
+            </script>
+          </div>
 
-                            <h1>Chat History</h1>
-                            <hr>
-                            <table class="chat_history_table">
-                                <tr style="color: #786EEA; background-color: #E3E1F7; font-size: 24px;">
-                                    <th>Date</th>
-                                    <th>Content</th>
-                                    <th>State</th>
-                                </tr>
-                                <!--Begining of Chat Loop-->
-                                <% for(let x = 0 ; x< chatList.length;x++) {%>
-                                  <tr>
-                                    <% if(x==0) {%>
-                                    <td id="chat_date">
-                                      <%= chatList[x].timestamp.toDate().toDateString() %>
-                                    </td>
-                                    <% } else if(chatList[x].timestamp.toDate().toDateString() !=
-                                    chatList[x-1].timestamp.toDate().toDateString()) { %>
-                                    <td id="chat_date">
-                                      <%= chatList[x].timestamp.toDate().toDateString() %>
-                                    </td>
-                                    <% }else if(chatList[x].timestamp.toDate().toDateString() ==
-                                    chatList[x-1].timestamp.toDate().toDateString()) { %>
-                                    <td id="chat_date"></td>
-                                    <% } %>
-                                    <td id="chat_content" style="text-align: left">
-                                      <%= chatList[x].content %>
-                                    </td>
-                                    <td id="chat_state" class="chat_list">
-                                      <% if(chatList[x].emotion == "-1"){ %>
-                                      <button type="button" class="btn btn_negative">
-                                        Negative
-                                      </button>
-                                      <% }else if(chatList[x].emotion == "1"){ %>
-                                      <button type="button" class="btn btn_positive">
-                                        Positive
-                                      </button>
-                                      <% } %>
-                                    </td>
-                                  </tr>
-                                  <%} %>
-                                <!--Ending of chat Loop-->
-                            </table>
-                            <div style="text-align: right; margin: 1%;"><a href="/profile/<%= getUserID %>/chat">see all chat history</a></div>
+          <h1>Chat History</h1>
+          <hr />
+          <table class="chat_history_table">
+            <tr style="color: #786eea; background-color: #e3e1f7; font-size: 24px">
+              <th>Date</th>
+              <th>Content</th>
+              <th>State</th>
+            </tr>
+            <!--Begining of Chat Loop-->
+            <% for(let x = 0 ; x< chatList.length;x++) {%>
+            <tr>
+              <% if(x==0) {%>
+              <td id="chat_date"><%= chatList[x].timestamp.toDate().toDateString() %></td>
+              <% } else if(chatList[x].timestamp.toDate().toDateString() != chatList[x-1].timestamp.toDate().toDateString()) { %>
+              <td id="chat_date"><%= chatList[x].timestamp.toDate().toDateString() %></td>
+              <% }else if(chatList[x].timestamp.toDate().toDateString() == chatList[x-1].timestamp.toDate().toDateString()) { %>
+              <td id="chat_date"></td>
+              <% } %>
+              <td id="chat_content" style="text-align: left"><%= chatList[x].content %></td>
+              <td id="chat_state" class="chat_list">
+                <% if(chatList[x].emotion == "-1"){ %>
+                <button type="button" class="btn btn_negative">Negative</button>
+                <% }else if(chatList[x].emotion == "1"){ %>
+                <button type="button" class="btn btn_positive">Positive</button>
+                <% } %>
+              </td>
+            </tr>
+            <%} %>
+            <!--Ending of chat Loop-->
+          </table>
+          <div style="text-align: right; margin: 1%"><a href="/profile/<%= getUserID %>/chat">see all chat history</a></div>
 
-                            <h1>Depression Assessment</h1>
-                            <hr>
-                            <table class="chat_history_table">
-                                <tr style="color: #786EEA; background-color: #E3E1F7; font-size: 24px;">
-                                    <th style="width: 30%;">Time</th>
-                                    <th style="width: 20%;">Type</th>
-                                    <th colspan="3">Result</th>
-                                    <th>State</th>
-                                </tr>
-                                <!--Begining of Assessment Loop-->
-                                <% for(let i = 0 ; i< assessmentList.length;i++) {%> <%
-                                    if(assessmentList[i].type == "dass"){ %>
-                                    <tr>
-                                      <td id="assess_date">
-                                        <%= assessmentList[i].timestamp.toDate().toDateString() %> <%=
-                                        assessmentList[i].timestamp.toDate().toLocaleTimeString() %>
-                                      </td>
-                                      <td id="assess_type">
-                                        <%= assessmentList[i].type.toUpperCase() %>
-                                      </td>
-                                      <td id="Dscore" class="chat_list">
-                                        D = <%= assessmentList[i].Dscore %>
-                                      </td>
-                                      <td id="Ascore" class="chat_list">
-                                        A = <%= assessmentList[i].Ascore %>
-                                      </td>
-                                      <td id="Sscore" class="chat_list">
-                                        S = <%= assessmentList[i].Sscore %>
-                                      </td>
-                                      <td id="chat_state" class="chat_list">
-                                        <% if(assessmentList[i].status == "Safe"){ %>
-                                        <button type="button" class="btn btn_positive">
-                                          <%= assessmentList[i].status %>
-                                        </button>
-                                        <% }else if(assessmentList[i].status == "Follow"){ %>
-                                        <button type="button" class="btn btn_neutral">
-                                          <%= assessmentList[i].status %>
-                                        </button>
-                                        <% }else if(assessmentList[i].status == "Danger"){ %>
-                                        <button type="button" class="btn btn_negative">
-                                          <%= assessmentList[i].status %>
-                                        </button>
-                                        <% }%>
-                                      </td>
-                                    </tr>
-                                    <% }else if(assessmentList[i].type == "depress"){ %>
-                                    <tr>
-                                      <td id="assess_date">
-                                        <%= assessmentList[i].timestamp.toDate().toDateString() %> <%=
-                                        assessmentList[i].timestamp.toDate().toLocaleTimeString() %>
-                                      </td>
-                                      <td id="chat_content">
-                                        <%= assessmentList[i].type[0].toUpperCase() +
-                                        assessmentList[i].type.substr(1).toLowerCase()+"ion" %>
-                                      </td>
-                                      <td id="chat_state" class="chat_list" colspan="3">
-                                        <%= assessmentList[i].score %>
-                                      </td>
-                                      <td id="chat_state" class="chat_list">
-                                        <% if(assessmentList[i].status == "Safe"){ %>
-                                        <button type="button" class="btn btn_positive">
-                                          <%= assessmentList[i].status %>
-                                        </button>
-                                        <% }else if(assessmentList[i].status == "Follow"){ %>
-                                        <button type="button" class="btn btn_neutral">
-                                          <%= assessmentList[i].status %>
-                                        </button>
-                                        <% }else if(assessmentList[i].status == "Danger"){ %>
-                                        <button type="button" class="btn btn_negative">
-                                          <%= assessmentList[i].status %>
-                                        </button>
-                                        <% }%>
-                                      </td>
-                                    </tr>
-                                    <% }%>
-                                <%} %>
-                               
-                                <!--Ending of chat Loop-->
-                            </table>
-                            <div style="text-align: right; margin: 1%;"><a href="/profile/<%= getUserID %>/assessment">see all assessment history</a></div>
+          <h1>Depression Assessment</h1>
+          <hr />
+          <table class="chat_history_table">
+            <tr style="color: #786eea; background-color: #e3e1f7; font-size: 24px">
+              <th style="width: 30%">Time</th>
+              <th style="width: 20%">Type</th>
+              <th colspan="3">Result</th>
+              <th>State</th>
+            </tr>
+            <!--Begining of Assessment Loop-->
+            <% for(let i = 0 ; i< assessmentList.length;i++) {%> <% if(assessmentList[i].type == "dass"){ %>
+            <tr>
+              <td id="assess_date"><%= assessmentList[i].timestamp.toDate().toDateString() %> <%= assessmentList[i].timestamp.toDate().toLocaleTimeString() %></td>
+              <td id="assess_type"><%= assessmentList[i].type.toUpperCase() %></td>
+              <td id="Dscore" class="chat_list">D = <%= assessmentList[i].Dscore %></td>
+              <td id="Ascore" class="chat_list">A = <%= assessmentList[i].Ascore %></td>
+              <td id="Sscore" class="chat_list">S = <%= assessmentList[i].Sscore %></td>
+              <td id="chat_state" class="chat_list">
+                <% if(assessmentList[i].status == "Safe"){ %>
+                <button type="button" class="btn btn_positive"><%= assessmentList[i].status %></button>
+                <% }else if(assessmentList[i].status == "Follow"){ %>
+                <button type="button" class="btn btn_neutral"><%= assessmentList[i].status %></button>
+                <% }else if(assessmentList[i].status == "Danger"){ %>
+                <button type="button" class="btn btn_negative"><%= assessmentList[i].status %></button>
+                <% }%>
+              </td>
+            </tr>
+            <% }else if(assessmentList[i].type == "depress"){ %>
+            <tr>
+              <td id="assess_date"><%= assessmentList[i].timestamp.toDate().toDateString() %> <%= assessmentList[i].timestamp.toDate().toLocaleTimeString() %></td>
+              <td id="chat_content"><%= assessmentList[i].type[0].toUpperCase() + assessmentList[i].type.substr(1).toLowerCase()+"ion" %></td>
+              <td id="chat_state" class="chat_list" colspan="3"><%= assessmentList[i].score %></td>
+              <td id="chat_state" class="chat_list">
+                <% if(assessmentList[i].status == "Safe"){ %>
+                <button type="button" class="btn btn_positive"><%= assessmentList[i].status %></button>
+                <% }else if(assessmentList[i].status == "Follow"){ %>
+                <button type="button" class="btn btn_neutral"><%= assessmentList[i].status %></button>
+                <% }else if(assessmentList[i].status == "Danger"){ %>
+                <button type="button" class="btn btn_negative"><%= assessmentList[i].status %></button>
+                <% }%>
+              </td>
+            </tr>
+            <% }%> <%} %>
 
-                    </div>
-</body>
-
+            <!--Ending of chat Loop-->
+          </table>
+          <div style="text-align: right; margin: 1%"><a href="/profile/<%= getUserID %>/assessment">see all assessment history</a></div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

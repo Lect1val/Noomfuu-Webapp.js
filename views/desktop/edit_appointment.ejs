@@ -1,216 +1,240 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <%- include component/import%>
-        <style>
-            .st-bg {
-                border-left: none;
-            }
+    <style>
+      .st-bg {
+        border-left: none;
+      }
 
-            .st-dtitle {
-                border: none;
-                background: white;
-            }
+      .st-dtitle {
+        border: none;
+        background: white;
+      }
 
-            .appoint_date {
-                color: #223E63;
-                font-weight: 600;
-                font-size: 18px;
-            }
+      .appoint_date {
+        color: #223e63;
+        font-weight: 600;
+        font-size: 18px;
+      }
 
-            .appoint_time {
-                color: #223E63;
-                font-weight: 300;
-                font-size: 16px;
-            }
+      .appoint_time {
+        color: #223e63;
+        font-weight: 300;
+        font-size: 16px;
+      }
 
-            .appoint_place {
-                color: #223E63;
-                font-weight: 300;
-                font-size: 16px;
-            }
+      .appoint_place {
+        color: #223e63;
+        font-weight: 300;
+        font-size: 16px;
+      }
 
-            .appoint_online {
-                color: #2ABD4A;
-                font-weight: 700;
-                font-size: 18px;
-            }
+      .appoint_online {
+        color: #2abd4a;
+        font-weight: 700;
+        font-size: 18px;
+      }
 
-            .appoint_onsite {
-                color: #DAAA00;
-                font-weight: 700;
-                font-size: 18px;
-            }
+      .appoint_onsite {
+        color: #daaa00;
+        font-weight: 700;
+        font-size: 18px;
+      }
 
-            .appoint_ongoing {
-                color: #DAAA00;
-                font-weight: 500;
-                font-size: 16px;
-            }
+      .appoint_ongoing {
+        color: #daaa00;
+        font-weight: 500;
+        font-size: 16px;
+      }
 
-            .appoint_done {
-                color: #2ABD4A;
-                font-weight: 500;
-                font-size: 16px;
-            }
+      .appoint_done {
+        color: #2abd4a;
+        font-weight: 500;
+        font-size: 16px;
+      }
 
-            .appoint_canceled {
-                color: #E34545;
-                font-weight: 500;
-                font-size: 16px;
-            }
+      .appoint_canceled {
+        color: #e34545;
+        font-weight: 500;
+        font-size: 16px;
+      }
 
-            .modal-appoint {
-                background-color: #fefefe;
-                margin: 15% auto;
-                /* 15% from the top and centered */
-                padding: 20px;
-                border: 1px solid #888;
-                width: 60%;
-                /* Could be more or less, depending on screen size */
-            }
-        </style>
-</head>
+      .modal-appoint {
+        background-color: #fefefe;
+        margin: 15% auto;
+        /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 60%;
+        /* Could be more or less, depending on screen size */
+      }
+    </style>
+  </head>
 
-<body>
+  <body>
     <%- include component/navbar%>
-        <div class="container-fluid">
-            <div class="row">
-                <%- include component/contactList%>
-                    <div class="col-md-9">
-                        <% include component/profileNav%>
+    <div class="container-fluid">
+      <div class="row">
+        <%- include component/contactList%>
+        <div class="col-md-9">
+          <% include component/profileNav%>
 
-                            <div style="font-size: 32px; font-weight: 700; color: #6E89EA;">
-                                <%= contactlists.find(el=> el.userID === getUserID).lineName %>
-                            </div>
-                            <hr>
+          <div style="font-size: 32px; font-weight: 700; color: #6e89ea"><%= contactlists.find(el=> el.userID === getUserID).lineName %></div>
+          <hr />
 
-                            <h1>Edit Appointment</h1>
-                            <!-- <div class="modal-appoint"> -->
-                                <% if(appointLists.find(el => el.appointID === getAppointID).type=="online") { %>
-                                    <form method="POST" action="/profile/<%= getUserID %>/appointment/<%= getAppointID %>" id="edit_profile">
-                                        <table style="width: 100%;">
-                                            <tr>
-                                                <td class="data_head">Appointment Date</td>
-                                                <td style="width:75%"><input type="date"
-                                                        class="text_field shadow-sm" name="new_date"
-                                                        id="date" required value="<%= moment(appointLists.find(el => el.appointID === getAppointID).appointmentStart.toDate().toDateString()).format('YYYY-MM-DD') %>"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="data_head">Start Time</td>
-                                                <td style="width:75%"><input type="time"
-                                                        class="text_field shadow-sm" name="new_starttime"
-                                                        id="starttime" required value="<%= moment(appointLists.find(el => el.appointID === getAppointID).appointmentStart.toDate().toUTCString()).format('kk:mm')%>"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="data_head">End Time</td>
-                                                <td style="width:75%"><input type="time"
-                                                        class="text_field shadow-sm" name="new_endtime"
-                                                        id="endtime" required value="<%= moment(appointLists.find(el => el.appointID === getAppointID).appointmentEnd.toDate().toUTCString()).format('kk:mm')%>"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="data_head">meeting link</td>
-                                                    <td style="width:75%"><input type="text" class="text_field shadow-sm" name="new_link"
-                                                        value="<%= appointLists.find(el => el.appointID === getAppointID).meetingurl %>"></td>
-                                                    <!-- <td style="width:75%"><input type="text" class="text_field shadow-sm" name="new_link"
+          <h1>Edit Appointment</h1>
+          <!-- <div class="modal-appoint"> -->
+          <% if(appointLists.find(el => el.appointID === getAppointID).type=="online") { %>
+          <form method="POST" action="/profile/<%= getUserID %>/appointment/<%= getAppointID %>" id="edit_profile">
+            <table style="width: 100%">
+              <tr>
+                <td class="data_head">Appointment Date</td>
+                <td style="width: 75%">
+                  <input
+                    type="date"
+                    class="text_field shadow-sm"
+                    name="new_date"
+                    id="date"
+                    required
+                    value="<%= moment(appointLists.find(el => el.appointID === getAppointID).appointmentStart.toDate().toDateString()).format('YYYY-MM-DD') %>"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td class="data_head">Start Time</td>
+                <td style="width: 75%">
+                  <input
+                    type="time"
+                    class="text_field shadow-sm"
+                    name="new_starttime"
+                    id="starttime"
+                    required
+                    value="<%= moment(appointLists.find(el => el.appointID === getAppointID).appointmentStart.toDate().toUTCString()).format('kk:mm')%>"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td class="data_head">End Time</td>
+                <td style="width: 75%">
+                  <input
+                    type="time"
+                    class="text_field shadow-sm"
+                    name="new_endtime"
+                    id="endtime"
+                    required
+                    value="<%= moment(appointLists.find(el => el.appointID === getAppointID).appointmentEnd.toDate().toUTCString()).format('kk:mm')%>"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td class="data_head">meeting link</td>
+                <td style="width: 75%"><input type="text" class="text_field shadow-sm" name="new_link" value="<%= appointLists.find(el => el.appointID === getAppointID).meetingurl %>" /></td>
+                <!-- <td style="width:75%"><input type="text" class="text_field shadow-sm" name="new_link"
                                                         value=""></td> -->
-                                            </tr>
-                                            <tr>
-                                                <td class="data_head">channel</td>
-                                                <td style="width:75%">
-                                                    <select class="text_field shadow-sm" id="type"
-                                                        name="new_type">
-                                                        <option value="online" selected>Online</option>
-                                                        <option value="onsite">On site ที่มหาวิทยาลัย</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="data_head">status</td>
-                                                <td style="width:75%">
-                                                    <select class="text_field shadow-sm" id="status"
-                                                        name="new_status">
-                                                        <option value="ongoing" selected>ongoing</option>
-                                                        <option value="done">done</option>
-                                                        <option value="cancle">cancle</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <div class="d-grid gap-2" style="margin:3%;">
-                                            <button type="submit" form="edit_profile"
-                                                class="btn btn-outline-success">
-                                                Save
-                                            </button>
-                                        </div>
-                                    </form>
-                                <% } else if(appointLists.find(el => el.appointID === getAppointID).type=="onsite") { %>
-                                    <form method="POST" action="/profile/<%= getUserID %>/appointment/<%= getAppointID %>" id="edit_profile">
-                                        <table style="width: 100%;">
-                                            <tr>
-                                                <td class="data_head">Appointment Date</td>
-                                                <td style="width:75%"><input type="date"
-                                                        class="text_field shadow-sm" name="new_date"
-                                                        id="date" required value="<%= moment(appointLists.find(el => el.appointID === getAppointID).appointmentStart.toDate().toDateString()).format('YYYY-MM-DD') %>"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="data_head">Start Time</td>
-                                                <td style="width:75%"><input type="time"
-                                                        class="text_field shadow-sm" name="new_starttime"
-                                                        id="starttime" required value="<%= moment(appointLists.find(el => el.appointID === getAppointID).appointmentStart.toDate().toUTCString()).format('kk:mm')%>"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="data_head">End Time</td>
-                                                <td style="width:75%"><input type="time"
-                                                        class="text_field shadow-sm" name="new_endtime"
-                                                        id="endtime" required value="<%= moment(appointLists.find(el => el.appointID === getAppointID).appointmentEnd.toDate().toUTCString()).format('kk:mm')%>"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="data_head">meeting link</td>
-                                                    <td style="width:75%"><input type="text" class="text_field shadow-sm" name="new_link"
-                                                        value="" ></td>
-                                                    <!-- <td style="width:75%"><input type="text" class="text_field shadow-sm" name="new_link"
-                                                        value=""></td> -->
-                                            </tr>
-                                            <tr>
-                                                <td class="data_head">channel</td>
-                                                <td style="width:75%">
-                                                    <select class="text_field shadow-sm" id="type"
-                                                        name="new_type">
-                                                        <option value="online" >Online</option>
-                                                        <option value="onsite"selected >On site ที่มหาวิทยาลัย</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="data_head">status</td>
-                                                <td style="width:75%">
-                                                    <select class="text_field shadow-sm" id="status"
-                                                        name="new_status">
-                                                        <option value="ongoing" selected>ongoing</option>
-                                                        <option value="done">done</option>
-                                                        <option value="cancle">cancle</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <div class="d-grid gap-2" style="margin:3%;">
-                                            <button type="submit" form="edit_profile"
-                                                class="btn btn-outline-success">
-                                                Save
-                                            </button>
-                                        </div>
-                                    </form>
-
-                                <% } %>  
-                                
-                            <!-- </div> -->
-                        </div>
-
-                    </div>
+              </tr>
+              <tr>
+                <td class="data_head">channel</td>
+                <td style="width: 75%">
+                  <select class="text_field shadow-sm" id="type" name="new_type">
+                    <option value="online" selected>Online</option>
+                    <option value="onsite">On site ที่มหาวิทยาลัย</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td class="data_head">status</td>
+                <td style="width: 75%">
+                  <select class="text_field shadow-sm" id="status" name="new_status">
+                    <option value="ongoing" selected>ongoing</option>
+                    <option value="done">done</option>
+                    <option value="cancle">cancle</option>
+                  </select>
+                </td>
+              </tr>
+            </table>
+            <div class="d-grid gap-2" style="margin: 3%">
+              <button type="submit" form="edit_profile" class="btn btn-outline-success">Save</button>
             </div>
-        </div>>
-</body>
+          </form>
+          <% } else if(appointLists.find(el => el.appointID === getAppointID).type=="onsite") { %>
+          <form method="POST" action="/profile/<%= getUserID %>/appointment/<%= getAppointID %>" id="edit_profile">
+            <table style="width: 100%">
+              <tr>
+                <td class="data_head">Appointment Date</td>
+                <td style="width: 75%">
+                  <input
+                    type="date"
+                    class="text_field shadow-sm"
+                    name="new_date"
+                    id="date"
+                    required
+                    value="<%= moment(appointLists.find(el => el.appointID === getAppointID).appointmentStart.toDate().toDateString()).format('YYYY-MM-DD') %>"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td class="data_head">Start Time</td>
+                <td style="width: 75%">
+                  <input
+                    type="time"
+                    class="text_field shadow-sm"
+                    name="new_starttime"
+                    id="starttime"
+                    required
+                    value="<%= moment(appointLists.find(el => el.appointID === getAppointID).appointmentStart.toDate().toUTCString()).format('kk:mm')%>"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td class="data_head">End Time</td>
+                <td style="width: 75%">
+                  <input
+                    type="time"
+                    class="text_field shadow-sm"
+                    name="new_endtime"
+                    id="endtime"
+                    required
+                    value="<%= moment(appointLists.find(el => el.appointID === getAppointID).appointmentEnd.toDate().toUTCString()).format('kk:mm')%>"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td class="data_head">meeting link</td>
+                <td style="width: 75%"><input type="text" class="text_field shadow-sm" name="new_link" value="" /></td>
+                <!-- <td style="width:75%"><input type="text" class="text_field shadow-sm" name="new_link"
+                                                        value=""></td> -->
+              </tr>
+              <tr>
+                <td class="data_head">channel</td>
+                <td style="width: 75%">
+                  <select class="text_field shadow-sm" id="type" name="new_type">
+                    <option value="online">Online</option>
+                    <option value="onsite" selected>On site ที่มหาวิทยาลัย</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td class="data_head">status</td>
+                <td style="width: 75%">
+                  <select class="text_field shadow-sm" id="status" name="new_status">
+                    <option value="ongoing" selected>ongoing</option>
+                    <option value="done">done</option>
+                    <option value="cancle">cancle</option>
+                  </select>
+                </td>
+              </tr>
+            </table>
+            <div class="d-grid gap-2" style="margin: 3%">
+              <button type="submit" form="edit_profile" class="btn btn-outline-success">Save</button>
+            </div>
+          </form>
 
+          <% } %>
+
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

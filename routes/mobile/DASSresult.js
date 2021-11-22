@@ -77,12 +77,7 @@ router.get("/", async (req, res, next) => {
         status: statusRecord,
       };
       //db.collection('Assessment').add(data);
-      await db
-        .collection("User")
-        .doc(userID)
-        .collection("assessment")
-        .doc("1")
-        .set(data);
+      await db.collection("User").doc(userID).collection("assessment").doc("1").set(data);
     } else if (oldAssessment[0] != undefined) {
       const newAssessmentID = Number(oldAssessment[0].assessmentID) + 1;
       const data = {
@@ -96,12 +91,7 @@ router.get("/", async (req, res, next) => {
         timestamp: FieldValue.serverTimestamp(),
       };
       //db.collection('Assessment').add(data);
-      await db
-        .collection("User")
-        .doc(userID)
-        .collection("assessment")
-        .doc(newAssessmentID.toString())
-        .set(data);
+      await db.collection("User").doc(userID).collection("assessment").doc(newAssessmentID.toString()).set(data);
     }
   }
 

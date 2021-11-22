@@ -7,28 +7,25 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/", async (req, res, next) => {
-  var username = req.body.username
-  var password = req.body.password
+  var username = req.body.username;
+  var password = req.body.password;
   var loginstatus = "";
 
   const contactListRef = db.collection("User");
-    const contactlists = [];
+  const contactlists = [];
 
-
-  const adminsRef = db.collection('Admin');
-  const snapshot = await adminsRef.where('username', '==', username).get();
+  const adminsRef = db.collection("Admin");
+  const snapshot = await adminsRef.where("username", "==", username).get();
 
   if (snapshot.empty) {
-    loginstatus = "No_user"
+    loginstatus = "No_user";
     console.log(loginstatus);
     res.render("desktop/login");
   }
 
-
-  snapshot.forEach(async doc => {
-    doc.adminid, '=>', doc.data();
+  snapshot.forEach(async (doc) => {
+    doc.adminid, "=>", doc.data();
     if (doc.data().password == password) {
-
       await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
           if (doc.data().nickName != null && doc.data().nickName != "") {
@@ -43,17 +40,14 @@ router.post("/", async (req, res, next) => {
       res.render("desktop/index", {
         contactlists,
       });
-      loginstatus = "success"
+      loginstatus = "success";
     } else {
-      console.log(username + ',' + password)
+      console.log(username + "," + password);
       res.render("desktop/login");
-      loginstatus = "wrong_password"
+      loginstatus = "wrong_password";
     }
-    console.log(loginstatus)
+    console.log(loginstatus);
   });
-
 });
-
-
 
 module.exports = router;

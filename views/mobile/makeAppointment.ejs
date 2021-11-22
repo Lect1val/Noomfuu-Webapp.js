@@ -1,128 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Make an Appointment</title>
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <style>
-        html {
-            background: url(/images/BG-375-667.png) no-repeat center center fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
-        }
+      html {
+        background: url(/images/BG-375-667.png) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
 
-        body {
-            font-family: "Kanit", sans-serif;
-        }
+      body {
+        font-family: "Kanit", sans-serif;
+      }
 
-        h1 {
-            color: #223e63;
-            font-weight: 600;
-            font-size: 35px;
-            line-height: 80%;
-            text-align: center;
-        }
+      h1 {
+        color: #223e63;
+        font-weight: 600;
+        font-size: 35px;
+        line-height: 80%;
+        text-align: center;
+      }
 
-        h2 {
-            color: #223e63;
-            font-weight: 200;
-            font-size: 18px;
-            padding: 0% 10% 5% 10%;
-            text-align: center;
-        }
+      h2 {
+        color: #223e63;
+        font-weight: 200;
+        font-size: 18px;
+        padding: 0% 10% 5% 10%;
+        text-align: center;
+      }
 
-        h3 {
-            color: #223e63;
-            font-weight: 300;
-            font-size: 20px;
-        }
+      h3 {
+        color: #223e63;
+        font-weight: 300;
+        font-size: 20px;
+      }
 
-        a {
-            text-decoration: none;
-        }
+      a {
+        text-decoration: none;
+      }
 
-        a:hover {
-            text-decoration: none;
-            color: #ab94e9;
-        }
+      a:hover {
+        text-decoration: none;
+        color: #ab94e9;
+      }
 
-        .content_box {
-            position: fixed;
-            left: 50%;
-            bottom: 50px;
-            transform: translate(-50%, -50%);
-            margin: 0 auto;
+      .content_box {
+        position: fixed;
+        left: 50%;
+        bottom: 50px;
+        transform: translate(-50%, -50%);
+        margin: 0 auto;
 
-            background-color: white;
+        background-color: white;
 
-            text-align: center;
-            border: none;
-            width: 80%;
-            padding: 3%;
-            margin: auto;
-            /* box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25); */
-            border-radius: 10px;
-            font-family: "Kanit", sans-serif;
-            word-wrap: break-word;
-            /* display: none; */
-
-        }
+        text-align: center;
+        border: none;
+        width: 80%;
+        padding: 3%;
+        margin: auto;
+        /* box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25); */
+        border-radius: 10px;
+        font-family: "Kanit", sans-serif;
+        word-wrap: break-word;
+        /* display: none; */
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <script>
+      var userProfile = null;
+      var displayName = null;
+      var statusMessage = null;
+      var pictureUrl = null;
 
-        var userProfile = null;
-        var displayName = null;
-        var statusMessage = null;
-        var pictureUrl = null;
+      function runApp() {
+        liff
+          .getProfile()
+          .then((profile) => {
+            userProfile = profile.userId;
+            displayName = profile.displayName;
+            statusMessage = profile.statusMessage;
+            pictureUrl = profile.pictureUrl;
+            console.log("run" + userProfile + displayName);
+          })
+          .catch((err) => console.error(err));
+      }
 
-        function runApp() {
-            liff.getProfile().then(profile => {
-                userProfile = profile.userId;
-                displayName = profile.displayName;
-                statusMessage = profile.statusMessage;
-                pictureUrl = profile.pictureUrl;
-                console.log('run' + userProfile + displayName)
-            }).catch(
-                err => console.error(err)
-            );
-        }
+      liff.init(
+        { liffId: "1655710592-pB69YqQ7" },
+        () => {
+          if (liff.isLoggedIn() /*&& userProfile != null*/) {
+            runApp();
+          } else {
+            liff.login();
+          }
+        },
+        (err) => console.error(err.code, error.message)
+      );
+      if (userProfile != null) {
+        console.log(userProfile);
+      } else {
+        console.log("null");
+      }
 
-        liff.init({ liffId: "1655710592-pB69YqQ7" }, () => {
-            if (liff.isLoggedIn() /*&& userProfile != null*/) {
-                runApp();
-            } else {
-                liff.login();
-            }
-
-
-        }, err => console.error(err.code, error.message));
-        if (userProfile != null) {
-            console.log(userProfile);
-        } else {
-            console.log("null")
-        }
-
-        function nextGoogle() {
-            window.location.href = "/appointment/googleAdd";
-        }
-        function next() {
-            window.location.href = "/appointment/add?id=" + userProfile;
-        }
+      function nextGoogle() {
+        window.location.href = "/appointment/googleAdd";
+      }
+      function next() {
+        window.location.href = "/appointment/add?id=" + userProfile;
+      }
     </script>
 
-    <div style="padding-top: 8%;">
-        <h1>Make Appointment</h1>
+    <div style="padding-top: 8%">
+      <h1>Make Appointment</h1>
     </div>
-    <div class="content_box"><a onclick='next()'>เริ่มการนัดหมาย</a></div>
-</body>
-
+    <div class="content_box"><a onclick="next()">เริ่มการนัดหมาย</a></div>
+  </body>
 </html>

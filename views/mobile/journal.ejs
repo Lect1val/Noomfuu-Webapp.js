@@ -1,97 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Gratitude Journal</title>
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <style>
-        html {
-            background: url(/images/BG-375-667.png) no-repeat center center fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
-        }
+      html {
+        background: url(/images/BG-375-667.png) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
 
-        body {
-            font-family: "Kanit", sans-serif;
-        }
+      body {
+        font-family: "Kanit", sans-serif;
+      }
 
-        h1 {
-            color: #223e63;
-            font-weight: 600;
-            font-size: 35px;
-            line-height: 80%;
-            text-align: center;
-        }
+      h1 {
+        color: #223e63;
+        font-weight: 600;
+        font-size: 35px;
+        line-height: 80%;
+        text-align: center;
+      }
 
-        h2 {
-            color: #223e63;
-            font-weight: 200;
-            font-size: 18px;
-            padding: 0% 10% 5% 10%;
-            text-align: center;
-        }
+      h2 {
+        color: #223e63;
+        font-weight: 200;
+        font-size: 18px;
+        padding: 0% 10% 5% 10%;
+        text-align: center;
+      }
 
-        h3 {
-            color: #223e63;
-            font-weight: 300;
-            font-size: 20px;
-        }
+      h3 {
+        color: #223e63;
+        font-weight: 300;
+        font-size: 20px;
+      }
 
-        a {
-            text-decoration: none;
-        }
+      a {
+        text-decoration: none;
+      }
 
-        .content_box {
-            background-color: white;
-            border: none;
-            width: 90%;
-            padding: 3%;
-            margin-top: 1%;
-            margin-bottom: 3%;
-            margin-right: 3%;
-            /* box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25); */
-            border-radius: 10px;
-            font-family: "Kanit", sans-serif;
-            word-wrap: break-word;
-        }
+      .content_box {
+        background-color: white;
+        border: none;
+        width: 90%;
+        padding: 3%;
+        margin-top: 1%;
+        margin-bottom: 3%;
+        margin-right: 3%;
+        /* box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25); */
+        border-radius: 10px;
+        font-family: "Kanit", sans-serif;
+        word-wrap: break-word;
+      }
 
-        .addjournal{
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-        }
+      .addjournal {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
-    <div style="padding-top: 8%;">
-        <h1>Gratitude Journal</h1>
-        <h2>ฉันเคยรู้สึกขอบคุณสิ่งเหล่านี้</h2>
+  <body>
+    <div style="padding-top: 8%">
+      <h1>Gratitude Journal</h1>
+      <h2>ฉันเคยรู้สึกขอบคุณสิ่งเหล่านี้</h2>
     </div>
-    <% for(let x=0 ; x< journals.length;x++) {%>
-        <% if(x==0) {%>
-            <div><%=journals[x].timestamp.toDate().toDateString()%></div>
-        <% } else if(journals[x].timestamp.toDate().toDateString() != journals[x-1].timestamp.toDate().toDateString()) { %>
-            <div><%=journals[x].timestamp.toDate().toDateString()%></div>
-        <% } %>
-        <div class="content_box"><%= journals[x].content%></div>
+    <% for(let x=0 ; x< journals.length;x++) {%> <% if(x==0) {%>
+    <div><%=journals[x].timestamp.toDate().toDateString()%></div>
+    <% } else if(journals[x].timestamp.toDate().toDateString() != journals[x-1].timestamp.toDate().toDateString()) { %>
+    <div><%=journals[x].timestamp.toDate().toDateString()%></div>
+    <% } %>
+    <div class="content_box"><%= journals[x].content%></div>
     <% } %>
 
     <div class="addjournal">
-        <a href="/journal/<%= userID %>/add">
-            <img
-              src="/images/addNote.png"
-              style="height: 50px; padding-right: 5%"
-            />
-          </a>
+      <a href="/journal/<%= userID %>/add">
+        <img src="/images/addNote.png" style="height: 50px; padding-right: 5%" />
+      </a>
     </div>
-
-</body>
-
+  </body>
 </html>

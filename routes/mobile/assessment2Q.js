@@ -4,7 +4,7 @@ const { db } = require("../../Database/database");
 
 router.get("/", (req, res, next) => {
   var userID = req.query.id;
-  res.render("mobile/assessment2Q", {userID});
+  res.render("mobile/assessment2Q", { userID });
 });
 
 module.exports = router;

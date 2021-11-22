@@ -71,11 +71,7 @@ router.post("/:userID/add", async (req, res, next) => {
       journalID: newJournalID,
     };
     //db.collection('Assessment').add(data);
-    db.collection("User")
-      .doc(userID)
-      .collection("journal")
-      .doc(newJournalID.toString())
-      .set(data);
+    db.collection("User").doc(userID).collection("journal").doc(newJournalID.toString()).set(data);
   }
 
   const journalRef = db.collection("User").doc(userID).collection("journal");
