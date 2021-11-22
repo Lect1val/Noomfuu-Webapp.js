@@ -888,9 +888,6 @@ router.get("/:userID/appointment", async (req, res, next) => {
       });
     });
 
-    console.log(appointmentOngoingLists);
-    console.log(appointmentLists);
-
     // ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
@@ -990,8 +987,6 @@ router.get("/:userID/appointment/:appointID/edit", async (req, res, next) => {
       });
     });
 
-    console.log(appointLists[0].type);
-
     // ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
@@ -1056,6 +1051,157 @@ router.get("/:userID/appointment/:appointID/edit", async (req, res, next) => {
         getUserID,
         appointLists,
         moment: moment,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+//* เแก้ไขข้อมูล Appointment
+router.post("/:userID/appointment/:appointID", async (req, res, next) => {
+  try {
+    const getUserID = req.params.userID;
+    const getAppointID = Number(req.params.appointID);
+
+    //
+    const newAppointDate = req.body.new_date;
+    const newAppointStartTime = req.body.new_starttime + ":0000";
+    const newAppointEndTime = req.body.new_endtime + ":0000";
+    const newLink = req.body.new_link;
+    const newType = req.body.new_type;
+    const newStatus = req.body.new_status;
+
+    const newAppointStart = new Date(
+      newAppointDate + " " + newAppointStartTime
+    );
+    const newAppointEnd = new Date(newAppointDate + " " + newAppointEndTime);
+
+    if (Date.parse(newAppointStart) > Date.now()) {
+      const updateAppointment = db
+        .collection("User")
+        .doc(getUserID)
+        .collection("appointment")
+        .doc(getAppointID.toString());
+      const res = await updateAppointment.update({
+        appointmentStart: moment(newAppointStart),
+        appointmentEnd: moment(newAppointEnd),
+        type: newType,
+        timestamp: FieldValue.serverTimestamp(),
+        status: newStatus,
+        meetingurl: newLink,
+      });
+    }
+
+    const appointmentListRef = db
+      .collection("User")
+      .doc(getUserID)
+      .collection("appointment")
+      .orderBy("appointmentStart", "asc");
+    const appointmentOngoingLists = [];
+    const appointmentLists = [];
+
+    await appointmentListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().status == "ongoing") {
+          appointmentOngoingLists.push({
+            appointID: doc.data().appointID,
+            userID: doc.data().userID,
+            studentID: doc.data().studentID,
+            fullname: doc.data().fullname,
+            appointmentStart: doc.data().appointmentStart,
+            appointmentEnd: doc.data().appointmentEnd,
+            type: doc.data().type,
+            timestamp: doc.data().timestamp,
+            status: doc.data().status,
+            meetingurl: doc.data().meetingurl,
+          });
+        } else if (
+          doc.data().status == "done" ||
+          doc.data().status == "cancel"
+        ) {
+          appointmentLists.push({
+            appointID: doc.data().appointID,
+            userID: doc.data().userID,
+            studentID: doc.data().studentID,
+            fullname: doc.data().fullname,
+            appointmentStart: doc.data().appointmentStart,
+            appointmentEnd: doc.data().appointmentEnd,
+            type: doc.data().type,
+            timestamp: doc.data().timestamp,
+            status: doc.data().status,
+            meetingurl: doc.data().meetingurl,
+          });
+        }
+      });
+    });
+
+    // ดึงข้อมุล contactlist และ serach contactlist
+    const contactListRef = db.collection("User");
+    const contactlists_temp = [];
+    const contactlists = [];
+
+    const search_name = req.query.search;
+
+    if (search_name != null) {
+      console.log(search_name);
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists_temp.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+      let i = 0;
+
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            i++;
+            if (
+              contactlists_temp[i - 1].lineName
+                .toLowerCase()
+                .includes(search_name.toLowerCase())
+            ) {
+              contactlists.push({
+                userID: doc.data().userID,
+                lineName: doc.data().lineName,
+              });
+            }
+          }
+        });
+      });
+
+      res.render("desktop/appointment_all", {
+        contactlists,
+        getAppointID,
+        getUserID,
+        appointmentLists,
+        moment: moment,
+        appointmentOngoingLists,
+      });
+    } else {
+      await contactListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            contactlists.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+
+      res.render("desktop/appointment_all", {
+        contactlists,
+        getAppointID,
+        getUserID,
+        appointmentLists,
+        moment: moment,
+        appointmentOngoingLists,
       });
     }
   } catch (error) {

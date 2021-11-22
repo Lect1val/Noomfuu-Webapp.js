@@ -89,7 +89,7 @@
                             <h1>Edit Appointment</h1>
                             <!-- <div class="modal-appoint"> -->
                                 <% if(appointLists.find(el => el.appointID === getAppointID).type=="online") { %>
-                                    <form method="POST" action="" id="edit_profile">
+                                    <form method="POST" action="/profile/<%= getUserID %>/appointment/<%= getAppointID %>" id="edit_profile">
                                         <table style="width: 100%;">
                                             <tr>
                                                 <td class="data_head">Appointment Date</td>
@@ -101,13 +101,13 @@
                                                 <td class="data_head">Start Time</td>
                                                 <td style="width:75%"><input type="time"
                                                         class="text_field shadow-sm" name="new_starttime"
-                                                        id="starttime" required value="<%= moment(appointLists.find(el => el.appointID === getAppointID).appointmentStart.toDate().toUTCString()).format('hh:mm')%>"></td>
+                                                        id="starttime" required value="<%= moment(appointLists.find(el => el.appointID === getAppointID).appointmentStart.toDate().toUTCString()).format('kk:mm')%>"></td>
                                             </tr>
                                             <tr>
                                                 <td class="data_head">End Time</td>
                                                 <td style="width:75%"><input type="time"
                                                         class="text_field shadow-sm" name="new_endtime"
-                                                        id="endtime" required value="<%= moment(appointLists.find(el => el.appointID === getAppointID).appointmentEnd.toDate().toUTCString()).format('hh:mm')%>"></td>
+                                                        id="endtime" required value="<%= moment(appointLists.find(el => el.appointID === getAppointID).appointmentEnd.toDate().toUTCString()).format('kk:mm')%>"></td>
                                             </tr>
                                             <tr>
                                                 <td class="data_head">meeting link</td>
@@ -146,7 +146,7 @@
                                         </div>
                                     </form>
                                 <% } else if(appointLists.find(el => el.appointID === getAppointID).type=="onsite") { %>
-                                    <form method="POST" action="" id="edit_profile">
+                                    <form method="POST" action="/profile/<%= getUserID %>/appointment/<%= getAppointID %>" id="edit_profile">
                                         <table style="width: 100%;">
                                             <tr>
                                                 <td class="data_head">Appointment Date</td>
@@ -158,18 +158,18 @@
                                                 <td class="data_head">Start Time</td>
                                                 <td style="width:75%"><input type="time"
                                                         class="text_field shadow-sm" name="new_starttime"
-                                                        id="starttime" required value="<%= moment(appointLists.find(el => el.appointID === getAppointID).appointmentStart.toDate().toUTCString()).format('hh:mm')%>"></td>
+                                                        id="starttime" required value="<%= moment(appointLists.find(el => el.appointID === getAppointID).appointmentStart.toDate().toUTCString()).format('kk:mm')%>"></td>
                                             </tr>
                                             <tr>
                                                 <td class="data_head">End Time</td>
                                                 <td style="width:75%"><input type="time"
                                                         class="text_field shadow-sm" name="new_endtime"
-                                                        id="endtime" required value="<%= moment(appointLists.find(el => el.appointID === getAppointID).appointmentEnd.toDate().toUTCString()).format('hh:mm')%>"></td>
+                                                        id="endtime" required value="<%= moment(appointLists.find(el => el.appointID === getAppointID).appointmentEnd.toDate().toUTCString()).format('kk:mm')%>"></td>
                                             </tr>
                                             <tr>
                                                 <td class="data_head">meeting link</td>
                                                     <td style="width:75%"><input type="text" class="text_field shadow-sm" name="new_link"
-                                                        value="" disabled></td>
+                                                        value="" ></td>
                                                     <!-- <td style="width:75%"><input type="text" class="text_field shadow-sm" name="new_link"
                                                         value=""></td> -->
                                             </tr>
