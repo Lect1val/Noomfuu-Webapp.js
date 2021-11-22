@@ -948,7 +948,6 @@ router.get("/:userID/appointment", async (req, res, next) => {
           }
         });
       });
-
       res.render("desktop/appointment_all", {
         contactlists,
         getUserID,
@@ -963,10 +962,35 @@ router.get("/:userID/appointment", async (req, res, next) => {
 });
 
 //* เข้าหน้าแก้ไข Appointment
-router.get("/:userID/appointment/edit", async (req, res, next) => {
+router.get("/:userID/appointment/:appointID/edit", async (req, res, next) => {
   // /:appointID
   try {
     const getUserID = req.params.userID;
+    const getAppointID = Number(req.params.appointID);
+
+    const appointListRef = db
+      .collection("User")
+      .doc(getUserID)
+      .collection("appointment");
+    const appointLists = [];
+    await appointListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        appointLists.push({
+          appointID: doc.data().appointID,
+          userID: doc.data().userID,
+          studentID: doc.data().studentID,
+          fullname: doc.data().fullname,
+          appointmentStart: doc.data().appointmentStart,
+          appointmentEnd: doc.data().appointmentEnd,
+          type: doc.data().type,
+          timestamp: doc.data().timestamp,
+          status: doc.data().status,
+          meetingurl: doc.data().meetingurl,
+        });
+      });
+    });
+
+    console.log(appointLists[0].type);
 
     // ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
@@ -1009,9 +1033,10 @@ router.get("/:userID/appointment/edit", async (req, res, next) => {
 
       res.render("desktop/edit_appointment", {
         contactlists,
-
+        getAppointID,
         getUserID,
-
+        appointLists,
+        moment: moment,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -1027,7 +1052,10 @@ router.get("/:userID/appointment/edit", async (req, res, next) => {
 
       res.render("desktop/edit_appointment", {
         contactlists,
-        getUserID
+        getAppointID,
+        getUserID,
+        appointLists,
+        moment: moment,
       });
     }
   } catch (error) {

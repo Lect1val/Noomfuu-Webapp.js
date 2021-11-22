@@ -95,7 +95,7 @@
                                         <div class="row">
                                             <!--Appointment Card 1-->
                                             <div class="col-md-6">
-                                                
+                                                <a href="/profile/<%= getUserID %>/appointment/<%= appointmentOngoingLists[x].appointID %>/edit">
                                                     <div class="card shadow-sm card_style" id="myBtn<%= x %>">
                                                         <Table
                                                             style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
@@ -110,7 +110,7 @@
                                                             <tr>
                                                                 <td class="appoint_ongoing"><%= appointmentOngoingLists[x].status %></td>
                                                                 <% if(appointmentOngoingLists[x].meetingurl!=""){ %>
-                                                                    <td style="text-align: right;"><a href="<%= appointmentOngoingLists[x].meetingurl %>"><button type="button"
+                                                                    <td style="text-align: right;"><a href="https:/<%= appointmentOngoingLists[x].meetingurl %>/"><button type="button"
                                                                         class="btn btn-light">Enter Meeting</button></a></td>
                                                                 <% }else if(appointmentOngoingLists[x].meetingurl=="") { %>
                                                                     <td style="text-align: right;"><a href="#"><button type="button"
@@ -119,112 +119,14 @@
                                                             </tr>
                                                         </Table>
                                                     </div>
-                                                
-                                                <div id="myModal<%= x %>" class="modal">
-            
-                                                    <!-- Modal content -->
-                                                    <div class="modal-appoint">
-                                                        <span class="close">&times;</span>
-
-                                                        <h3 style="text-align: center;">Appointment Detail</h3>
-                                                        <hr>
-                                                        <form method="POST" action="" id="edit_profile">
-                                                            <table style="width: 100%;">
-                                                                <tr>
-                                                                    <td class="data_head">Appointment Date</td>
-                                                                    <td style="width:75%"><input type="date"
-                                                                            class="text_field shadow-sm" name="new_date"
-                                                                            id="date" required value="<%= moment(appointmentOngoingLists[x].appointmentStart.toDate().toDateString()).format('YYYY-MM-DD') %>"></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="data_head">Start Time</td>
-                                                                    <td style="width:75%"><input type="time"
-                                                                            class="text_field shadow-sm" name="new_starttime"
-                                                                            id="starttime" required value="<%= moment(appointmentOngoingLists[x].appointmentStart.toDate().toUTCString()).format('hh:mm') %>"></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="data_head">End Time</td>
-                                                                    <td style="width:75%"><input type="time"
-                                                                            class="text_field shadow-sm" name="new_endtime"
-                                                                            id="endtime" required value="<%= moment(appointmentOngoingLists[x].appointmentEnd.toDate().toUTCString()).format('hh:mm') %>"></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="data_head">meeting link</td>
-                                                                    <% if(appointmentOngoingLists[x].meetingurl!=""){ %>
-                                                                        <td style="width:75%"><input type="text" class="text_field shadow-sm" name="new_link"
-                                                                            value="<%= appointmentOngoingLists[x].meetingurl %>"></td>
-                                                                    <% }else if(appointmentOngoingLists[x].meetingurl=="") { %>
-                                                                        <td style="width:75%"><input type="text" class="text_field shadow-sm" name="new_link"
-                                                                            value=""></td>
-                                                                    <% } %>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="data_head">channel</td>
-                                                                    <td style="width:75%">
-                                                                        <select class="text_field shadow-sm" id="type"
-                                                                            name="new_type">
-                                                                            <option value="online" selected>Online</option>
-                                                                            <option value="onsite">On site ที่มหาวิทยาลัย</option>
-                                                                        </select>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="data_head">status</td>
-                                                                    <td style="width:75%">
-                                                                        <select class="text_field shadow-sm" id="status"
-                                                                            name="new_status">
-                                                                            <option value="ongoing" selected>ongoing</option>
-                                                                            <option value="done">done</option>
-                                                                            <option value="cancle">cancle</option>
-                                                                        </select>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                            <div class="d-grid gap-2" style="margin:3%;">
-                                                                <button type="submit" form="edit_profile"
-                                                                    class="btn btn-outline-success">
-                                                                    Save
-                                                                </button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-            
-                                                <script>
-                                                    // Get the modal
-                                                    var modal = document.getElementById("myModal<%= x %>");
-            
-                                                    // Get the button that opens the modal
-                                                    var btn = document.getElementById("myBtn<%= x %>");
-            
-                                                    // Get the <span> element that closes the modal
-                                                    var span = document.getElementsByClassName("close")[0];
-            
-                                                    // When the user clicks on the button, open the modal
-                                                    btn.onclick = function () {
-                                                        modal.style.display = "block";
-                                                    }
-            
-                                                    // When the user clicks on <span> (x), close the modal
-                                                    span.onclick = function () {
-                                                        modal.style.display = "none";
-                                                    }
-            
-                                                    // When the user clicks anywhere outside of the modal, close it
-                                                    window.onclick = function (event) {
-                                                        if (event.target == modal) {
-                                                            modal.style.display = "none";
-                                                        }
-                                                    }
-            
-                                                </script>
+                                                </a>
                                             </div>
                                         <% cardTop++ %>
                                     <% }else if(appointmentOngoingLists[x].type=="onsite") { %>
                                         <div class="row">
                                             <!--Appointment Card 1-->
                                             <div class="col-md-6">
-                                                
+                                                <a href="/profile/<%= getUserID %>/appointment/<%= appointmentOngoingLists[x].appointID %>/edit">
                                                     <div class="card shadow-sm card_style" id="myBtn<%= x %>">
                                                         <Table
                                                             style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
@@ -244,108 +146,14 @@
                                                             </tr>
                                                         </Table>
                                                     </div>
-                                                
-                                                <div id="myModal<%= x %>" class="modal">
-            
-                                                    <!-- Modal content -->
-                                                    <div class="modal-appoint">
-                                                        <span class="close">&times;</span>
-
-                                                        <h3 style="text-align: center;">Appointment Detail</h3>
-                                                        <hr>
-                                                        <form method="POST" action="" id="edit_profile">
-                                                            <table style="width: 100%;">
-                                                                <tr>
-                                                                    <td class="data_head">Appointment Date</td>
-                                                                    <td style="width:75%"><input type="date"
-                                                                            class="text_field shadow-sm" name="new_date"
-                                                                            id="date" required value="<%= moment(appointmentOngoingLists[x].appointmentStart.toDate().toDateString()).format('YYYY-MM-DD') %>"></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="data_head">Start Time</td>
-                                                                    <td style="width:75%"><input type="time"
-                                                                            class="text_field shadow-sm" name="new_starttime"
-                                                                            id="starttime" required value="<%= moment(appointmentOngoingLists[x].appointmentStart.toDate().toUTCString()).format('hh:mm') %>"></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="data_head">End Time</td>
-                                                                    <td style="width:75%"><input type="time"
-                                                                            class="text_field shadow-sm" name="new_endtime"
-                                                                            id="endtime" required value="<%= moment(appointmentOngoingLists[x].appointmentEnd.toDate().toUTCString()).format('hh:mm') %>"></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="data_head">meeting link</td>
-                                                                    <td style="width:75%"><input type="text" class="text_field shadow-sm" name="new_link"
-                                                                            value="" disabled></td>
-                                                                    
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="data_head">channel</td>
-                                                                    <td style="width:75%">
-                                                                        <select class="text_field shadow-sm" id="type"
-                                                                            name="new_type">
-                                                                            <option value="online">Online</option>
-                                                                            <option value="onsite" selected>On site ที่มหาวิทยาลัย</option>
-                                                                        </select>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="data_head">status</td>
-                                                                    <td style="width:75%">
-                                                                        <select class="text_field shadow-sm" id="status"
-                                                                            name="new_status">
-                                                                            <option value="ongoing" selected>ongoing</option>
-                                                                            <option value="done">done</option>
-                                                                            <option value="cancle">cancle</option>
-                                                                        </select>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                            <div class="d-grid gap-2" style="margin:3%;">
-                                                                <button type="submit" form="edit_profile"
-                                                                    class="btn btn-outline-success">
-                                                                    Save
-                                                                </button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-            
-                                                <script>
-                                                    // Get the modal
-                                                    var modal = document.getElementById("myModal<%= x %>");
-            
-                                                    // Get the button that opens the modal
-                                                    var btn = document.getElementById("myBtn<%= x %>");
-            
-                                                    // Get the <span> element that closes the modal
-                                                    var span = document.getElementsByClassName("close")[0];
-            
-                                                    // When the user clicks on the button, open the modal
-                                                    btn.onclick = function () {
-                                                        modal.style.display = "block";
-                                                    }
-            
-                                                    // When the user clicks on <span> (x), close the modal
-                                                    span.onclick = function () {
-                                                        modal.style.display = "none";
-                                                    }
-            
-                                                    // When the user clicks anywhere outside of the modal, close it
-                                                    window.onclick = function (event) {
-                                                        if (event.target == modal) {
-                                                            modal.style.display = "none";
-                                                        }
-                                                    }
-            
-                                                </script>
+                                                </a>
                                             </div>
                                         <% cardTop++ %>
                                     <% } %> 
                                 <% }else if(cardTop==2) { %>
                                     <% if(appointmentOngoingLists[x].type=="online"){ %>
                                         <div class="col-md-6">
-                                                
+                                            <a href="/profile/<%= getUserID %>/appointment/<%= appointmentOngoingLists[x].appointID %>/edit">
                                             <div class="card shadow-sm card_style" id="myBtn<%= x %>">
                                                 <Table
                                                     style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
@@ -369,12 +177,13 @@
                                                     </tr>
                                                 </Table>
                                             </div>
+                                        </a>
                                         </div>
-                                        </div>
+                                    </div>
                                         <% cardTop=1 %>    
                                     <% }else if(appointmentOngoingLists[x].type=="onsite") { %>
                                         <div class="col-md-6">
-                                                
+                                            <a href="/profile/<%= getUserID %>/appointment/<%= appointmentOngoingLists[x].appointID %>/edit">
                                             <div class="card shadow-sm card_style" id="myBtn<%= x %>">
                                                 <Table
                                                     style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
@@ -394,8 +203,9 @@
                                                     </tr>
                                                 </Table>
                                             </div>
+                                        </a>
                                         </div>
-                                        </div>
+                                    </div>
                                         <% cardTop=1 %>
                                     <% } %> 
                                 <% } %> 
@@ -421,7 +231,7 @@
                                         <div class="row">
                                             <!--Appointment Card 1-->
                                             <div class="col-md-6">
-                                                <a href="#">
+                                                
                                                     <div class="card shadow-sm card_style">
                                                         <Table
                                                             style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
@@ -438,14 +248,14 @@
                                                             </tr>
                                                         </Table>
                                                     </div>
-                                                </a>
+                                               
                                             </div>
                                             <% card++ %>
                                     <% } else if(appointmentLists[y].status=="cancel") { %>    
                                         <div class="row">
                                             <!--Appointment Card 1-->
                                             <div class="col-md-6">
-                                                <a href="#">
+                                                
                                                     <div class="card shadow-sm card_style">
                                                         <Table
                                                             style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
@@ -462,14 +272,14 @@
                                                             </tr>
                                                         </Table>
                                                     </div>
-                                                </a>
+                                                
                                             </div>
                                         <% card++ %>
                                     <% } %>
                                 <% } else if(card==2) { %>
                                     <% if(appointmentLists[y].status=="done"){ %>
                                         <div class="col-md-6">
-                                            <a href="#">
+                                            
                                                 <div class="card shadow-sm card_style">
                                                     <Table
                                                         style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
@@ -487,13 +297,13 @@
                                                         </tr>
                                                     </Table>
                                                 </div>
-                                            </a>
+                                          
                                         </div>
                                     </div>
                                         <% card=1 %>
                                     <% } else if(appointmentLists[y].status=="cancel") { %> 
                                         <div class="col-md-6">
-                                            <a href="#">
+                                      
                                                 <div class="card shadow-sm card_style">
                                                     <Table
                                                         style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
@@ -511,7 +321,7 @@
                                                         </tr>
                                                     </Table>
                                                 </div>
-                                            </a>
+                                         
                                         </div>
                                     </div>
                                            
