@@ -84,23 +84,24 @@
           <hr />
 
           <h1>Appointment</h1>
-          <!--Appointment row 1-->
+          <!--Appointment On going-->
           <% var cardTop = 1 %> <% for(let x=0 ; x< appointmentOngoingLists.length;x++) { %> <% if(cardTop==1){ %> <% if(appointmentOngoingLists[x].type=="online"){ %>
           <div class="row">
-            <!--Appointment Card 1-->
             <div class="col-md-6">
               <a href="/profile/<%= getUserID %>/appointment/<%= appointmentOngoingLists[x].appointID %>/edit">
                 <div class="card shadow-sm card_style" id="myBtn<%= x %>">
                   <Table style="width: 100%; text-align: left; vertical-align: middle; padding: 3%">
                     <tr>
-                      <td class="appoint_date"><%= appointmentOngoingLists[x].appointmentStart.toDate().toDateString() %></td>
+                      <td class="appoint_date"><%= moment(appointmentOngoingLists[x].appointmentStart.toDate().toDateString()).format('ddd DD MMM YYYY') %></td>
                       <td class="appoint_online" style="text-align: right"><%= appointmentOngoingLists[x].type.toUpperCase() %></td>
                     </tr>
                     <tr>
-                      <td class="appoint_time"><%= appointmentOngoingLists[x].appointmentStart.toDate().toLocaleTimeString() %></td>
+                      <td class="appoint_time"><%= moment(appointmentOngoingLists[x].appointmentStart.toDate().toUTCString()).format('kk:mm น.') %></td>
                     </tr>
                     <tr>
-                      <td class="appoint_ongoing"><%= appointmentOngoingLists[x].status %></td>
+                      <td class="appoint_ongoing">
+                        <%= appointmentOngoingLists[x].status[0].toUpperCase() + appointmentOngoingLists[x].status[1] + " " +appointmentOngoingLists[x].status.substr(2).toLowerCase() %>
+                      </td>
                       <% if(appointmentOngoingLists[x].meetingurl!=""){ %>
                       <td style="text-align: right">
                         <a href="https:/<%= appointmentOngoingLists[x].meetingurl %>/"><button type="button" class="btn btn-light">Enter Meeting</button></a>
@@ -117,20 +118,21 @@
             </div>
             <% cardTop++ %> <% }else if(appointmentOngoingLists[x].type=="onsite") { %>
             <div class="row">
-              <!--Appointment Card 1-->
               <div class="col-md-6">
                 <a href="/profile/<%= getUserID %>/appointment/<%= appointmentOngoingLists[x].appointID %>/edit">
                   <div class="card shadow-sm card_style" id="myBtn<%= x %>">
                     <Table style="width: 100%; text-align: left; vertical-align: middle; padding: 3%">
                       <tr>
-                        <td class="appoint_date"><%= appointmentOngoingLists[x].appointmentStart.toDate().toDateString() %></td>
+                        <td class="appoint_date"><%= moment(appointmentOngoingLists[x].appointmentStart.toDate().toDateString()).format('ddd DD MMM YYYY') %></td>
                         <td class="appoint_online" style="text-align: right"><%= appointmentOngoingLists[x].type.toUpperCase() %></td>
                       </tr>
                       <tr>
-                        <td class="appoint_time"><%= appointmentOngoingLists[x].appointmentStart.toDate().toLocaleTimeString() %></td>
+                        <td class="appoint_time"><%= moment(appointmentOngoingLists[x].appointmentStart.toDate().toUTCString()).format('kk:mm น.') %></td>
                       </tr>
                       <tr>
-                        <td class="appoint_ongoing"><%= appointmentOngoingLists[x].status %></td>
+                        <td class="appoint_ongoing">
+                          <%= appointmentOngoingLists[x].status[0].toUpperCase() + appointmentOngoingLists[x].status[1] + " " +appointmentOngoingLists[x].status.substr(2).toLowerCase() %>
+                        </td>
                         <td class="appoint_place" style="text-align: right">
                           ห้องพยาบาล อาคารเรียนรวม 2<br />
                           มจธ. บางมด
@@ -146,15 +148,17 @@
                   <div class="card shadow-sm card_style" id="myBtn<%= x %>">
                     <Table style="width: 100%; text-align: left; vertical-align: middle; padding: 3%">
                       <tr>
-                        <td class="appoint_date"><%= appointmentOngoingLists[x].appointmentStart.toDate().toDateString() %></td>
+                        <td class="appoint_date"><%= moment(appointmentOngoingLists[x].appointmentStart.toDate().toDateString()).format('ddd DD MMM YYYY') %></td>
                         <td class="appoint_online" style="text-align: right"><%= appointmentOngoingLists[x].type.toUpperCase() %></td>
                       </tr>
                       <tr>
-                        <td class="appoint_time"><%= appointmentOngoingLists[x].appointmentStart.toDate().toLocaleTimeString() %></td>
+                        <td class="appoint_time"><%= moment(appointmentOngoingLists[x].appointmentStart.toDate().toUTCString()).format('kk:mm น.') %></td>
                       </tr>
 
                       <tr>
-                        <td class="appoint_ongoing"><%= appointmentOngoingLists[x].status %></td>
+                        <td class="appoint_ongoing">
+                          <%= appointmentOngoingLists[x].status[0].toUpperCase() + appointmentOngoingLists[x].status[1] + " " +appointmentOngoingLists[x].status.substr(2).toLowerCase() %>
+                        </td>
                         <% if(appointmentOngoingLists[x].meetingurl!=""){ %>
                         <td style="text-align: right">
                           <a href="<%= appointmentOngoingLists[x].meetingurl %>"><button type="button" class="btn btn-light">Enter Meeting</button></a>
@@ -176,14 +180,16 @@
                 <div class="card shadow-sm card_style" id="myBtn<%= x %>">
                   <Table style="width: 100%; text-align: left; vertical-align: middle; padding: 3%">
                     <tr>
-                      <td class="appoint_date"><%= appointmentOngoingLists[x].appointmentStart.toDate().toDateString() %></td>
+                      <td class="appoint_date"><%= moment(appointmentOngoingLists[x].appointmentStart.toDate().toDateString()).format('ddd DD MMM YYYY') %></td>
                       <td class="appoint_online" style="text-align: right"><%= appointmentOngoingLists[x].type.toUpperCase() %></td>
                     </tr>
                     <tr>
-                      <td class="appoint_time"><%= appointmentOngoingLists[x].appointmentStart.toDate().toLocaleTimeString() %></td>
+                      <td class="appoint_time"><%= moment(appointmentOngoingLists[x].appointmentStart.toDate().toUTCString()).format('kk:mm น.') %></td>
                     </tr>
                     <tr>
-                      <td class="appoint_ongoing"><%= appointmentOngoingLists[x].status %></td>
+                      <td class="appoint_ongoing">
+                        <%= appointmentOngoingLists[x].status[0].toUpperCase() + appointmentOngoingLists[x].status[1] + " " +appointmentOngoingLists[x].status.substr(2).toLowerCase() %>
+                      </td>
                       <td class="appoint_place" style="text-align: right">
                         ห้องพยาบาล อาคารเรียนรวม 2<br />
                         มจธ. บางมด
@@ -195,6 +201,7 @@
             </div>
           </div>
           <% cardTop=1 %> <% } %> <% } %> <% } %>
+
           <div id="loading">loading...</div>
           <div id="calendar"></div>
 
@@ -214,14 +221,14 @@
               <div class="card shadow-sm card_style">
                 <Table style="width: 100%; text-align: left; vertical-align: middle; padding: 3%">
                   <tr>
-                    <td class="appoint_date"><%= appointmentLists[y].appointmentStart.toDate().toDateString()%></td>
-                    <td class="appoint_online" style="text-align: right"><%= appointmentLists[y].type %></td>
+                    <td class="appoint_date"><%= moment(appointmentLists[y].appointmentStart.toDate().toDateString()).format('ddd DD MMM YYYY')%></td>
+                    <td class="appoint_online" style="text-align: right"><%= appointmentLists[y].type.toUpperCase() %></td>
                   </tr>
                   <tr>
-                    <td class="appoint_time"><%= appointmentLists[y].appointmentStart.toDate().toLocaleTimeString() %></td>
+                    <td class="appoint_time"><%= moment(appointmentLists[y].appointmentStart.toDate().toUTCString()).format('kk:mm น.') %></td>
                   </tr>
                   <tr>
-                    <td class="appoint_done" style="padding-top: 10px"><%= appointmentLists[y].status %></td>
+                    <td class="appoint_done" style="padding-top: 10px"><%= appointmentLists[y].status[0].toUpperCase() + appointmentLists[y].status.substr(1).toLowerCase() %></td>
                   </tr>
                 </Table>
               </div>
@@ -233,14 +240,14 @@
                 <div class="card shadow-sm card_style">
                   <Table style="width: 100%; text-align: left; vertical-align: middle; padding: 3%">
                     <tr>
-                      <td class="appoint_date"><%= appointmentLists[y].appointmentStart.toDate().toDateString()%></td>
-                      <td class="appoint_online" style="text-align: right"><%= appointmentLists[y].type %></td>
+                      <td class="appoint_date"><%= moment(appointmentLists[y].appointmentStart.toDate().toDateString()).format('ddd DD MMM YYYY')%></td>
+                      <td class="appoint_online" style="text-align: right"><%= appointmentLists[y].type.toUpperCase() %></td>
                     </tr>
                     <tr>
-                      <td class="appoint_time"><%= appointmentLists[y].appointmentStart.toDate().toLocaleTimeString() %></td>
+                      <td class="appoint_time"><%= moment(appointmentLists[y].appointmentStart.toDate().toUTCString()).format('kk:mm น.') %></td>
                     </tr>
                     <tr>
-                      <td class="appoint_canceled" style="padding-top: 10px"><%= appointmentLists[y].status %></td>
+                      <td class="appoint_canceled" style="padding-top: 10px"><%= appointmentLists[y].status[0].toUpperCase() + appointmentLists[y].status.substr(1).toLowerCase() %></td>
                     </tr>
                   </Table>
                 </div>
@@ -250,14 +257,14 @@
                 <div class="card shadow-sm card_style">
                   <Table style="width: 100%; text-align: left; vertical-align: middle; padding: 3%">
                     <tr>
-                      <td class="appoint_date"><%= appointmentLists[y].appointmentStart.toDate().toDateString()%></td>
-                      <td class="appoint_online" style="text-align: right"><%= appointmentLists[y].type %></td>
+                      <td class="appoint_date"><%= moment(appointmentLists[y].appointmentStart.toDate().toDateString()).format('ddd DD MMM YYYY')%></td>
+                      <td class="appoint_online" style="text-align: right"><%= appointmentLists[y].type.toUpperCase() %></td>
                     </tr>
                     <tr>
-                      <td class="appoint_time"><%= appointmentLists[y].appointmentStart.toDate().toLocaleTimeString() %>.</td>
+                      <td class="appoint_time"><%= moment(appointmentLists[y].appointmentStart.toDate().toUTCString()).format('kk:mm น.') %>.</td>
                     </tr>
                     <tr>
-                      <td class="appoint_done" style="padding-top: 10px"><%= appointmentLists[y].status %></td>
+                      <td class="appoint_done" style="padding-top: 10px"><%= appointmentLists[y].status[0].toUpperCase() + appointmentLists[y].status.substr(1).toLowerCase() %></td>
                     </tr>
                   </Table>
                 </div>
@@ -268,14 +275,14 @@
               <div class="card shadow-sm card_style">
                 <Table style="width: 100%; text-align: left; vertical-align: middle; padding: 3%">
                   <tr>
-                    <td class="appoint_date"><%= appointmentLists[y].appointmentStart.toDate().toDateString()%></td>
-                    <td class="appoint_online" style="text-align: right"><%= appointmentLists[y].type %></td>
+                    <td class="appoint_date"><%= moment(appointmentLists[y].appointmentStart.toDate().toDateString()).format('ddd DD MMM YYYY')%></td>
+                    <td class="appoint_online" style="text-align: right"><%= appointmentLists[y].type.toUpperCase() %></td>
                   </tr>
                   <tr>
-                    <td class="appoint_time"><%= appointmentLists[y].appointmentStart.toDate().toLocaleTimeString() %></td>
+                    <td class="appoint_time"><%= moment(appointmentLists[y].appointmentStart.toDate().toUTCString()).format('kk:mm น.') %></td>
                   </tr>
                   <tr>
-                    <td class="appoint_canceled" style="padding-top: 10px"><%= appointmentLists[y].status %></td>
+                    <td class="appoint_canceled" style="padding-top: 10px"><%= appointmentLists[y].status[0].toUpperCase() + appointmentLists[y].status.substr(1).toLowerCase() %></td>
                   </tr>
                 </Table>
               </div>

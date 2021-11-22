@@ -35,7 +35,7 @@
                 <th>State</th>
               </tr>
               <!--Begining of Assessment Loop-->
-              <% for(let i = 0 ; i< assessmentList.length;i++) {%> <% if(assessmentList[i].type == "dass"){ %>
+              <% for(let i = 0 ; i< assessmentList.length;i++) { %> <% if(assessmentList[i].type == "dass"){ %>
               <tr>
                 <td id="assess_date"><%= assessmentList[i].timestamp.toDate().toDateString() %> <%= assessmentList[i].timestamp.toDate().toLocaleTimeString() %></td>
                 <td id="assess_type"><%= assessmentList[i].type.toUpperCase() %></td>

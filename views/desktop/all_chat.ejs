@@ -38,10 +38,10 @@
                 <th>State</th>
               </tr>
               <!--Begining of Chat Loop-->
-              <% for(let i=0 ; i< chatList.length;i++) {%>
+              <% for(let i=0 ; i< chatList.length;i++) { %>
 
               <tr>
-                <% if(i==0) {%>
+                <% if(i==0) { %>
                 <td id="chat_date"><%= chatList[i].timestamp.toDate().toDateString() %></td>
                 <% } else if(chatList[i].timestamp.toDate().toDateString() !=chatList[i-1].timestamp.toDate().toDateString()) { %>
                 <td id="chat_date"><%= chatList[i].timestamp.toDate().toDateString() %></td>

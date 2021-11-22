@@ -269,7 +269,9 @@
                       <td class="appoint_time"><%= moment(appointmentOngoingLists[f].appointmentStart.toDate().toUTCString()).format('kk:mm น.') %></td>
                     </tr>
                     <tr>
-                      <td class="appoint_ongoing"><%= appointmentOngoingLists[f].status %></td>
+                      <td class="appoint_ongoing">
+                        <%= appointmentOngoingLists[f].status[0].toUpperCase() + appointmentOngoingLists[f].status[1] + " " +appointmentOngoingLists[f].status.substr(2).toLowerCase() %>
+                      </td>
                       <% if(appointmentOngoingLists[f].meetingurl!=""){ %>
                       <td style="text-align: right">
                         <a href="https:/<%= appointmentOngoingLists[f].meetingurl %>/"><button type="button" class="btn btn-light">Enter Meeting</button></a>
@@ -293,7 +295,9 @@
                       <td class="appoint_time"><%= moment(appointmentOngoingLists[f].appointmentStart.toDate().toUTCString()).format('kk:mm น.') %></td>
                     </tr>
                     <tr>
-                      <td class="appoint_ongoing"><%= appointmentOngoingLists[f].status %></td>
+                      <td class="appoint_ongoing">
+                        <%= appointmentOngoingLists[f].status[0].toUpperCase() + appointmentOngoingLists[f].status[1] + " " +appointmentOngoingLists[f].status.substr(2).toLowerCase() %>
+                      </td>
                       <% if(appointmentOngoingLists[f].meetingurl!=""){ %>
                       <td style="text-align: right">
                         <a href="https:/<%= appointmentOngoingLists[f].meetingurl %>/"><button type="button" class="btn btn-light">Enter Meeting</button></a>
