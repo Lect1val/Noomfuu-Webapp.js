@@ -36,11 +36,63 @@ router.get("/", async (req, res, next) => {
       });
     });
 
-    console.log(userLists);
+    let forcheckAppoinmentListRef;
+    const forcheckAppoinmentList = [];
+    for (let y = 0; y < userLists.length; y++) {
+      if (userLists[y].lineName != "") {
+        forcheckAppoinmentListRef = db
+          .collection("User")
+          .doc(userLists[y].userID)
+          .collection("appointment");
+
+        await forcheckAppoinmentListRef.get().then((snapshot) => {
+          snapshot.forEach((doc) => {
+            forcheckAppoinmentList.push({
+              appointID: doc.data().appointID,
+              userID: doc.data().userID,
+              studentID: doc.data().studentID,
+              fullname: doc.data().fullname,
+              appointmentStart: doc.data().appointmentStart,
+              appointmentEnd: doc.data().appointmentEnd,
+              type: doc.data().type,
+              timestamp: doc.data().timestamp,
+              status: doc.data().status,
+              meetingurl: doc.data().meetingurl,
+            });
+          });
+        });
+      }
+    }
+
+    let date = moment();
+    for (let f = 0; f < forcheckAppoinmentList.length; f++) {
+      if (
+        forcheckAppoinmentList[f].status == "ongoing" ||
+        forcheckAppoinmentList[f].status == "done"
+      ) {
+        if (
+          date.isAfter(
+            forcheckAppoinmentList[f].appointmentEnd.toDate().toUTCString()
+          )
+        ) {
+          const autoUpdateAppointment = db
+            .collection("User")
+            .doc(forcheckAppoinmentList[f].userID)
+            .collection("appointment")
+            .doc(forcheckAppoinmentList[f].appointID.toString());
+          await autoUpdateAppointment.update({
+            status: "done",
+          });
+        }
+      }
+    }
+
     let messageUserListRef;
     let assessmentUserListsRef;
+    let appointmentUserListsRef;
     const messageUserLists = [];
     const assessmentUserLists = [];
+    const appointmentUserLists = [];
     for (let x = 0; x < userLists.length; x++) {
       if (userLists[x].lineName != "") {
         messageUserListRef = db
@@ -56,6 +108,7 @@ router.get("/", async (req, res, next) => {
             });
           });
         });
+
         assessmentUserListsRef = db
           .collection("User")
           .doc(userLists[x].userID)
@@ -89,9 +142,45 @@ router.get("/", async (req, res, next) => {
             }
           });
         });
+
+        appointmentUserListsRef = db
+          .collection("User")
+          .doc(userLists[x].userID)
+          .collection("appointment")
+          .orderBy("appointmentStart", "asc");
+        await appointmentUserListsRef.get().then((snapshot) => {
+          snapshot.forEach((doc) => {
+            if (doc.data().status == "ongoing") {
+              appointmentUserLists.push({
+                lineName: userLists[x].lineName,
+                appointID: doc.data().appointID,
+                userID: doc.data().userID,
+                studentID: doc.data().studentID,
+                fullname: doc.data().fullname,
+                appointmentStart: doc.data().appointmentStart,
+                appointmentEnd: doc.data().appointmentEnd,
+                type: doc.data().type,
+                timestamp: doc.data().timestamp,
+                status: doc.data().status,
+                meetingurl: doc.data().meetingurl,
+              });
+            }
+          });
+        });
       }
     }
-    console.log(assessmentUserLists);
+
+    appointmentUserLists.sort(function (a, b) {
+      return a.appointmentStart - b.appointmentStart;
+    });
+
+    console.log("----");
+    console.log(appointmentUserLists);
+    console.log(
+      moment(appointmentUserLists[0].timestamp.toDate().toDateString()).format(
+        "ddd DD MMM YYYY"
+      )
+    );
 
     // ดึงข้อมูล Feeling down ไปแสดงในหน้า  Index
     const feelingDownLists = [];
@@ -175,7 +264,6 @@ router.get("/", async (req, res, next) => {
     const search_name = req.query.search;
 
     if (search_name != null) {
-      console.log(search_name);
       await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
@@ -210,6 +298,8 @@ router.get("/", async (req, res, next) => {
         contactlists,
         feelingDownLists,
         riskUserLists,
+        moment: moment,
+        appointmentUserLists,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -227,6 +317,8 @@ router.get("/", async (req, res, next) => {
         contactlists,
         feelingDownLists,
         riskUserLists,
+        moment: moment,
+        appointmentUserLists,
       });
     }
   } catch (error) {
