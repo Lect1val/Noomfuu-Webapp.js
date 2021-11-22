@@ -1064,7 +1064,7 @@ router.post("/:userID/appointment/:appointID", async (req, res, next) => {
     const getUserID = req.params.userID;
     const getAppointID = Number(req.params.appointID);
 
-    //
+    // update Appointment  ลง DB
     const newAppointDate = req.body.new_date;
     const newAppointStartTime = req.body.new_starttime + ":0000";
     const newAppointEndTime = req.body.new_endtime + ":0000";
@@ -1299,7 +1299,7 @@ router.get("/:userID/note", async (req, res, next) => {
 router.get("/:userID/note/:noteID/content", async (req, res, next) => {
   try {
     const getUserID = req.params.userID;
-    const getNoteID = req.params.noteID;
+    const getNoteID = Number(req.params.noteID);
 
     // ดึงข้อมูล Note ไป show ที่หน้า Content Note
     const noteListRef = db.collection("User").doc(getUserID).collection("note");
@@ -1395,7 +1395,7 @@ router.get("/:userID/note/:noteID/content", async (req, res, next) => {
 router.get("/:userID/note/:noteID/content/edit", async (req, res, next) => {
   try {
     const getUserID = req.params.userID;
-    const getNoteID = req.params.noteID;
+    const getNoteID = Number(req.params.noteID);
 
     // ดึงข้อมูล Note ไป show ที่หน้า Edit Note
     const noteListRef = db.collection("User").doc(getUserID).collection("note");
@@ -1485,7 +1485,7 @@ router.get("/:userID/note/:noteID/content/edit", async (req, res, next) => {
 router.post("/:userID/note/:noteID/content", async (req, res, next) => {
   try {
     const getUserID = req.params.userID;
-    const getNoteID = req.params.noteID;
+    const getNoteID = Number(req.params.noteID);
 
     // update note  ลง DB
     const checkSave = req.body.saveEdit;
@@ -1497,7 +1497,7 @@ router.post("/:userID/note/:noteID/content", async (req, res, next) => {
         .collection("User")
         .doc(getUserID)
         .collection("note")
-        .doc(getNoteID);
+        .doc(getNoteID.toString());
       const res = await updateContent.update({
         content: newContent,
         header: newHeader,
@@ -1599,14 +1599,14 @@ router.post("/:userID/note/:noteID/content", async (req, res, next) => {
 router.get("/:userID/note/:noteID/delete", async (req, res, next) => {
   try {
     const getUserID = req.params.userID;
-    const getNoteID = req.params.noteID;
+    const getNoteID = Number(req.params.noteID);
 
     // ลบ note ออหจาห DB
     const deleteContent = db
       .collection("User")
       .doc(getUserID)
       .collection("note")
-      .doc(getNoteID);
+      .doc(getNoteID.toString());
     const response = await deleteContent.delete();
 
     // ดึงข้อมูล Note หลังจากลบ ไป show ที่หน้า All Note
