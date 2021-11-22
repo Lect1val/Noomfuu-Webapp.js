@@ -98,6 +98,7 @@ router.get("/:userID", async (req, res, next) => {
       }
     }
 
+    // Auto Update Appointment Status ตามเวลานัดหมาย
     const forcheckAppoinmentListRef = db
       .collection("User")
       .doc(getUserID)
@@ -144,6 +145,7 @@ router.get("/:userID", async (req, res, next) => {
       }
     }
 
+    // ดึงข้อมูล Appointment ที่เป็น on going
     const appointmentListRef = db
       .collection("User")
       .doc(getUserID)
@@ -289,6 +291,7 @@ router.post("/:userID", async (req, res, next) => {
       });
     });
 
+    // Auto Update Appointment Status ตามเวลานัดหมาย
     const forcheckAppoinmentListRef = db
       .collection("User")
       .doc(getUserID)
@@ -967,6 +970,7 @@ router.get("/:userID/appointment", async (req, res, next) => {
   try {
     const getUserID = req.params.userID;
 
+    // Auto Update Appointment Status ตามเวลานัดหมาย
     const forcheckAppoinmentListRef = db
       .collection("User")
       .doc(getUserID)
@@ -1013,6 +1017,7 @@ router.get("/:userID/appointment", async (req, res, next) => {
       }
     }
 
+    // ดึงข้อมูล appointment 
     const appointmentListRef = db
       .collection("User")
       .doc(getUserID)
@@ -1133,6 +1138,7 @@ router.get("/:userID/appointment/:appointID/edit", async (req, res, next) => {
     const getUserID = req.params.userID;
     const getAppointID = Number(req.params.appointID);
 
+    // ดึงข้อมูล appointment
     const appointListRef = db
       .collection("User")
       .doc(getUserID)
@@ -1261,6 +1267,7 @@ router.post("/:userID/appointment/:appointID", async (req, res, next) => {
       });
     }
 
+    // Auto Update Appointment Status ตามเวลานัดหมาย
     const forcheckAppoinmentListRef = db
       .collection("User")
       .doc(getUserID)
@@ -1307,6 +1314,7 @@ router.post("/:userID/appointment/:appointID", async (req, res, next) => {
       }
     }
 
+    // ดึงข้อมูล appointment
     const appointmentListRef = db
       .collection("User")
       .doc(getUserID)
