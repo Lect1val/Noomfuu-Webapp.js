@@ -1661,7 +1661,7 @@ router.post("/:userID/note/add", async (req, res, next) => {
         .doc("1")
         .set(data);
     } else if (oldNote[0] != undefined) {
-      let newNoteID = oldNote[0].noteID + 1;
+      let newNoteID = Number(oldNote[0].noteID) + 1;
 
       const data = {
         content: createContent,

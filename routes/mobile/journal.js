@@ -63,7 +63,7 @@ router.post("/:userID/add", async (req, res, next) => {
 
     db.collection("User").doc(userID).collection("journal").doc("1").set(data);
   } else if (oldJournal[0] != undefined) {
-    const newJournalID = oldJournal[0].journalID + 1;
+    const newJournalID = Number(oldJournal[0].journalID) + 1;
     console.log(newJournalID);
     const data = {
       content: content,

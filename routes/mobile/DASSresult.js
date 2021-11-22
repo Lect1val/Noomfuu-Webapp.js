@@ -84,7 +84,7 @@ router.get("/", async (req, res, next) => {
         .doc("1")
         .set(data);
     } else if (oldAssessment[0] != undefined) {
-      const newAssessmentID = oldAssessment[0].assessmentID + 1;
+      const newAssessmentID = Number(oldAssessment[0].assessmentID) + 1;
       const data = {
         assessmentID: newAssessmentID,
         userID: userID,

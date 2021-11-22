@@ -94,10 +94,9 @@ router.post("/add", async (req, res, next) => {
   const appointEnd = new Date(
     new Date(appointStart).setHours(appointStart.getHours() + 1)
   );
-  console.log(Date.parse(appointStart) < Date.now())
+  console.log(Date.parse(appointStart) < Date.now());
 
-
-    res.render("mobile/appointDetail", { userID });
+  res.render("mobile/appointDetail", { userID });
 
   console.log(appointStart, appointEnd);
 
@@ -147,7 +146,7 @@ router.post("/add", async (req, res, next) => {
       .doc("1")
       .set(data);
   } else if (oldAppointment[0] != undefined) {
-    const newAppointmentID = oldAppointment[0].appointID + 1;
+    const newAppointmentID = Number(oldAppointment[0].appointID) + 1;
     const data = {
       appointID: newAppointmentID,
       userID: userID,
@@ -170,8 +169,6 @@ router.post("/add", async (req, res, next) => {
   }
 
   res.render("mobile/appointDetail", { userID });
-
-  
 });
 
 router.get("/googleAdd", (req, res, next) => {
