@@ -89,7 +89,7 @@
                             <h1>Appointment</h1>             
                             <!--Appointment row 1-->
                             <% var cardTop = 1 %>
-                            <% for(let x=0 ; x< appointmentOngoingLists.length;x++) {%> 
+                            <% for(let x=0 ; x< appointmentOngoingLists.length;x++) { %> 
                                 <% if(cardTop==1){ %>
                                     <% if(appointmentOngoingLists[x].type=="online"){ %>
                                         <div class="row">
@@ -225,7 +225,7 @@
                             <h1>Appointment History</h1>
                             <hr>
                             <% var card = 1 %>
-                            <% for(let y=0 ; y< appointmentLists.length;y++) {%>
+                            <% for(let y=0 ; y< appointmentLists.length;y++) { %>
                                 <% if(card==1){ %>
                                     <% if(appointmentLists[y].status=="done"){ %>
                                         <div class="row">
