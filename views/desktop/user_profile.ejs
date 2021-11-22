@@ -249,76 +249,66 @@
 
                                     <!--Appointment Card-->
                                     <td style="width: 55%; text-align: center;">
-                                        <!--Card 1-->
-                                        <a href="#">
+                                    <% if(appointmentOngoingLists.length > 3 ) { %>
+                                        <% for(let f=0 ; f< 3 ; f++) { %> 
                                             <div class="card shadow-sm card_style">
                                                 <Table
                                                     style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
                                                     <tr>
-                                                        <td class="appoint_date">23/03/2021</td>
-                                                        <td class="appoint_online" style="text-align: right;">ONLINE
+                                                        <td class="appoint_date"><%= moment(appointmentOngoingLists[f].appointmentStart.toDate().toDateString()).format('ddd DD MMM YYYY') %></td>
+                                                        <td class="appoint_online" style="text-align: right;"><%= appointmentOngoingLists[f].type.toUpperCase() %>
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="appoint_time">13:00 น.</td>
+                                                        <td class="appoint_time"><%= moment(appointmentOngoingLists[f].appointmentStart.toDate().toUTCString()).format('kk:mm น.') %></td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="appoint_ongoing">On going</td>
-                                                        <td style="text-align: right;"><button type="button"
-                                                                class="btn btn-light">Enter Meeting</button></td>
+                                                        <td class="appoint_ongoing"><%= appointmentOngoingLists[f].status %></td>
+                                                        <% if(appointmentOngoingLists[f].meetingurl!=""){ %>
+                                                            <td style="text-align: right;"><a href="https:/<%= appointmentOngoingLists[f].meetingurl %>/"><button type="button"
+                                                                class="btn btn-light">Enter Meeting</button></a></td>
+                                                        <% }else if(appointmentOngoingLists[f].meetingurl=="") { %>
+                                                            <td style="text-align: right;"><a href="#"><button type="button"
+                                                                class="btn btn-light">Enter Meeting</button></a></td>
+                                                        <% } %> 
                                                     </tr>
                                                 </Table>
                                             </div>
-                                        </a>
-
-                                        <!--Card 2-->
-                                        <a href="#">
+                                            <% } %>
+                                    <% } else if(appointmentOngoingLists.length <= 3) { %>
+                                        <% for(let f=0 ; f< appointmentOngoingLists.length ; f++) { %> 
                                             <div class="card shadow-sm card_style">
                                                 <Table
                                                     style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
                                                     <tr>
-                                                        <td class="appoint_date">23/03/2021</td>
-                                                        <td class="appoint_online" style="text-align: right;">ONLINE
+                                                        <td class="appoint_date"><%= moment(appointmentOngoingLists[f].appointmentStart.toDate().toDateString()).format('ddd DD MMM YYYY') %></td>
+                                                        <td class="appoint_online" style="text-align: right;"><%= appointmentOngoingLists[f].type.toUpperCase() %>
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="appoint_time">13:00 น.</td>
+                                                        <td class="appoint_time"><%= moment(appointmentOngoingLists[f].appointmentStart.toDate().toUTCString()).format('kk:mm น.') %></td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="appoint_ongoing">On going</td>
-                                                        <td style="text-align: right;"><button type="button"
-                                                                class="btn btn-light">Enter Meeting</button></td>
+                                                        <td class="appoint_ongoing"><%= appointmentOngoingLists[f].status %></td>
+                                                        <% if(appointmentOngoingLists[f].meetingurl!=""){ %>
+                                                            <td style="text-align: right;"><a href="https:/<%= appointmentOngoingLists[f].meetingurl %>/"><button type="button"
+                                                                class="btn btn-light">Enter Meeting</button></a></td>
+                                                        <% }else if(appointmentOngoingLists[f].meetingurl=="") { %>
+                                                            <td style="text-align: right;"><a href="#"><button type="button"
+                                                                class="btn btn-light">Enter Meeting</button></a></td>
+                                                        <% } %> 
                                                     </tr>
                                                 </Table>
                                             </div>
-                                        </a>
-
-                                        <!--Card 3-->
-                                        <a href="#">
-                                            <div class="card shadow-sm card_style">
-                                                <Table
-                                                    style="width: 100%; text-align: left; vertical-align: middle; padding: 3%;">
-                                                    <tr>
-                                                        <td class="appoint_date">23/03/2021</td>
-                                                        <td class="appoint_online" style="text-align: right;">ONLINE
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="appoint_time">13:00 น.</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="appoint_ongoing">On going</td>
-                                                        <td style="text-align: right;"><button type="button"
-                                                                class="btn btn-light">Enter Meeting</button></td>
-                                                    </tr>
-                                                </Table>
-                                            </div>
-                                        </a>
-                                    </td>
+                                            <% } %>
+                                    <% } %>
+                                       
                                     <!--End of Appointent Card-->
                                 </tr>
                             </table>
                     </div>
+                </div>
+         
 </body>
 
 </html>
