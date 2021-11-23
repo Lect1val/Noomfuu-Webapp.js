@@ -115,11 +115,11 @@
         background-color: transparent;
         border: none;
         width: 100%;
-        padding: 3%;
+        /* padding: 3%;
         margin-top: 3%;
         margin-bottom: 3%;
         box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-        border-radius: 20px;
+        border-radius: 20px; */
         font-family: "Kanit", sans-serif;
       }
     </style>
@@ -139,20 +139,20 @@
     <div style="padding-top: 8%">
       <h1>Make Appointment</h1>
     </div>
-    <div style="text-align: center; width: 90%;">
+    <div style="text-align: center;">
       <div id="error"></div>
       <form method="post" id="appoint" action="#" onsubmit="next()">
         <div class="inputHeader">รหัสนักศึกษา</div>
-        <div><input type="number" class="inputbox" name="appointStdID" id="appointStdID" required /></div>
+        <div><input style="width: 90%;" type="number" class="inputbox" name="appointStdID" id="appointStdID" required /></div>
 
         <div class="inputHeader">ชื่อ-นามสกุล</div>
-        <div><input type="text" class="inputbox" name="appointName" id="appointName" required /></div>
+        <div><input style="width: 90%;" type="text" class="inputbox" name="appointName" id="appointName" required /></div>
 
         <div class="inputHeader">วันนัดหมาย</div>
-        <div><input type="date" class="inputbox" name="appointDate" id="appointDate" required /></div>
+        <div><input style="width: 90%;" type="date" class="inputbox" name="appointDate" id="appointDate" required /></div>
 
         <div class="inputHeader">เวลา</div>
-        <div><input type="time" list="times" class="inputbox" name="appointTime" id="appointTime" required /></div>
+        <div><input style="width: 90%;" type="time" list="times" class="inputbox" name="appointTime" id="appointTime" required /></div>
 
         <div class="inputHeader">ช่องทางปรึกษา</div>
         <select class="inputbox" id="type" name="type">
