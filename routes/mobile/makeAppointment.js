@@ -148,9 +148,9 @@ router.post("/add", async (req, res, next) => {
       await db.collection("User").doc(userID).collection("appointment").doc(newAppointmentID.toString()).set(data);
     }
 
-    res.render("mobile/assessmentDASSwarning");
+    res.render("mobile/assessmentDASSwarning", { userID });
   }
-  res.render("mobile/assessmentDASSwarning");
+  res.render("mobile/assessmentDASSwarning", { userID });
 });
 
 module.exports = router;

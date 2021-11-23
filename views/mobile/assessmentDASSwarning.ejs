@@ -68,40 +68,10 @@
 
   <body>
     <script>
-      var userProfile = null;
-      var displayName = null;
-      var statusMessage = null;
-      var pictureUrl = null;
-
-      function runApp() {
-        liff
-          .getProfile()
-          .then((profile) => {
-            userProfile = profile.userId;
-            displayName = profile.displayName;
-            statusMessage = profile.statusMessage;
-            pictureUrl = profile.pictureUrl;
-            console.log("run" + userProfile + displayName);
-          })
-          .catch((err) => console.error(err));
-      }
-
-      liff.init(
-        { liffId: "1655710592-L8VgZW9o" },
-        () => {
-          if (liff.isLoggedIn() /*&& userProfile != null*/) {
-            runApp();
-          } else {
-            liff.login();
-          }
-        },
-        (err) => console.error(err.code, error.message)
-      );
-
+      var id = "<%= userID %>";
       function nextPage() {
-        console.log(userProfile);
-        console.log(displayName);
-        window.location.href = "/assessment/dass/q?id=" + userProfile;
+
+        window.location.href = "/assessment/dass/q?id=" + id;
       }
     </script>
     <div class="assess_content">
