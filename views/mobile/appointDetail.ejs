@@ -112,7 +112,7 @@
       }
 
       .submit {
-        background-color: white;
+        background-color: transparent;
         border: none;
         width: 100%;
         padding: 3%;
@@ -139,7 +139,7 @@
     <div style="padding-top: 8%">
       <h1>Make Appointment</h1>
     </div>
-    <div style="text-align: center">
+    <div style="text-align: center; width: 90%;">
       <div id="error"></div>
       <form method="post" id="appoint" action="#" onsubmit="next()">
         <div class="inputHeader">รหัสนักศึกษา</div>
@@ -169,7 +169,7 @@
           <option value="14:30:00"></option>
         </datalist>
 
-        <button id="submitbtn" class="submit" type="submit" form="appoint" value="ดำเนินการนัดหมาย">ดำเนินการนัดหมาย</button>
+        <button id="submitbtn" class="submit" type="submit" form="appoint"><img src="/images/save_mobile.png"></button>
       </form>
     </div>
   </body>
