@@ -984,6 +984,8 @@ router.get("/:userID/appointment/:appointID/edit", async (req, res, next) => {
     const getUserID = req.params.userID;
     const getAppointID = Number(req.params.appointID);
 
+    const errorMessage = null;
+
     // ดึงข้อมูล appointment
     const appointListRef = db.collection("User").doc(getUserID).collection("appointment");
     const appointLists = [];
@@ -1044,6 +1046,7 @@ router.get("/:userID/appointment/:appointID/edit", async (req, res, next) => {
         getUserID,
         appointLists,
         moment: moment,
+        errorMessage,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -1063,6 +1066,7 @@ router.get("/:userID/appointment/:appointID/edit", async (req, res, next) => {
         getUserID,
         appointLists,
         moment: moment,
+        errorMessage,
       });
     }
   } catch (error) {
@@ -1087,11 +1091,9 @@ router.post("/:userID/appointment/:appointID", async (req, res, next) => {
     const newAppointStart = new Date(newAppointDate + " " + newAppointStartTime);
     const newAppointEnd = new Date(newAppointDate + " " + newAppointEndTime);
 
-    console.log(newAppointStart);
-    console.log(moment(newAppointStart));
     if (Date.parse(newAppointStart) > Date.now()) {
       const updateAppointment = db.collection("User").doc(getUserID).collection("appointment").doc(getAppointID.toString());
-      const res = await updateAppointment.update({
+      const response = await updateAppointment.update({
         appointmentStart: moment(newAppointStart),
         appointmentEnd: moment(newAppointEnd),
         type: newType,
@@ -1099,140 +1101,226 @@ router.post("/:userID/appointment/:appointID", async (req, res, next) => {
         status: newStatus,
         meetingurl: newLink,
       });
-    }
 
-    // Auto Update Appointment Status ตามเวลานัดหมาย
-    const forcheckAppoinmentListRef = db.collection("User").doc(getUserID).collection("appointment");
-    const forcheckAppoinmentList = [];
+      // Auto Update Appointment Status ตามเวลานัดหมาย
+      const forcheckAppoinmentListRef = db.collection("User").doc(getUserID).collection("appointment");
+      const forcheckAppoinmentList = [];
 
-    await forcheckAppoinmentListRef.get().then((snapshot) => {
-      snapshot.forEach((doc) => {
-        forcheckAppoinmentList.push({
-          appointID: doc.data().appointID,
-          userID: doc.data().userID,
-          studentID: doc.data().studentID,
-          fullname: doc.data().fullname,
-          appointmentStart: doc.data().appointmentStart,
-          appointmentEnd: doc.data().appointmentEnd,
-          type: doc.data().type,
-          timestamp: doc.data().timestamp,
-          status: doc.data().status,
-          meetingurl: doc.data().meetingurl,
+      await forcheckAppoinmentListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          forcheckAppoinmentList.push({
+            appointID: doc.data().appointID,
+            userID: doc.data().userID,
+            studentID: doc.data().studentID,
+            fullname: doc.data().fullname,
+            appointmentStart: doc.data().appointmentStart,
+            appointmentEnd: doc.data().appointmentEnd,
+            type: doc.data().type,
+            timestamp: doc.data().timestamp,
+            status: doc.data().status,
+            meetingurl: doc.data().meetingurl,
+          });
         });
       });
-    });
 
-    let date = moment();
-    for (let f = 0; f < forcheckAppoinmentList.length; f++) {
-      if (forcheckAppoinmentList[f].status == "ongoing" || forcheckAppoinmentList[f].status == "done") {
-        if (date.isAfter(forcheckAppoinmentList[f].appointmentEnd.toDate().toUTCString())) {
-          const autoUpdateAppointment = db.collection("User").doc(getUserID).collection("appointment").doc(forcheckAppoinmentList[f].appointID.toString());
-          await autoUpdateAppointment.update({
-            status: "done",
-          });
+      let date = moment();
+      for (let f = 0; f < forcheckAppoinmentList.length; f++) {
+        if (forcheckAppoinmentList[f].status == "ongoing" || forcheckAppoinmentList[f].status == "done") {
+          if (date.isAfter(forcheckAppoinmentList[f].appointmentEnd.toDate().toUTCString())) {
+            const autoUpdateAppointment = db.collection("User").doc(getUserID).collection("appointment").doc(forcheckAppoinmentList[f].appointID.toString());
+            await autoUpdateAppointment.update({
+              status: "done",
+            });
+          }
         }
       }
-    }
 
-    // ดึงข้อมูล appointment
-    const appointmentListRef = db.collection("User").doc(getUserID).collection("appointment").orderBy("appointmentStart", "asc");
-    const appointmentOngoingLists = [];
-    const appointmentLists = [];
+      // ดึงข้อมูล appointment
+      const appointmentListRef = db.collection("User").doc(getUserID).collection("appointment").orderBy("appointmentStart", "asc");
+      const appointmentOngoingLists = [];
+      const appointmentLists = [];
 
-    await appointmentListRef.get().then((snapshot) => {
-      snapshot.forEach((doc) => {
-        if (doc.data().status == "ongoing") {
-          appointmentOngoingLists.push({
-            appointID: doc.data().appointID,
-            userID: doc.data().userID,
-            studentID: doc.data().studentID,
-            fullname: doc.data().fullname,
-            appointmentStart: doc.data().appointmentStart,
-            appointmentEnd: doc.data().appointmentEnd,
-            type: doc.data().type,
-            timestamp: doc.data().timestamp,
-            status: doc.data().status,
-            meetingurl: doc.data().meetingurl,
-          });
-        } else if (doc.data().status == "done" || doc.data().status == "cancel") {
-          appointmentLists.push({
-            appointID: doc.data().appointID,
-            userID: doc.data().userID,
-            studentID: doc.data().studentID,
-            fullname: doc.data().fullname,
-            appointmentStart: doc.data().appointmentStart,
-            appointmentEnd: doc.data().appointmentEnd,
-            type: doc.data().type,
-            timestamp: doc.data().timestamp,
-            status: doc.data().status,
-            meetingurl: doc.data().meetingurl,
-          });
-        }
-      });
-    });
-
-    // ดึงข้อมุล contactlist และ serach contactlist
-    const contactListRef = db.collection("User");
-    const contactlists_temp = [];
-    const contactlists = [];
-
-    const search_name = req.query.search;
-
-    if (search_name != null) {
-      await contactListRef.get().then((snapshot) => {
+      await appointmentListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
-          if (doc.data().lineName != null && doc.data().lineName != "") {
-            contactlists_temp.push({
+          if (doc.data().status == "ongoing") {
+            appointmentOngoingLists.push({
+              appointID: doc.data().appointID,
               userID: doc.data().userID,
-              lineName: doc.data().lineName,
+              studentID: doc.data().studentID,
+              fullname: doc.data().fullname,
+              appointmentStart: doc.data().appointmentStart,
+              appointmentEnd: doc.data().appointmentEnd,
+              type: doc.data().type,
+              timestamp: doc.data().timestamp,
+              status: doc.data().status,
+              meetingurl: doc.data().meetingurl,
+            });
+          } else if (doc.data().status == "done" || doc.data().status == "cancel") {
+            appointmentLists.push({
+              appointID: doc.data().appointID,
+              userID: doc.data().userID,
+              studentID: doc.data().studentID,
+              fullname: doc.data().fullname,
+              appointmentStart: doc.data().appointmentStart,
+              appointmentEnd: doc.data().appointmentEnd,
+              type: doc.data().type,
+              timestamp: doc.data().timestamp,
+              status: doc.data().status,
+              meetingurl: doc.data().meetingurl,
             });
           }
         });
       });
-      let i = 0;
 
-      await contactListRef.get().then((snapshot) => {
-        snapshot.forEach((doc) => {
-          if (doc.data().lineName != null && doc.data().lineName != "") {
-            i++;
-            if (contactlists_temp[i - 1].lineName.toLowerCase().includes(search_name.toLowerCase())) {
+      // ดึงข้อมุล contactlist และ serach contactlist
+      const contactListRef = db.collection("User");
+      const contactlists_temp = [];
+      const contactlists = [];
+
+      const search_name = req.query.search;
+
+      if (search_name != null) {
+        await contactListRef.get().then((snapshot) => {
+          snapshot.forEach((doc) => {
+            if (doc.data().lineName != null && doc.data().lineName != "") {
+              contactlists_temp.push({
+                userID: doc.data().userID,
+                lineName: doc.data().lineName,
+              });
+            }
+          });
+        });
+        let i = 0;
+
+        await contactListRef.get().then((snapshot) => {
+          snapshot.forEach((doc) => {
+            if (doc.data().lineName != null && doc.data().lineName != "") {
+              i++;
+              if (contactlists_temp[i - 1].lineName.toLowerCase().includes(search_name.toLowerCase())) {
+                contactlists.push({
+                  userID: doc.data().userID,
+                  lineName: doc.data().lineName,
+                });
+              }
+            }
+          });
+        });
+
+        res.render("desktop/appointment_all", {
+          contactlists,
+          getAppointID,
+          getUserID,
+          appointmentLists,
+          moment: moment,
+          appointmentOngoingLists,
+        });
+      } else {
+        await contactListRef.get().then((snapshot) => {
+          snapshot.forEach((doc) => {
+            if (doc.data().lineName != null && doc.data().lineName != "") {
               contactlists.push({
                 userID: doc.data().userID,
                 lineName: doc.data().lineName,
               });
             }
-          }
+          });
         });
-      });
 
-      res.render("desktop/appointment_all", {
-        contactlists,
-        getAppointID,
-        getUserID,
-        appointmentLists,
-        moment: moment,
-        appointmentOngoingLists,
-      });
+        res.render("desktop/appointment_all", {
+          contactlists,
+          getAppointID,
+          getUserID,
+          appointmentLists,
+          moment: moment,
+          appointmentOngoingLists,
+        });
+      }
     } else {
-      await contactListRef.get().then((snapshot) => {
+      const errorMessage = "วันเวลานัดหมายไม่ถูกต้อง ลองเลือกเวลาใหม่นะคะ";
+
+      // ดึงข้อมูล appointment
+      const appointListRef = db.collection("User").doc(getUserID).collection("appointment");
+      const appointLists = [];
+      await appointListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
-          if (doc.data().lineName != null && doc.data().lineName != "") {
-            contactlists.push({
-              userID: doc.data().userID,
-              lineName: doc.data().lineName,
-            });
-          }
+          appointLists.push({
+            appointID: doc.data().appointID,
+            userID: doc.data().userID,
+            studentID: doc.data().studentID,
+            fullname: doc.data().fullname,
+            appointmentStart: doc.data().appointmentStart,
+            appointmentEnd: doc.data().appointmentEnd,
+            type: doc.data().type,
+            timestamp: doc.data().timestamp,
+            status: doc.data().status,
+            meetingurl: doc.data().meetingurl,
+          });
         });
       });
 
-      res.render("desktop/appointment_all", {
-        contactlists,
-        getAppointID,
-        getUserID,
-        appointmentLists,
-        moment: moment,
-        appointmentOngoingLists,
-      });
+      // ดึงข้อมุล contactlist และ serach contactlist
+      const contactListRef = db.collection("User");
+      const contactlists_temp = [];
+      const contactlists = [];
+
+      const search_name = req.query.search;
+
+      if (search_name != null) {
+        await contactListRef.get().then((snapshot) => {
+          snapshot.forEach((doc) => {
+            if (doc.data().lineName != null && doc.data().lineName != "") {
+              contactlists_temp.push({
+                userID: doc.data().userID,
+                lineName: doc.data().lineName,
+              });
+            }
+          });
+        });
+        let i = 0;
+
+        await contactListRef.get().then((snapshot) => {
+          snapshot.forEach((doc) => {
+            if (doc.data().lineName != null && doc.data().lineName != "") {
+              i++;
+              if (contactlists_temp[i - 1].lineName.toLowerCase().includes(search_name.toLowerCase())) {
+                contactlists.push({
+                  userID: doc.data().userID,
+                  lineName: doc.data().lineName,
+                });
+              }
+            }
+          });
+        });
+
+        res.render("desktop/edit_appointment", {
+          contactlists,
+          getAppointID,
+          getUserID,
+          appointLists,
+          moment: moment,
+          errorMessage,
+        });
+      } else {
+        await contactListRef.get().then((snapshot) => {
+          snapshot.forEach((doc) => {
+            if (doc.data().lineName != null && doc.data().lineName != "") {
+              contactlists.push({
+                userID: doc.data().userID,
+                lineName: doc.data().lineName,
+              });
+            }
+          });
+        });
+
+        res.render("desktop/edit_appointment", {
+          contactlists,
+          getAppointID,
+          getUserID,
+          appointLists,
+          moment: moment,
+          errorMessage,
+        });
+      }
     }
   } catch (error) {
     console.log(error);
