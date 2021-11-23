@@ -56,7 +56,7 @@
                 <td class="appoint_date" style="text-align: right"><%= moment(appointmentUserLists[s].appointmentStart.toDate().toDateString()).format("ddd DD MMM YYYY") %></td>
               </tr>
               <tr>
-                <td class="appoint_user"><%= appointmentUserLists[s].lineName %></td>
+                <td class="appoint_user"><%= appointmentUserLists[s].fullname %> (<%= appointmentUserLists[s].lineName %>)</td>
                 <td class="appoint_time" style="text-align: right"><%= moment( appointmentUserLists[s].appointmentStart.toDate().toUTCString()).format('kk:mm น.')%></td>
               </tr>
             </Table>
@@ -69,7 +69,7 @@
                 <td class="appoint_date" style="text-align: right"><%= moment(appointmentUserLists[s].appointmentStart.toDate().toDateString()).format("ddd DD MMM YYYY") %></td>
               </tr>
               <tr>
-                <td class="appoint_user"><%= appointmentUserLists[s].lineName %></td>
+                <td class="appoint_user"><%= appointmentUserLists[s].fullname %> (<%= appointmentUserLists[s].lineName %>)</td>
                 <td class="appoint_time" style="text-align: right"><%= moment( appointmentUserLists[s].appointmentStart.toDate().toUTCString()).format('kk:mm น.')%></td>
               </tr>
             </Table>
@@ -78,7 +78,7 @@
 
           <!--End of Appointment Card-->
           <hr />
-          <h1 style="text-align: center;">Calendy Appointment</h1>
+          <h1 style="text-align: center">Calendy Appointment</h1>
           <div id="loading">loading...</div>
           <div id="calendar"></div>
 
