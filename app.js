@@ -6,16 +6,7 @@ var logger = require("morgan");
 
 // *Route Desktop*
 var indexRouter = require("./routes/desktop/index");
-var loginRouter = require("./routes/desktop/login");
-var noPermissionRouter = require("./routes/desktop/no_permission");
 var usersRouter = require("./routes/desktop/users");
-var analyticRouter = require("./routes/desktop/feeling_analytic");
-var noteRouter = require("./routes/desktop/note");
-var noteContentRouter = require("./routes/desktop/note_content");
-var noteEditRouter = require("./routes/desktop/note_edit");
-var noteAddRouter = require("./routes/desktop/note_add");
-var appointmentRouter = require("./routes/desktop/appointment_all");
-// var contactList = require("./routes/contactlist");
 
 // *Route Mobile*
 var assessment2QRouter = require("./routes/mobile/assessment2Q");
@@ -43,15 +34,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // *App.use Desktop*
 app.use("/", indexRouter);
 app.use("/home", indexRouter);
-app.use("/nopermission", noPermissionRouter);
 app.use("/profile", usersRouter);
-app.use("/profile/analytic", analyticRouter);
-app.use("/profile/note", noteRouter);
-app.use("/profile/note/content", noteContentRouter);
-app.use("/profile/note/add", noteAddRouter);
-app.use("/profile/note/content/edit", noteEditRouter);
-app.use("/profile/appointment", appointmentRouter);
-// app.use(contactList);
 
 // *App.use Mobile*
 app.use("/assessment/depress", assessmentWarningRouter);
@@ -63,7 +46,6 @@ app.use("/assessment/dass/q", DASSQuestionRouter);
 app.use("/assessment/dass/result", DASSResultRouter);
 app.use("/journal", journalRouter);
 app.use("/appointment", makeAppointmentRouter);
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

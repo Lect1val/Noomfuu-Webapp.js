@@ -82,7 +82,6 @@
           function nextYes() {
             score += 1;
             if (curNum === 1) {
-              // curNum = 0;
               if (score >= 1) {
                 window.location.href = "./9Q?id=" + id;
               } else {
@@ -100,7 +99,6 @@
 
           function nextNo() {
             if (curNum === 1) {
-              // curNum = 0;
               if (score == 1) {
                 window.location.href = "./9Q?id=" + id;
               } else {
@@ -117,17 +115,10 @@
           }
         </script>
 
-        <!-- <div style="text-align: right">
-        <button style="border: none; background-color: transparent">
-          <img src="/images/help.png" alt="Girl in a jacket" width="125" height="auto" />
-        </button>
-      </div> -->
         <div>
-          <!-- <form> -->
           <button class="answer_box" id="myButton" onclick="nextYes()" name="user_ans" value="yes">ใช่</button>
           <br />
           <button class="answer_box" id="myButton" onclick="nextNo()" name="user_ans" value="no">ไม่ใช่</button>
-          <!-- </form> -->
         </div>
       </div>
     </div>

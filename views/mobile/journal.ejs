@@ -72,10 +72,10 @@
       <h1>Gratitude Journal</h1>
       <h2>ฉันเคยรู้สึกขอบคุณสิ่งเหล่านี้</h2>
     </div>
-    <% for(let x=0 ; x< journals.length;x++) {%> <% if(x==0) {%>
-    <div><%=journals[x].timestamp.toDate().toDateString()%></div>
+    <% for(let x=0 ; x< journals.length;x++) { %> <% if(x==0) { %>
+    <div><%=journals[x].timestamp.toDate().toDateString() %></div>
     <% } else if(journals[x].timestamp.toDate().toDateString() != journals[x-1].timestamp.toDate().toDateString()) { %>
-    <div><%=journals[x].timestamp.toDate().toDateString()%></div>
+    <div><%=journals[x].timestamp.toDate().toDateString() %></div>
     <% } %>
     <div class="content_box"><%= journals[x].content%></div>
     <% } %>

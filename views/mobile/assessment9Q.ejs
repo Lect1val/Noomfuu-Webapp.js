@@ -101,7 +101,6 @@
 
           function nextNever() {
             if (curNum === 8) {
-              // curNum = 0;
               window.location.href = "./Qresult?score=" + score + "&id=" + id;
             } else {
               curNum++;
@@ -115,7 +114,6 @@
           function nextSometimes() {
             score += 1;
             if (curNum === 8) {
-              // curNum = 0;
               window.location.href = "./Qresult?score=" + score + "&id=" + id;
             } else {
               curNum++;
@@ -157,11 +155,6 @@
           }
         </script>
 
-        <!-- <div style="text-align: right">
-        <button style="border: none; background-color: transparent">
-          <img src="/images/help.png" alt="Girl in a jacket" width="125" height="auto" />
-        </button>
-      </div> -->
         <div>
           <button class="answer_box" id="myButton" onclick="nextNever()" name="user_ans" value="0">ไม่มีเลย</button>
           <button class="answer_box" id="myButton" onclick="nextSometimes()" name="user_ans" value="1">เป็นบางวัน</button>
