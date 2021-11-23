@@ -61,7 +61,7 @@
             <p><%= noteLists.find(el=> el.noteID === getNoteID).content %></p>
           </div>
           <div class="row">
-            <div class="col-md-6 note_owner">Created by <%= contactlists.find(el=> el.userID === creatorID).firstName %> <%= contactlists.find(el=> el.userID === creatorID).lastName %></div>
+            <div class="col-md-6 note_owner"></div>
             <div class="col-md-6 modify_status">
               Last Modify: <%= moment(noteLists.find(el=> el.noteID === getNoteID).timestamp.toDate().toDateString()).format('ddd DD MMM YYYY')%> <%= moment(noteLists.find(el=> el.noteID ===
               getNoteID).timestamp.toDate().toUTCString()).format('kk:mm น.') %>
