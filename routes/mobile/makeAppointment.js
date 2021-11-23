@@ -73,11 +73,13 @@ router.get("/", (req, res, next) => {
 
 router.get("/add", (req, res, next) => {
   const userID = req.query.id;
-  res.render("mobile/appointDetail", { userID });
+  const errormessage = null;
+  res.render("mobile/appointDetail", { userID, errormessage });
 });
 
 router.post("/add", async (req, res, next) => {
   const userID = req.query.id;
+  
 
   const appointStdID = req.body.appointStdID;
   const appointName = req.body.appointName;
@@ -148,8 +150,10 @@ router.post("/add", async (req, res, next) => {
     }
 
     res.render("mobile/assessmentDASSwarning", { userID });
+  } else {
+    const errormessage = "วันเวลานัดหมายไม่ถูกต้อง ลองเลือกเวลาใหม่นะคะ"
+    res.render("mobile/appointDetail", { userID, errormessage });
   }
-  res.render("mobile/assessmentDASSwarning", { userID });
 });
 
 module.exports = router;

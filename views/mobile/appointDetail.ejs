@@ -115,6 +115,7 @@
 
   <body>
     <script>
+
       function nextGoogle() {
         window.location.href = "/appointment/googleAdd";
       }
@@ -128,7 +129,9 @@
       <h1>Make Appointment</h1>
     </div>
     <div style="text-align: center;">
-      <div id="error"></div>
+      <% if (errormessage){ %>
+      <div style="color: red;"> <%=errormessage %> </div>
+      <% } %>
       <form method="post" id="appoint" action="#" onsubmit="next()">
         <div class="inputHeader">รหัสนักศึกษา</div>
         <div><input style="width: 90%;" type="number" class="inputbox" name="appointStdID" id="appointStdID" required /></div>
