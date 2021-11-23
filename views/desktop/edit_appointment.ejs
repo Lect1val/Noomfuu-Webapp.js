@@ -85,6 +85,7 @@
 
           <h1>Edit Appointment</h1>
           <!-- <div class="modal-appoint"> -->
+          <div style="color: red;"></div>
           <% if(appointLists.find(el => el.appointID === getAppointID).type=="online") { %>
           <form method="POST" action="/profile/<%= getUserID %>/appointment/<%= getAppointID %>" id="edit_profile">
             <table style="width: 100%">
