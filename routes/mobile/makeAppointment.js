@@ -87,9 +87,9 @@ router.post("/add", async (req, res, next) => {
 
   const appointStart = new Date(appointDate + " " + appointTime);
   const appointEnd = new Date(new Date(appointStart).setHours(appointStart.getHours() + 1));
-  if (Date.parse(appointStart) < Date.now()) {
-    console.log(appointStart, appointEnd);
 
+  let date = moment();
+  if (date.isAfter(appointStart.toDate().toUTCString()) ) {
     const oldAppointment = [];
     const oldAppointmentID = await db
       .collection("User")
