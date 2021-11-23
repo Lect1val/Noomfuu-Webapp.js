@@ -3,7 +3,6 @@ var router = express.Router();
 var moment = require("moment");
 const { db } = require("../../Database/database");
 
-
 router.get("/", async (req, res, next) => {
   try {
     const userListRef = db.collection("User");
@@ -126,10 +125,6 @@ router.get("/", async (req, res, next) => {
     appointmentUserLists.sort(function (a, b) {
       return a.appointmentStart - b.appointmentStart;
     });
-
-    console.log("----");
-    console.log(appointmentUserLists);
-    console.log(moment(appointmentUserLists[0].timestamp.toDate().toDateString()).format("ddd DD MMM YYYY"));
 
     // ดึงข้อมูล Feeling down ไปแสดงในหน้า  Index
     const feelingDownLists = [];

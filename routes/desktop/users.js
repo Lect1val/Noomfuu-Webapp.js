@@ -152,7 +152,6 @@ router.get("/:userID", async (req, res, next) => {
     const search_name = req.query.search;
 
     if (search_name != null) {
-      console.log(search_name);
       await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
@@ -300,7 +299,6 @@ router.post("/:userID", async (req, res, next) => {
     const search_name = req.query.search;
 
     if (search_name != null) {
-      console.log(search_name);
       await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
@@ -359,7 +357,6 @@ router.get("/:userID/analytic", async (req, res, next) => {
     await assessmentListRef.get().then((snapshot) => {
       snapshot.forEach((doc) => {
         if (doc.data().type == "dass") {
-          console.log("dass");
           assessmentList.push({
             assessmentID: doc.data().assessmentID,
             type: doc.data().type,
@@ -370,7 +367,6 @@ router.get("/:userID/analytic", async (req, res, next) => {
             Sscore: doc.data().Sscore,
           });
         } else if (doc.data().type == "depress") {
-          console.log("depress");
           assessmentList.push({
             assessmentID: doc.data().assessmentID,
             type: doc.data().type,
@@ -440,7 +436,6 @@ router.get("/:userID/analytic", async (req, res, next) => {
     const search_name = req.query.search;
 
     if (search_name != null) {
-      console.log(search_name);
       await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
@@ -521,7 +516,6 @@ router.get("/:userID/assessment", async (req, res, next) => {
         await assessmentListRef.get().then((snapshot) => {
           snapshot.forEach((doc) => {
             if (doc.data().type == "dass") {
-              console.log("dass");
               assessmentList_temp.push({
                 assessmentID: doc.data().assessmentID,
                 type: doc.data().type,
@@ -532,7 +526,6 @@ router.get("/:userID/assessment", async (req, res, next) => {
                 Sscore: doc.data().Sscore,
               });
             } else if (doc.data().type == "depress") {
-              console.log("depress");
               assessmentList_temp.push({
                 assessmentID: doc.data().assessmentID,
                 type: doc.data().type,
@@ -548,12 +541,9 @@ router.get("/:userID/assessment", async (req, res, next) => {
 
         await assessmentListRef.get().then((snapshot) => {
           snapshot.forEach((doc) => {
-            console.log(assessmentList_temp[i].status.toLowerCase());
-            console.log(assessmentList_temp[i].status.toLowerCase() == search_assessment_name);
             i++;
             if (assessmentList_temp[i - 1].status.toLowerCase() == search_assessment_name) {
               if (doc.data().type == "dass") {
-                console.log("dass");
                 assessmentList.push({
                   assessmentID: doc.data().assessmentID,
                   type: doc.data().type,
@@ -564,7 +554,6 @@ router.get("/:userID/assessment", async (req, res, next) => {
                   Sscore: doc.data().Sscore,
                 });
               } else if (doc.data().type == "depress") {
-                console.log("depress");
                 assessmentList.push({
                   assessmentID: doc.data().assessmentID,
                   type: doc.data().type,
@@ -581,7 +570,6 @@ router.get("/:userID/assessment", async (req, res, next) => {
           await assessmentListRef.get().then((snapshot) => {
             snapshot.forEach((doc) => {
               if (doc.data().type == "dass") {
-                console.log("dass");
                 assessmentList.push({
                   assessmentID: doc.data().assessmentID,
                   type: doc.data().type,
@@ -598,7 +586,6 @@ router.get("/:userID/assessment", async (req, res, next) => {
           await assessmentListRef.get().then((snapshot) => {
             snapshot.forEach((doc) => {
               if (doc.data().type == "depress") {
-                console.log("depress");
                 assessmentList.push({
                   assessmentID: doc.data().assessmentID,
                   type: doc.data().type,
@@ -615,7 +602,6 @@ router.get("/:userID/assessment", async (req, res, next) => {
       await assessmentListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
           if (doc.data().type == "dass") {
-            console.log("dass");
             assessmentList.push({
               assessmentID: doc.data().assessmentID,
               type: doc.data().type,
@@ -626,7 +612,6 @@ router.get("/:userID/assessment", async (req, res, next) => {
               Sscore: doc.data().Sscore,
             });
           } else if (doc.data().type == "depress") {
-            console.log("depress");
             assessmentList.push({
               assessmentID: doc.data().assessmentID,
               type: doc.data().type,
@@ -647,7 +632,6 @@ router.get("/:userID/assessment", async (req, res, next) => {
     const search_name = req.query.search;
 
     if (search_name != null) {
-      console.log(search_name);
       await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
@@ -731,8 +715,6 @@ router.get("/:userID/chat", async (req, res, next) => {
 
         await chatListRef.get().then((snapshot) => {
           snapshot.forEach((doc) => {
-            console.log(chatList_temp[i].content.toLowerCase());
-            console.log(chatList_temp[i].content.toLowerCase().includes(search_chat_name.toLowerCase()));
             i++;
             if (chatList_temp[i - 1].content.toLowerCase().includes(search_chat_name.toLowerCase())) {
               chatList.push({
@@ -753,7 +735,7 @@ router.get("/:userID/chat", async (req, res, next) => {
         } else {
           emotion = "0";
         }
-        console.log(emotion);
+
         await chatListRef.get().then((snapshot) => {
           snapshot.forEach((doc) => {
             chatList_temp.push({
@@ -768,8 +750,6 @@ router.get("/:userID/chat", async (req, res, next) => {
 
         await chatListRef.get().then((snapshot) => {
           snapshot.forEach((doc) => {
-            console.log(chatList_temp[i].emotion.toLowerCase());
-            console.log(chatList_temp[i].emotion.toLowerCase() == emotion);
             i++;
             if (chatList_temp[i - 1].emotion.toLowerCase().toLowerCase() == emotion) {
               chatList.push({
@@ -803,7 +783,6 @@ router.get("/:userID/chat", async (req, res, next) => {
     const search_name = req.query.search;
 
     if (search_name != null) {
-      console.log(search_name);
       await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
@@ -941,7 +920,6 @@ router.get("/:userID/appointment", async (req, res, next) => {
     const search_name = req.query.search;
 
     if (search_name != null) {
-      console.log(search_name);
       await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
@@ -1034,7 +1012,6 @@ router.get("/:userID/appointment/:appointID/edit", async (req, res, next) => {
     const search_name = req.query.search;
 
     if (search_name != null) {
-      console.log(search_name);
       await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
@@ -1110,6 +1087,8 @@ router.post("/:userID/appointment/:appointID", async (req, res, next) => {
     const newAppointStart = new Date(newAppointDate + " " + newAppointStartTime);
     const newAppointEnd = new Date(newAppointDate + " " + newAppointEndTime);
 
+    console.log(newAppointStart);
+    console.log(moment(newAppointStart));
     if (Date.parse(newAppointStart) > Date.now()) {
       const updateAppointment = db.collection("User").doc(getUserID).collection("appointment").doc(getAppointID.toString());
       const res = await updateAppointment.update({
@@ -1200,7 +1179,6 @@ router.post("/:userID/appointment/:appointID", async (req, res, next) => {
     const search_name = req.query.search;
 
     if (search_name != null) {
-      console.log(search_name);
       await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
@@ -1288,7 +1266,6 @@ router.get("/:userID/note", async (req, res, next) => {
     const search_name = req.query.search;
 
     if (search_name != null) {
-      console.log(search_name);
       await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
@@ -1372,7 +1349,6 @@ router.get("/:userID/note/:noteID/content", async (req, res, next) => {
     const search_name = req.query.search;
 
     if (search_name != null) {
-      console.log(search_name);
       await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
@@ -1466,7 +1442,6 @@ router.get("/:userID/note/:noteID/content/edit", async (req, res, next) => {
     const search_name = req.query.search;
 
     if (search_name != null) {
-      console.log(search_name);
       await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
@@ -1566,7 +1541,6 @@ router.post("/:userID/note/:noteID/content", async (req, res, next) => {
     const search_name = req.query.search;
 
     if (search_name != null) {
-      console.log(search_name);
       await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
@@ -1664,7 +1638,6 @@ router.get("/:userID/note/:noteID/delete", async (req, res, next) => {
     const search_name = req.query.search;
 
     if (search_name != null) {
-      console.log(search_name);
       await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
@@ -1732,7 +1705,6 @@ router.get("/:userID/note/add", async (req, res, next) => {
     const search_name = req.query.search;
 
     if (search_name != null) {
-      console.log(search_name);
       await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
@@ -1861,7 +1833,6 @@ router.post("/:userID/note/add", async (req, res, next) => {
     const search_name = req.query.search;
 
     if (search_name != null) {
-      console.log(search_name);
       await contactListRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
           if (doc.data().lineName != null && doc.data().lineName != "") {
