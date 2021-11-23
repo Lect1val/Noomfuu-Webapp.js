@@ -50,6 +50,7 @@ router.post("/:userID/add", async (req, res, next) => {
           content: doc.data().content,
           journalID: doc.data().journalID,
           timestamp: doc.data().timestamp,
+          emotion: doc.data().emotion,
         });
       });
     });
@@ -59,6 +60,7 @@ router.post("/:userID/add", async (req, res, next) => {
       content: content,
       timestamp: FieldValue.serverTimestamp(),
       journalID: 1,
+      emotion: "1",
     };
 
     db.collection("User").doc(userID).collection("journal").doc("1").set(data);
@@ -69,6 +71,7 @@ router.post("/:userID/add", async (req, res, next) => {
       content: content,
       timestamp: FieldValue.serverTimestamp(),
       journalID: newJournalID,
+      emotion: "1",
     };
     //db.collection('Assessment').add(data);
     db.collection("User").doc(userID).collection("journal").doc(newJournalID.toString()).set(data);
