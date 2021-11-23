@@ -104,7 +104,7 @@
                       </td>
                       <% if(appointmentOngoingLists[x].meetingurl!=""){ %>
                       <td style="text-align: right">
-                        <a href="https:/<%= appointmentOngoingLists[x].meetingurl %>/"><button type="button" class="btn btn-light">Enter Meeting</button></a>
+                        <a href="https://<%= appointmentOngoingLists[x].meetingurl %>"><button type="button" class="btn btn-light">Enter Meeting</button></a>
                       </td>
                       <% }else if(appointmentOngoingLists[x].meetingurl=="") { %>
                       <td style="text-align: right">
@@ -161,7 +161,7 @@
                         </td>
                         <% if(appointmentOngoingLists[x].meetingurl!=""){ %>
                         <td style="text-align: right">
-                          <a href="<%= appointmentOngoingLists[x].meetingurl %>"><button type="button" class="btn btn-light">Enter Meeting</button></a>
+                          <a href="https://<%= appointmentOngoingLists[x].meetingurl %>"><button type="button" class="btn btn-light">Enter Meeting</button></a>
                         </td>
                         <% }else if(appointmentOngoingLists[x].meetingurl=="") { %>
                         <td style="text-align: right">
@@ -202,8 +202,8 @@
           </div>
           <% cardTop=1 %> <% } %> <% } %> <% } %>
 
-          <hr>
-          <h1 style="text-align: center;">Calendy Appointment</h1>
+          <hr />
+          <h1 style="text-align: center">Calendy Appointment</h1>
           <div id="loading">loading...</div>
           <div id="calendar"></div>
 
