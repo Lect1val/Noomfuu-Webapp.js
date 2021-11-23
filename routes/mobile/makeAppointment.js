@@ -148,54 +148,9 @@ router.post("/add", async (req, res, next) => {
       await db.collection("User").doc(userID).collection("appointment").doc(newAppointmentID.toString()).set(data);
     }
 
-    res.render("mobile/appointDetail", { userID });
+    res.render("mobile/assessmentDASSwarning");
   }
-  res.render("mobile/appointDetail", { userID });
-});
-
-router.get("/googleAdd", (req, res, next) => {
-  var event = {
-    summary: "Google I/O 2015",
-    location: "800 Howard St., San Francisco, CA 94103",
-    description: "A chance to hear more about Google's developer products.",
-    start: {
-      dateTime: "2021-10-28T09:00:00-07:00",
-      timeZone: "America/Los_Angeles",
-    },
-    end: {
-      dateTime: "2021-10-28T17:00:00-07:00",
-      timeZone: "America/Los_Angeles",
-    },
-    recurrence: ["RRULE:FREQ=DAILY;COUNT=2"],
-    attendees: [{ email: "srud8mm07ss8rkfs04kkcj3oac@group.calendar.google.com" }],
-    reminders: {
-      useDefault: false,
-      overrides: [
-        { method: "email", minutes: 24 * 60 },
-        { method: "popup", minutes: 10 },
-      ],
-    },
-  };
-
-  console.log("create var");
-
-  const calendar = google.calendar({ version: "v3", auth });
-  calendar.events.insert(
-    {
-      auth: auth,
-      calendarId: "primary",
-      resource: event,
-    },
-    function (err, event) {
-      if (err) {
-        console.log("There was an error contacting the Calendar service: " + err);
-        return;
-      }
-      console.log("Event created: %s", event.htmlLink);
-    }
-  );
-
-  res.redirect("/appointment");
+  res.render("mobile/assessmentDASSwarning");
 });
 
 module.exports = router;
