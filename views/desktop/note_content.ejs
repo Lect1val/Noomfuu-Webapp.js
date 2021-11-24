@@ -53,7 +53,7 @@
           <div class="row">
             <div class="col-md-6 note_header"><%= noteLists.find(el=> el.noteID === getNoteID).header%></div>
             <div class="col-md-6" style="font-size: 32px; font-weight: 700; color: #6e89ea; text-align: right; padding-right: 3%">
-              <% var creatorID= noteLists.find(el=> el.noteID === getNoteID).creatorID %> <%= contactlists.find(el=> el.userID === creatorID).lineName %>
+              <% var creatorID= noteLists.find(el=> el.noteID === getNoteID).creatorID %> <%= headerUserList.find(el=> el.userID === creatorID).lineName %>
             </div>
           </div>
           <hr />
