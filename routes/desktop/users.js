@@ -758,18 +758,18 @@ router.get("/:userID/chat", async (req, res, next) => {
     const chatList_temp = [];
     const chatList = [];
 
-    if (search_chat_name != null && filter != null) {
-      if (filter == "chat") {
-        await chatListRef.get().then((snapshot) => {
-          snapshot.forEach((doc) => {
-            chatList_temp.push({
-              messageID: doc.data().messageID,
-              emotion: doc.data().emotion,
-              timestamp: doc.data().timestamp,
-              content: doc.data().content,
-            });
+    if (search_chat_name != null && filter != null && search_chat_name != "" && filter != "") {
+      await chatListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          chatList_temp.push({
+            messageID: doc.data().messageID,
+            emotion: doc.data().emotion,
+            timestamp: doc.data().timestamp,
+            content: doc.data().content,
           });
         });
+      });
+      if (filter == "chat") {
         let i = 0;
 
         await chatListRef.get().then((snapshot) => {
@@ -786,31 +786,23 @@ router.get("/:userID/chat", async (req, res, next) => {
           });
         });
       } else {
-        let emotion = "";
-        if (search_chat_name.includes("neg")) {
-          emotion = "-1";
-        } else if (search_chat_name.includes("pos")) {
-          emotion = "1";
-        } else {
-          emotion = "0";
+        let neg = "negative";
+        let pos = "positive";
+        let emotionNeg = "";
+        let emotionPos = "";
+        if (neg.includes(search_chat_name.toLocaleLowerCase())) {
+          emotionNeg = "-1";
         }
 
-        await chatListRef.get().then((snapshot) => {
-          snapshot.forEach((doc) => {
-            chatList_temp.push({
-              messageID: doc.data().messageID,
-              emotion: doc.data().emotion,
-              timestamp: doc.data().timestamp,
-              content: doc.data().content,
-            });
-          });
-        });
+        if (pos.includes(search_chat_name.toLocaleLowerCase())) {
+          emotionPos = "1";
+        }
         let i = 0;
 
         await chatListRef.get().then((snapshot) => {
           snapshot.forEach((doc) => {
             i++;
-            if (chatList_temp[i - 1].emotion.toLowerCase().toLowerCase() == emotion) {
+            if (chatList_temp[i - 1].emotion.toLowerCase() == emotionNeg || chatList_temp[i - 1].emotion.toLowerCase() == emotionPos) {
               chatList.push({
                 messageID: doc.data().messageID,
                 emotion: doc.data().emotion,
