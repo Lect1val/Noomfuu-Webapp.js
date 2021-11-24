@@ -67,7 +67,7 @@ router.get("/", async (req, res, next) => {
     //* Logic Add Assessment
     if (oldAssessment[0] == undefined) {
       const data = {
-        assessmentID: "1",
+        assessmentID: 1,
         userID: userID,
         type: "dass",
         Dscore: DScore,
