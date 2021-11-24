@@ -2,14 +2,17 @@
 <title>NoomFuu</title>
 
 <link rel="stylesheet" href="/stylesheets/bootstrap/bootstrap.min.css" />
-<script src="/่javascripts/bootstrap/bootstrap.min.js"></script>
+<script src="/่javascripts/bootstrap/bootstrap.bundle.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> -->
 
 <link rel="stylesheet" href="/stylesheets/desktop/style.css" />
 
 <!--Chart Import CDM-->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@3.1.0/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
 
 <link rel="preconnect" href="https://fonts.gstatic.com" />
+
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 
 <!--calendar-->
 <link href="/javascripts/fullcalendar-5.9.0/lib/main.css" rel="stylesheet" />
@@ -17,8 +20,8 @@
 <script type="text/javascript" src="fullcalendar/gcal.js"></script>
 
 <script>
-  //Authen Key AIzaSyDp2hUqWFMZ0BINLI1EXkaEIG3B1KlDn1Y
-  //Cal ID c_73ru65vnl9a9821isuahtpusik@group.calendar.google.com
+  //Authen Key AIzaSyAi1zL1CAx-bRa6nN3vqEoLp-Z_qpnxY40
+  //Cal ID srud8mm07ss8rkfs04kkcj3oac@group.calendar.google.com
   document.addEventListener("DOMContentLoaded", function () {
     var calendarEl = document.getElementById("calendar");
 
@@ -35,26 +38,20 @@
       // THIS KEY WON'T WORK IN PRODUCTION!!!
       // To make your own Google API key, follow the directions here:
       // http://fullcalendar.io/docs/google_calendar/
-      googleCalendarApiKey: "AIzaSyDp2hUqWFMZ0BINLI1EXkaEIG3B1KlDn1Y",
+      googleCalendarApiKey: "AIzaSyAi1zL1CAx-bRa6nN3vqEoLp-Z_qpnxY40",
 
       // US Holidays
-      events: "c_73ru65vnl9a9821isuahtpusik@group.calendar.google.com",
+      events: "srud8mm07ss8rkfs04kkcj3oac@group.calendar.google.com",
 
       eventClick: function (arg) {
         // opens events in a popup window
-        window.open(
-          arg.event.url,
-          "google-calendar-event",
-          "width=700,height=600"
-        );
+        window.open(arg.event.url, "google-calendar-event", "width=700,height=600");
 
         arg.jsEvent.preventDefault(); // don't navigate in main tab
       },
 
       loading: function (bool) {
-        document.getElementById("loading").style.display = bool
-          ? "block"
-          : "none";
+        document.getElementById("loading").style.display = bool ? "block" : "none";
       },
     });
 

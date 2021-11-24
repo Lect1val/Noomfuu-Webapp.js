@@ -50,45 +50,17 @@
 
         <div class="col-md-9">
           <% include component/profileNav%>
-          <form
-            method="POST"
-            action="/profile/<%= getUserID %>/note/content"
-            id="edit_content_form"
-          >
+          <form method="POST" action="/profile/<%= getUserID %>/note/add" id="create_content_form">
             <div class="row">
               <div class="col-md-6">
-                <input
-                  id="new_content_header"
-                  type="text"
-                  placeholder="กรุณาใส่หัวข้อ"
-                  class="note_header"
-                  style="border: none"
-                  name="new_header"
-                />
+                <input id="new_content_header" type="text" placeholder="กรุณาใส่หัวข้อ" class="note_header" style="border: none" name="create_header" required />
               </div>
-              <div
-                class="col-md-6"
-                style="
-                  font-size: 32px;
-                  font-weight: 700;
-                  color: #6e89ea;
-                  text-align: right;
-                  padding-right: 3%;
-                "
-              >
-                New Content
-              </div>
+              <div class="col-md-6" style="font-size: 32px; font-weight: 700; color: #6e89ea; text-align: right; padding-right: 3%">New Content</div>
             </div>
             <hr />
 
             <div class="row">
-              <textarea
-                name="new_content"
-                rows="10"
-                class="note_content"
-                id="new_content"
-                placeholder="กรุณาใส่เนื้อหา..."
-              ></textarea>
+              <textarea name="create_content" rows="10" class="note_content" id="new_content" placeholder="กรุณาใส่เนื้อหา..."></textarea>
               <!--code of auto resize textarea-->
               <script>
                 var textarea = document.querySelector("textarea");
@@ -99,8 +71,6 @@
                   var el = this;
                   setTimeout(function () {
                     el.style.cssText = "height:auto; padding:0";
-                    // for box-sizing other than "content-box" use:
-                    // el.style.cssText = '-moz-box-sizing:content-box';
                     el.style.cssText = "height:" + el.scrollHeight + "px";
                   }, 0);
                 }
@@ -110,51 +80,17 @@
             <div class="footer mt-auto py-3">
               <div class="row">
                 <div class="col-sm-8">
-                  <a
-                    href="/profile/<%= getUserID %>/note"
-                    style="color: #223e63"
-                    id="myBtn"
-                  >
-                    <img src="/images/backArrow.png" style="width: 30px" /> Back
-                  </a>
+                  <a href="/profile/<%= getUserID %>/note" style="color: #223e63" id="myBtn"> <img src="/images/backArrow.png" style="width: 30px" /> Back </a>
                 </div>
 
-                <div
-                  class="col-sm-2"
-                  style="text-align: right; padding-right: 3%"
-                >
-                  <a
-                    href="/profile/<%= getUserID %>/note/content"
-                    style="color: #223e63"
-                  >
-                  </a>
-                  <button
-                    type="submit"
-                    form="edit_content_form"
-                    name="saveEdit"
-                    value="Submit"
-                    style="
-                      width: 100%;
-                      border: none;
-                      background-color: transparent;
-                    "
-                  >
-                    <p style="color: #2fa549">
-                      <img
-                        src="/images/saveNote.png"
-                        style="height: 20px; margin-right: 5%"
-                      />Save
-                    </p>
+                <div class="col-sm-2" style="text-align: right; padding-right: 3%">
+                  <a href="/profile/<%= getUserID %>/note" style="color: #223e63"> </a>
+                  <button type="submit" form="create_content_form" name="saveEdit" value="Submit" style="width: 100%; border: none; background-color: transparent">
+                    <p style="color: #2fa549"><img src="/images/saveNote.png" style="height: 20px; margin-right: 5%" />Save</p>
                   </button>
                 </div>
-                <div
-                  class="col-sm-2"
-                  style="text-align: right; padding-right: 3%"
-                >
-                  <a
-                    href="/profile/<%= getUserID %>/note/delete"
-                    style="color: #223e63"
-                  >
+                <div class="col-sm-2" style="text-align: right; padding-right: 3%">
+                  <a href="/profile/<%= getUserID %>/note/delete" style="color: #223e63">
                     <p style="color: red">
                       <img src="/images/delete.png" style="height: 20px" />
                       Delete

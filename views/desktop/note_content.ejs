@@ -51,72 +51,35 @@
         <div class="col-md-9">
           <% include component/profileNav%>
           <div class="row">
-            <div class="col-md-6 note_header">
-              <%= noteLists.find(el => el.noteID === getNoteID).header%>
-            </div>
-            <div
-              class="col-md-6"
-              style="
-                font-size: 32px;
-                font-weight: 700;
-                color: #6e89ea;
-                text-align: right;
-                padding-right: 3%;
-              "
-            >
-              <% var creatorID = noteLists.find(el => el.noteID ===
-              getNoteID).creatorID %> <%= contactlists.find(el => el.userID ===
-              creatorID).nickName %>
+            <div class="col-md-6 note_header"><%= noteLists.find(el=> el.noteID === getNoteID).header%></div>
+            <div class="col-md-6" style="font-size: 32px; font-weight: 700; color: #6e89ea; text-align: right; padding-right: 3%">
+              <% var creatorID= noteLists.find(el=> el.noteID === getNoteID).creatorID %> <%= contactlists.find(el=> el.userID === creatorID).lineName %>
             </div>
           </div>
           <hr />
           <div class="row note_content">
-            <p><%= noteLists.find(el => el.noteID === getNoteID).content %></p>
+            <p><%= noteLists.find(el=> el.noteID === getNoteID).content %></p>
           </div>
           <div class="row">
-            <div class="col-md-6 note_owner">
-              Created by <%= contactlists.find(el => el.userID ===
-              creatorID).firstName %> <%= contactlists.find(el => el.userID ===
-              creatorID).lastName %>
-            </div>
+            <div class="col-md-6 note_owner"></div>
             <div class="col-md-6 modify_status">
-              Last Modify: <%= noteLists.find(el => el.noteID ===
-              getNoteID).timestamp.toDate().toDateString() %> <%=
-              noteLists.find(el => el.noteID ===
-              getNoteID).timestamp.toDate().toLocaleTimeString() %>
+              Last Modify: <%= moment(noteLists.find(el=> el.noteID === getNoteID).timestamp.toDate().toDateString()).format('ddd DD MMM YYYY')%> <%= moment(noteLists.find(el=> el.noteID ===
+              getNoteID).timestamp.toDate().toUTCString()).format('kk:mm น.') %>
             </div>
           </div>
           <div class="footer mt-auto py-3">
             <div class="row">
               <div class="col-sm-8">
-                <a href="/profile/<%= getUserID %>/note" style="color: #223e63">
-                  <img src="/images/backArrow.png" style="width: 30px" /> Back
+                <a href="/profile/<%= getUserID %>/note" style="color: #223e63"> <img src="/images/backArrow.png" style="width: 30px" /> Back </a>
+              </div>
+              <div class="col-sm-2" style="text-align: right; padding-right: 3%">
+                <a href="/profile/<%= getUserID %>/note/<%= getNoteID %>/content/edit" style="color: #223e63">
+                  <p style="color: #3378ff"><img src="/images/Edit.png" style="height: 20px" />Edit</p>
                 </a>
               </div>
-              <div
-                class="col-sm-2"
-                style="text-align: right; padding-right: 3%"
-              >
-                <a
-                  href="/profile/<%= getUserID %>/note/<%= getNoteID %>/content/edit"
-                  style="color: #223e63"
-                >
-                  <p style="color: #3378ff">
-                    <img src="/images/Edit.png" style="height: 20px" />Edit
-                  </p>
-                </a>
-              </div>
-              <div
-                class="col-sm-2"
-                style="text-align: right; padding-right: 3%"
-              >
-                <a
-                  href="/profile/<%= getUserID %>/note/<%= getNoteID %>/delete"
-                  style="color: #223e63"
-                >
-                  <p style="color: red">
-                    <img src="/images/delete.png" style="height: 20px" /> Delete
-                  </p>
+              <div class="col-sm-2" style="text-align: right; padding-right: 3%">
+                <a href="/profile/<%= getUserID %>/note/<%= getNoteID %>/delete" style="color: #223e63">
+                  <p style="color: red"><img src="/images/delete.png" style="height: 20px" /> Delete</p>
                 </a>
               </div>
             </div>

@@ -7,22 +7,17 @@ var logger = require("morgan");
 // *Route Desktop*
 var indexRouter = require("./routes/desktop/index");
 var usersRouter = require("./routes/desktop/users");
-var analyticRouter = require("./routes/desktop/feeling_analytic");
-var noteRouter = require("./routes/desktop/note");
-var noteContentRouter = require("./routes/desktop/note_content");
-var noteEditRouter = require("./routes/desktop/note_edit");
-var noteAddRouter = require("./routes/desktop/note_add");
-var appointmentRouter = require("./routes/desktop/appointment_all");
-// var contactList = require("./routes/contactlist");
 
 // *Route Mobile*
 var assessment2QRouter = require("./routes/mobile/assessment2Q");
 var assessment9QRouter = require("./routes/mobile/assessment9Q");
-var assessmentWarning = require("./routes/mobile/warning");
-var assessmentResult = require("./routes/mobile/assessmentResult");
-var DASSwarning = require("./routes/mobile/DASSwarning");
-var DASSQuestion = require("./routes/mobile/DASSQ");
-var DASSResult = require("./routes/mobile/DASSresult");
+var assessmentWarningRouter = require("./routes/mobile/warning");
+var assessmentResultRouter = require("./routes/mobile/assessmentResult");
+var DASSwarningRouter = require("./routes/mobile/DASSwarning");
+var DASSQuestionRouter = require("./routes/mobile/DASSQ");
+var DASSResultRouter = require("./routes/mobile/DASSresult");
+var journalRouter = require("./routes/mobile/journal");
+var makeAppointmentRouter = require("./routes/mobile/makeAppointment");
 
 var app = express();
 
@@ -38,24 +33,19 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // *App.use Desktop*
 app.use("/", indexRouter);
+app.use("/home", indexRouter);
 app.use("/profile", usersRouter);
-app.use("/profile/analytic", analyticRouter);
-app.use("/profile/note", noteRouter);
-app.use("/profile/note/content", noteContentRouter);
-app.use("/profile/note/add", noteAddRouter);
-app.use("/profile/note/content/edit", noteEditRouter);
-app.use("/profile/appointment", appointmentRouter);
-// app.use(contactList);
 
 // *App.use Mobile*
-app.use("/assessment/depress", assessmentWarning);
+app.use("/assessment/depress", assessmentWarningRouter);
 app.use("/assessment/depress/2Q", assessment2QRouter);
 app.use("/assessment/depress/9Q", assessment9QRouter);
-app.use("/assessment/depress/Qresult", assessmentResult);
-app.use("/assessment/dass", DASSwarning);
-app.use("/assessment/dass/q", DASSQuestion);
-app.use("/assessment/dass/result", DASSResult);
-
+app.use("/assessment/depress/Qresult", assessmentResultRouter);
+app.use("/assessment/dass", DASSwarningRouter);
+app.use("/assessment/dass/q", DASSQuestionRouter);
+app.use("/assessment/dass/result", DASSResultRouter);
+app.use("/journal", journalRouter);
+app.use("/appointment", makeAppointmentRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

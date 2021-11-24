@@ -1,184 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ประเมินโรคซึมเศร้า</title>
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <style>
+      html {
+        background: url(/images/BG-375-667.png) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ประเมินโรคซึมเศร้า</title>
-  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-  <style>
-    html {
-      background: url(/images/BG-375-667.png) no-repeat center center fixed;
-      -webkit-background-size: cover;
-      -moz-background-size: cover;
-      -o-background-size: cover;
-      background-size: cover;
-    }
+      body {
+        font-family: "Kanit", sans-serif;
+      }
 
-    body {
-      font-family: "Kanit", sans-serif;
-    }
+      h1 {
+        color: #223e63;
+        font-weight: 800;
+        font-size: 35px;
+        line-height: 80%;
+      }
 
-    h1 {
-      color: #223e63;
-      font-weight: 800;
-      font-size: 35px;
-      line-height: 80%;
-    }
+      h2 {
+        color: #223e63;
+        font-weight: 600;
+        font-size: 20px;
+      }
 
-    h2 {
-      color: #223e63;
-      font-weight: 600;
-      font-size: 20px;
-    }
+      h3 {
+        color: #223e63;
+        font-weight: 300;
+        font-size: 20px;
+      }
 
-    h3 {
-      color: #223e63;
-      font-weight: 300;
-      font-size: 20px;
-    }
+      h4 {
+        color: #223e63;
+        font-weight: 300;
+        font-size: 14px;
+      }
 
-    h4 {
-      color: #223e63;
-      font-weight: 300;
-      font-size: 14px;
-    }
+      a {
+        text-decoration: none;
+      }
 
-    a {
-      text-decoration: none;
-    }
+      .assess_content {
+        text-align: center;
+      }
 
-    .assess_content {
-      text-align: center;
-    }
+      .question {
+        margin: 10% 5% 10% 5%;
+      }
 
-    .question {
-      margin: 10% 5% 10% 5%;
-    }
+      .answer_box {
+        background-color: white;
+        border: none;
+        width: 100%;
+        padding: 3%;
+        margin-top: 3%;
+        margin-bottom: 3%;
+        box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 20px;
+        font-family: "Kanit", sans-serif;
+      }
+    </style>
+  </head>
 
-    .answer_box {
-      background-color: white;
-      border: none;
-      width: 100%;
-      padding: 3%;
-      margin-top: 3%;
-      margin-bottom: 3%;
-      box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-      border-radius: 20px;
-      font-family: "Kanit", sans-serif;
-    }
-  </style>
-</head>
+  <body>
+    <div class="assess_content">
+      <h1 style="margin-top: 20%">แบบทดสอบ</h1>
+      <h3>ความเสี่ยงการเป็นโรคซึมเศร้า</h3>
+      <div class="question">
+        <h4>
+          2 สัปดาห์มานี้<br />
+          มีความรู้สึกแบบนี้บ่อยแค่ไหน
+        </h4>
+        <h2 id="9Q">รู้สึกเบื่อ ไม่สนใจอยากทำอะไร</h2>
 
-<body>
-  <div class="assess_content">
-    <h1 style="margin-top: 20%">แบบทดสอบ</h1>
-    <h3>ความเสี่ยงการเป็นโรคซึมเศร้า</h3>
-    <div class="question">
-      <h4>
-        2 สัปดาห์มานี้<br />
-        มีความรู้สึกแบบนี้บ่อยแค่ไหน
-      </h4>
-      <h2 id="9Q">รู้สึกเบื่อ ไม่สนใจอยากทำอะไร</h2>
+        <script>
+          var id = "<%= userID %>";
+          var questionLoop = [
+            "รู้สึกเบื่อ ไม่สนใจอยากทำอะไร",
+            "ไม่สบายใจ ซึมเศร้าหรือว่าท้อแท้",
+            "อาการการนอนผิดปกติ เช่น หลับยาก ไม่ก็หลับ ๆ ตื่น ๆ หรือนอนหลับมากไป",
+            "เหนื่อยง่าย ไม่ค่อยมีแรง",
+            "กินผิดปกติ เช่น รู้สึกเบื่ออาหาร หรือกินมากเกินไป",
+            "รู้สึกไม่ดีกับตัวเองเท่าไร เช่น คิดว่าตัวเองล้มเหลว ทำให้คนอื่นผิดหวัง",
+            "รู้สึกไม่ค่อยมีสมาธิ ทำงานที่ต้องใช้ความตั้งใจไม่ค่อยได้",
+            "พูดช้า ทำอะไรช้าลง หรือไม่ก็กระสับกระส่ายผิดปกติ",
+            "เคยคิดจะทำร้ายตัวเองบ้างไหม หรือไม่ก็คิดว่า ถ้าตายไปคงจะดี",
+          ];
 
-      <script>
-        var id = '<%= userID %>'
-        var questionLoop = [
-          "รู้สึกเบื่อ ไม่สนใจอยากทำอะไร",
-          "ไม่สบายใจ ซึมเศร้าหรือว่าท้อแท้",
-          "อาการการนอนผิดปกติ เช่น หลับยาก ไม่ก็หลับ ๆ ตื่น ๆ หรือนอนหลับมากไป",
-          "เหนื่อยง่าย ไม่ค่อยมีแรง",
-          "กินผิดปกติ เช่น รู้สึกเบื่ออาหาร หรือกินมากเกินไป",
-          "รู้สึกไม่ดีกับตัวเองเท่าไร เช่น คิดว่าตัวเองล้มเหลว ทำให้คนอื่นผิดหวัง",
-          "รู้สึกไม่ค่อยมีสมาธิ ทำงานที่ต้องใช้ความตั้งใจไม่ค่อยได้",
-          "พูดช้า ทำอะไรช้าลง หรือไม่ก็กระสับกระส่ายผิดปกติ",
-          "เคยคิดจะทำร้ายตัวเองบ้างไหม หรือไม่ก็คิดว่า ถ้าตายไปคงจะดี"
-        ];
+          var curNum = 0; //curNum means 'current number'
+          x = document.getElementById("9Q");
+          var score = 0;
 
-        var curNum = 0; //curNum means 'current number'
-        x = document.getElementById("9Q");
-        var score = 0;
+          function nextNever() {
+            if (curNum === 8) {
+              window.location.href = "./Qresult?score=" + score + "&id=" + id;
+            } else {
+              curNum++;
+            }
+            console.log(curNum);
 
-        function nextNever() {
-          if (curNum === 8) {
-            // curNum = 0;
-            window.location.href = "./Qresult?score=" + score + "&id=" + id;
-          } else {
-            curNum++;
+            x.innerHTML = questionLoop[curNum];
+            console.log(questionLoop[curNum]);
           }
-          console.log(curNum);
 
-          x.innerHTML = questionLoop[curNum];
-          console.log(questionLoop[curNum]);
-        }
+          function nextSometimes() {
+            score += 1;
+            if (curNum === 8) {
+              window.location.href = "./Qresult?score=" + score + "&id=" + id;
+            } else {
+              curNum++;
+            }
+            console.log(curNum);
 
-        function nextSometimes() {
-          score += 1;
-          if (curNum === 8) {
-            // curNum = 0;
-            window.location.href = "./Qresult?score=" + score + "&id=" + id;
-          } else {
-            curNum++;
+            x.innerHTML = questionLoop[curNum];
+            console.log(questionLoop[curNum]);
           }
-          console.log(curNum);
 
-          x.innerHTML = questionLoop[curNum];
-          console.log(questionLoop[curNum]);
-        }
+          function nextUsually() {
+            score += 2;
+            if (curNum === 8) {
+              // curNum = 0;
+              score += 5;
+              window.location.href = "./Qresult?score=" + score + "&id=" + id;
+            } else {
+              curNum++;
+            }
+            console.log(curNum);
 
-        function nextUsually() {
-          score += 2;
-          if (curNum === 8) {
-            // curNum = 0;
-            score += 5;
-            window.location.href = "./Qresult?score=" + score + "&id=" + id;
-          } else {
-            curNum++;
+            x.innerHTML = questionLoop[curNum];
+            console.log(questionLoop[curNum]);
           }
-          console.log(curNum);
 
-          x.innerHTML = questionLoop[curNum];
-          console.log(questionLoop[curNum]);
-        }
+          function nextAlways() {
+            score += 3;
+            if (curNum === 8) {
+              score += 5;
+              // curNum = 0;
+              window.location.href = "./Qresult?score=" + score + "&id=" + id;
+            } else {
+              curNum++;
+            }
+            console.log(curNum);
 
-        function nextAlways() {
-          score += 3;
-          if (curNum === 8) {
-            score += 5;
-            // curNum = 0;
-            window.location.href = "./Qresult?score=" + score + "&id=" + id;
-          } else {
-            curNum++;
+            x.innerHTML = questionLoop[curNum];
+            console.log(questionLoop[curNum]);
           }
-          console.log(curNum);
+        </script>
 
-          x.innerHTML = questionLoop[curNum];
-          console.log(questionLoop[curNum]);
-        }
-      </script>
-
-      <!-- <div style="text-align: right">
-        <button style="border: none; background-color: transparent">
-          <img src="/images/help.png" alt="Girl in a jacket" width="125" height="auto" />
-        </button>
-      </div> -->
-      <div>
-        <button class="answer_box" id="myButton" onclick="nextNever()" name="user_ans" value="0">
-          ไม่มีเลย
-        </button>
-        <button class="answer_box" id="myButton" onclick="nextSometimes()" name="user_ans" value="1">
-          เป็นบางวัน
-        </button>
-        <button class="answer_box" id="myButton" onclick="nextUsually()" name="user_ans" value="2">
-          บ่อย ๆ นะ
-        </button>
-        <button class="answer_box" id="myButton" onclick="nextAlways()" name="user_ans" value="3">
-          ทุกวันเลย
-        </button>
+        <div>
+          <button class="answer_box" id="myButton" onclick="nextNever()" name="user_ans" value="0">ไม่มีเลย</button>
+          <button class="answer_box" id="myButton" onclick="nextSometimes()" name="user_ans" value="1">เป็นบางวัน</button>
+          <button class="answer_box" id="myButton" onclick="nextUsually()" name="user_ans" value="2">บ่อย ๆ นะ</button>
+          <button class="answer_box" id="myButton" onclick="nextAlways()" name="user_ans" value="3">ทุกวันเลย</button>
+        </div>
       </div>
     </div>
-  </div>
-</body>
-
+  </body>
 </html>

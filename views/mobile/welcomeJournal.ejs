@@ -4,8 +4,17 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ประเมินโรคซึมเศร้า</title>
+    <title>My Gratitude Journal</title>
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#div1").fadeIn();
+        $("#div2").fadeIn("slow");
+        $("#div3").fadeIn(3000);
+      });
+    </script>
+
     <style>
       html {
         background: url(/images/BG-375-667.png) no-repeat center center fixed;
@@ -21,16 +30,18 @@
 
       h1 {
         color: #223e63;
-        font-weight: 800;
+        font-weight: 600;
         font-size: 35px;
         line-height: 80%;
+        text-align: center;
       }
 
       h2 {
         color: #223e63;
-        font-weight: 400;
-        font-size: 16px;
+        font-weight: 200;
+        font-size: 18px;
         padding: 0% 10% 5% 10%;
+        text-align: center;
       }
 
       h3 {
@@ -43,24 +54,30 @@
         text-decoration: none;
       }
 
-      .assess_content {
-        text-align: center;
+      a:hover {
+        text-decoration: none;
+        color: #ab94e9;
       }
 
-      .question {
-        margin: 20% 5% 10% 5%;
-      }
+      .content_box {
+        position: fixed;
+        left: 50%;
+        bottom: 50px;
+        transform: translate(-50%, -50%);
+        margin: 0 auto;
 
-      .answer_box {
         background-color: white;
+
+        text-align: center;
         border: none;
-        width: 100%;
+        width: 80%;
         padding: 3%;
-        margin-top: 3%;
-        margin-bottom: 3%;
-        box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-        border-radius: 20px;
+        margin: auto;
+        /* box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25); */
+        border-radius: 10px;
         font-family: "Kanit", sans-serif;
+        word-wrap: break-word;
+        display: none;
       }
     </style>
   </head>
@@ -86,7 +103,7 @@
       }
 
       liff.init(
-        { liffId: "1655710592-RN7GEeaL" },
+        { liffId: "1655710592-Kr0LQEAx" },
         () => {
           if (liff.isLoggedIn() /*&& userProfile != null*/) {
             runApp();
@@ -101,19 +118,16 @@
       } else {
         console.log("null");
       }
-      function nextPage() {
-        console.log(userProfile);
-        console.log(displayName);
-        window.location.href = "/assessment/depress/2Q?id=" + userProfile;
+
+      function next() {
+        window.location.href = "/journal/" + userProfile;
       }
     </script>
-    <div class="assess_content">
-      <h1 style="margin-top: 20%">แบบทดสอบ</h1>
-      <h3>ความเสี่ยงการเป็นโรคซึมเศร้า</h3>
 
-      <p style="color: #e34545; font-weight: 600; font-size: 20px">คำเตือน</p>
-      <h2>บางคำถามอาจทำให้รู้สึกไม่ดีหรือไม่สบายใจได้ <br />ถ้ารู้สึกว่าไม่อยากทำต่อไม่ต้องห่วง <br />เธอกดปิดได้เลยทันที<br />และระบบจะไม่คำนวณและบันทึกผลใด ๆ ในครั้งนี้</h2>
-      <button class="answer_box" onclick="nextPage()">ฉันรับรู้และต้องการประเมินต่อ</button>
+    <div style="padding-top: 8%">
+      <h1>Gratitude Journal</h1>
+      <h2>บันทึกแห่งความทรงจำ<br />ว่าคุณเคยมีความสุขแค่ไหน</h2>
     </div>
+    <div id="div3" class="content_box"><a onclick="next()">กดเพื่อดูเนื้อหา</a></div>
   </body>
 </html>

@@ -50,46 +50,19 @@
 
         <div class="col-md-9">
           <% include component/profileNav%>
-          <form
-            method="POST"
-            action="/profile/<%= getUserID %>/note/<%= getNoteID %>/content"
-            id="edit_content_form"
-          >
+          <form method="POST" action="/profile/<%= getUserID %>/note/<%= getNoteID %>/content" id="edit_content_form">
             <div class="row">
               <div class="col-md-6">
-                <input
-                  id="new_content_header"
-                  type="text"
-                  value="<%= noteLists.find(el => el.noteID === getNoteID).header%>"
-                  class="note_header"
-                  style="border: none"
-                  name="new_header"
-                />
+                <input id="new_content_header" type="text" value="<%= noteLists.find(el => el.noteID === getNoteID).header%>" class="note_header" style="border: none" name="new_header" />
               </div>
-              <div
-                class="col-md-6"
-                style="
-                  font-size: 32px;
-                  font-weight: 700;
-                  color: #6e89ea;
-                  text-align: right;
-                  padding-right: 3%;
-                "
-              >
-                <% var creatorID = noteLists.find(el => el.noteID ===
-                getNoteID).creatorID %> <%= contactlists.find(el => el.userID
-                === creatorID).nickName %>
+              <div class="col-md-6" style="font-size: 32px; font-weight: 700; color: #6e89ea; text-align: right; padding-right: 3%">
+                <% var creatorID = noteLists.find(el => el.noteID === getNoteID).creatorID %> <%= contactlists.find(el => el.userID === creatorID).lineName %>
               </div>
             </div>
             <hr />
 
             <div class="row">
-              <textarea
-                name="new_content"
-                rows="10"
-                class="note_content"
-                id="new_content"
-              >
+              <textarea name="new_content" rows="10" class="note_content" id="new_content">
               <%= noteLists.find(el => el.noteID === getNoteID).content %>
               </textarea>
               <!--code of auto resize textarea-->
@@ -113,9 +86,7 @@
             <div class="footer mt-auto py-3">
               <div class="row">
                 <div class="col-sm-8">
-                  <a style="color: #223e63" id="myBtn">
-                    <img src="/images/backArrow.png" style="width: 30px" /> Back
-                  </a>
+                  <a style="color: #223e63" id="myBtn"> <img src="/images/backArrow.png" style="width: 30px" /> Back </a>
                 </div>
 
                 <div id="myModal" class="modal">
@@ -123,18 +94,8 @@
                   <div class="modal-close-note">
                     <span class="close">&times;</span>
                     <br />
-                    <p style="text-align: center; font-size: 18px">
-                      เนื้อหายังไม่ได้บันทึก
-                      คุณแน่ใจไหมว่าจะกลับไปโดยละทิ้งความเปลี่ยนแปลงทั้งหมด
-                    </p>
-                    <button
-                      type="submit"
-                      name="saveEdit"
-                      class="btn btn-success sure_btn"
-                      value="แน่ใจ"
-                    >
-                      แน่ใจ
-                    </button>
+                    <p style="text-align: center; font-size: 18px">เนื้อหายังไม่ได้บันทึก คุณแน่ใจไหมว่าจะกลับไปโดยละทิ้งความเปลี่ยนแปลงทั้งหมด</p>
+                    <button type="submit" name="saveEdit" class="btn btn-success sure_btn" value="แน่ใจ">แน่ใจ</button>
                   </div>
                 </div>
 
@@ -166,42 +127,14 @@
                   };
                 </script>
 
-                <div
-                  class="col-sm-2"
-                  style="text-align: right; padding-right: 3%"
-                >
-                  <a
-                    href="/profile/<%= getUserID %>/note/<%= getNoteID %>/content"
-                    style="color: #223e63"
-                  >
-                  </a>
-                  <button
-                    type="submit"
-                    form="edit_content_form"
-                    name="saveEdit"
-                    value="Submit"
-                    style="
-                      width: 100%;
-                      border: none;
-                      background-color: transparent;
-                    "
-                  >
-                    <p style="color: #2fa549">
-                      <img
-                        src="/images/saveNote.png"
-                        style="height: 20px; margin-right: 5%"
-                      />Save
-                    </p>
+                <div class="col-sm-2" style="text-align: right; padding-right: 3%">
+                  <a href="/profile/<%= getUserID %>/note/<%= getNoteID %>/content" style="color: #223e63"> </a>
+                  <button type="submit" form="edit_content_form" name="saveEdit" value="Submit" style="width: 100%; border: none; background-color: transparent">
+                    <p style="color: #2fa549"><img src="/images/saveNote.png" style="height: 20px; margin-right: 5%" />Save</p>
                   </button>
                 </div>
-                <div
-                  class="col-sm-2"
-                  style="text-align: right; padding-right: 3%"
-                >
-                  <a
-                    href="/profile/<%= getUserID %>/note/<%= getNoteID %>/delete"
-                    style="color: #223e63"
-                  >
+                <div class="col-sm-2" style="text-align: right; padding-right: 3%">
+                  <a href="/profile/<%= getUserID %>/note/<%= getNoteID %>/delete" style="color: #223e63">
                     <p style="color: red">
                       <img src="/images/delete.png" style="height: 20px" />
                       Delete

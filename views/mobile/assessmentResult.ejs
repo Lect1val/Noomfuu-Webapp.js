@@ -1,142 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ประเมินโรคซึมเศร้า</title>
 
     <style>
-        html {
-            background: url(/images/BG-375-667.png) no-repeat center center fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
-        }
+      html {
+        background: url(/images/BG-375-667.png) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
 
-        body {
-            font-family: "Kanit", sans-serif;
-        }
+      body {
+        font-family: "Kanit", sans-serif;
+      }
 
-        h1 {
-            color: #223e63;
-            font-weight: 800;
-            font-size: 35px;
-            line-height: 80%;
-        }
+      h1 {
+        color: #223e63;
+        font-weight: 800;
+        font-size: 35px;
+        line-height: 80%;
+      }
 
-        h2 {
-            color: #223e63;
-            font-weight: 400;
-            font-size: 16px;
-            padding: 0% 10% 5% 10%;
-        }
+      h2 {
+        color: #223e63;
+        font-weight: 400;
+        font-size: 16px;
+        padding: 0% 10% 5% 10%;
+      }
 
-        h3 {
-            color: #223e63;
-            font-weight: 300;
-            font-size: 20px;
-        }
+      h3 {
+        color: #223e63;
+        font-weight: 300;
+        font-size: 20px;
+      }
 
-        a {
-            text-decoration: none;
-        }
+      a {
+        text-decoration: none;
+      }
 
-        p {
-            color: #223e63;
-            font-weight: 400;
-            font-size: 14px;
-            padding: 0% 10% 5% 10%;
-        }
+      p {
+        color: #223e63;
+        font-weight: 400;
+        font-size: 14px;
+        padding: 0% 10% 5% 10%;
+      }
 
-        .assess_content {
-            text-align: center;
-        }
+      .assess_content {
+        text-align: center;
+      }
 
-        .question {
-            margin: 20% 5% 10% 5%;
-        }
+      .question {
+        margin: 20% 5% 10% 5%;
+      }
 
-        .answer_box {
-            background-color: white;
-            border: none;
-            width: 100%;
-            padding: 3%;
-            margin-top: 3%;
-            margin-bottom: 3%;
-            box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-            border-radius: 20px;
-            font-family: "Kanit", sans-serif;
-        }
+      .answer_box {
+        background-color: white;
+        border: none;
+        width: 100%;
+        padding: 3%;
+        margin-top: 3%;
+        margin-bottom: 3%;
+        box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 20px;
+        font-family: "Kanit", sans-serif;
+      }
 
-        .medium_risk {
-            color: #DAAA00;
-            font-weight: 500;
-            font-size: 32px;
-        }
+      .medium_risk {
+        color: #daaa00;
+        font-weight: 500;
+        font-size: 32px;
+      }
 
-        .low_risk {
-            color: #2ABD4A;
-            font-weight: 500;
-            font-size: 32px;
-        }
+      .low_risk {
+        color: #2abd4a;
+        font-weight: 500;
+        font-size: 32px;
+      }
 
-        .high_risk {
-            color: #E34545;
-            font-weight: 500;
-            font-size: 32px;
-        }
+      .high_risk {
+        color: #e34545;
+        font-weight: 500;
+        font-size: 32px;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="assess_content">
+      <h1 style="margin-top: 20%">แบบทดสอบ</h1>
+      <h3>ความเสี่ยงการเป็นโรคซึมเศร้า</h3>
 
-        <h1 style="margin-top: 20%">แบบทดสอบ</h1>
-        <h3>ความเสี่ยงการเป็นโรคซึมเศร้า</h3>
-
-        <div class="medium_risk" id="header"></div>
-        <p id="content"></p>
-        <p>ถ้าคุณยังกังวลใจ
-            ไม่รู้จะจัดการกับความเศร้าอย่างไรดี<br>นุ่มฟูแนะนำให้ลองนัดพบนักจิตวิทยาในเมนูด้านล่างแชทของนุ่มฟูดูนะ</p>
+      <div class="medium_risk" id="header"></div>
+      <p id="content"></p>
+      <p>ถ้าคุณยังกังวลใจ ไม่รู้จะจัดการกับความเศร้าอย่างไรดี<br />นุ่มฟูแนะนำให้ลองนัดพบนักจิตวิทยาในเมนูด้านล่างแชทของนุ่มฟูดูนะ</p>
     </div>
     <script>
-        console.log('<%= status %>')
-        let status = '<%= status %>'
-        console.log(status)
-        x = document.getElementById("header");
-        y = document.getElementById("content");
-        if (status == "none") {
-            console.log('if 1')
+      console.log("<%= status %>");
+      let status = "<%= status %>";
+      console.log(status);
+      x = document.getElementById("header");
+      y = document.getElementById("content");
+      if (status == "none") {
+        console.log("if 1");
 
-            x.innerHTML = "ไม่มีความเสี่ยง"
-            x.style.color = "#2ABD4A"
+        x.innerHTML = "ไม่มีความเสี่ยง";
+        x.style.color = "#2ABD4A";
 
-            y.innerHTML = "ตอนนี้คุณยังไม่มีความเสี่ยง ดีแล้วนะ ขอให้เธอไม่มีความเศร้าแบบนี้ต่อไป <br> อย่าลืมดูแลตัวเอง รักษาสภาพจิตใจตัวเองให้เป็นแบบนี้ต่อไปน้า"
-        } else if (status == "low") {
-            console.log('if 2')
+        y.innerHTML = "ตอนนี้คุณยังไม่มีความเสี่ยง ดีแล้วนะ ขอให้เธอไม่มีความเศร้าแบบนี้ต่อไป <br> อย่าลืมดูแลตัวเอง รักษาสภาพจิตใจตัวเองให้เป็นแบบนี้ต่อไปน้า";
+      } else if (status == "low") {
+        console.log("if 2");
 
-            x.innerHTML = "ความเสี่ยงน้อย"
-            x.style.color = "#2ABD4A"
+        x.innerHTML = "ความเสี่ยงน้อย";
+        x.style.color = "#2ABD4A";
 
-            y.innerHTML = "ความเสี่ยงของคุณอยู่ในระดับน้อย <br> ความเสี่ยงน้อยแต่ก็ใช่ว่าจะไม่มี หมั่นดูแลรักษาใจตัวเองให้ดี ถ้ารู้สึกแย่บ้างก็ลองมองไปรอบ ๆ หาอะไรทำเพื่อลดการจดจ่อกับเรื่องที่กำลังกังวล หรือไปหาใครสักคนที่เธอไว้ใจ กอดเขาเอาไว้อาจจะช่วยได้มากกว่าที่คิดนะ"
-        } else if (status == "medium") {
-            console.log('if 3')
-            x.innerHTML = "ความเสี่ยงปานกลาง"
-            x.style.color = "#DAAA00"
+        y.innerHTML =
+          "ความเสี่ยงของคุณอยู่ในระดับน้อย <br> ความเสี่ยงน้อยแต่ก็ใช่ว่าจะไม่มี หมั่นดูแลรักษาใจตัวเองให้ดี ถ้ารู้สึกแย่บ้างก็ลองมองไปรอบ ๆ หาอะไรทำเพื่อลดการจดจ่อกับเรื่องที่กำลังกังวล หรือไปหาใครสักคนที่เธอไว้ใจ กอดเขาเอาไว้อาจจะช่วยได้มากกว่าที่คิดนะ";
+      } else if (status == "medium") {
+        console.log("if 3");
+        x.innerHTML = "ความเสี่ยงปานกลาง";
+        x.style.color = "#DAAA00";
 
-            y.innerHTML = "นุ่มฟูคิดว่าคุณมีความเศร้ามากกว่าคนอื่นอยู่นะ ตอนนี้ยังไม่เยอะมาก ไม่น่าเป็นห่วง<br>แต่ถ้าปล่อยไว้นาน ๆ อาจจะเป็นผลเสียกับสุขภาพจิตได้<br>ทางที่ดีเราอยากให้เธอลดการจดจ่ออยู่กับเรื่องที่กังวลใจ พยายามจัดการกับเรื่องที่เข้ามากวนใจ<br>เลี่ยงอะไรที่จะทำให้เครียดหรือหาใครสักคนมาคุยด้วยเพื่อระบายความรู้สึกบ้าง"
-        } else if (status == "high") {
-            console.log('if 4')
+        y.innerHTML =
+          "นุ่มฟูคิดว่าคุณมีความเศร้ามากกว่าคนอื่นอยู่นะ ตอนนี้ยังไม่เยอะมาก ไม่น่าเป็นห่วง<br>แต่ถ้าปล่อยไว้นาน ๆ อาจจะเป็นผลเสียกับสุขภาพจิตได้<br>ทางที่ดีเราอยากให้เธอลดการจดจ่ออยู่กับเรื่องที่กังวลใจ พยายามจัดการกับเรื่องที่เข้ามากวนใจ<br>เลี่ยงอะไรที่จะทำให้เครียดหรือหาใครสักคนมาคุยด้วยเพื่อระบายความรู้สึกบ้าง";
+      } else if (status == "high") {
+        console.log("if 4");
 
-            x.innerHTML = "ความเสี่ยงสูง"
-            x.style.color = "#E34545"
+        x.innerHTML = "ความเสี่ยงสูง";
+        x.style.color = "#E34545";
 
-            y.innerHTML = "ความเศร้าของคุณค่อนข้างเยอะเลย<br>นุ่มฟูอยากให้เธอไปหาคนที่เป็นมืออาชีพที่จะสามารถช่วยเธอได้ เช่น นักจิตวิทยาหรือหมอจิตแพทย์นะ <br> แต่ถ้ายังไม่มีโอกาสบางทีการขอความช่วยเหลือจากคนที่เธอไว้ใจ ขอให้เขาช่วยรับฟังและลองระบายความรู้สึกของตัวเองออกไป อาจจะช่วยได้มากขึ้นนะ"
-        }
+        y.innerHTML =
+          "ความเศร้าของคุณค่อนข้างเยอะเลย<br>นุ่มฟูอยากให้เธอไปหาคนที่เป็นมืออาชีพที่จะสามารถช่วยเธอได้ เช่น นักจิตวิทยาหรือหมอจิตแพทย์นะ <br> แต่ถ้ายังไม่มีโอกาสบางทีการขอความช่วยเหลือจากคนที่เธอไว้ใจ ขอให้เขาช่วยรับฟังและลองระบายความรู้สึกของตัวเองออกไป อาจจะช่วยได้มากขึ้นนะ";
+      }
     </script>
-</body>
-
+  </body>
 </html>
