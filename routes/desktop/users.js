@@ -557,38 +557,38 @@ router.get("/:userID/assessment", async (req, res, next) => {
     const assessmentList_temp = [];
     const assessmentList = [];
 
-    if (search_assessment_name != null && filter != null) {
-      if (filter == "state") {
-        await assessmentListRef.get().then((snapshot) => {
-          snapshot.forEach((doc) => {
-            if (doc.data().type == "dass") {
-              assessmentList_temp.push({
-                assessmentID: doc.data().assessmentID,
-                type: doc.data().type,
-                timestamp: doc.data().timestamp,
-                status: doc.data().status,
-                Ascore: doc.data().Ascore,
-                Dscore: doc.data().Dscore,
-                Sscore: doc.data().Sscore,
-              });
-            } else if (doc.data().type == "depress") {
-              assessmentList_temp.push({
-                assessmentID: doc.data().assessmentID,
-                type: doc.data().type,
-                timestamp: doc.data().timestamp,
-                status: doc.data().status,
-                score: doc.data().score,
-              });
-            }
-          });
+    console.log(search_assessment_name);
+    if (search_assessment_name != null && filter != null && search_assessment_name != "" && filter != "") {
+      await assessmentListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().type == "dass") {
+            assessmentList_temp.push({
+              assessmentID: doc.data().assessmentID,
+              type: doc.data().type,
+              timestamp: doc.data().timestamp,
+              status: doc.data().status,
+              Ascore: doc.data().Ascore,
+              Dscore: doc.data().Dscore,
+              Sscore: doc.data().Sscore,
+            });
+          } else if (doc.data().type == "depress") {
+            assessmentList_temp.push({
+              assessmentID: doc.data().assessmentID,
+              type: doc.data().type,
+              timestamp: doc.data().timestamp,
+              status: doc.data().status,
+              score: doc.data().score,
+            });
+          }
         });
-
+      });
+      if (filter == "state") {
         let i = 0;
 
         await assessmentListRef.get().then((snapshot) => {
           snapshot.forEach((doc) => {
             i++;
-            if (assessmentList_temp[i - 1].status.toLowerCase() == search_assessment_name) {
+            if (assessmentList_temp[i - 1].status.toLowerCase().includes(search_assessment_name.toLocaleLowerCase())) {
               if (doc.data().type == "dass") {
                 assessmentList.push({
                   assessmentID: doc.data().assessmentID,
@@ -612,9 +612,12 @@ router.get("/:userID/assessment", async (req, res, next) => {
           });
         });
       } else if (filter == "type") {
-        if (search_assessment_name == "dass") {
-          await assessmentListRef.get().then((snapshot) => {
-            snapshot.forEach((doc) => {
+        let i = 0;
+
+        await assessmentListRef.get().then((snapshot) => {
+          snapshot.forEach((doc) => {
+            i++;
+            if (assessmentList_temp[i - 1].type.toLowerCase().includes(search_assessment_name.toLocaleLowerCase())) {
               if (doc.data().type == "dass") {
                 assessmentList.push({
                   assessmentID: doc.data().assessmentID,
@@ -625,13 +628,7 @@ router.get("/:userID/assessment", async (req, res, next) => {
                   Dscore: doc.data().Dscore,
                   Sscore: doc.data().Sscore,
                 });
-              }
-            });
-          });
-        } else if (search_assessment_name == "depress" || "ซึมเศร้า") {
-          await assessmentListRef.get().then((snapshot) => {
-            snapshot.forEach((doc) => {
-              if (doc.data().type == "depress") {
+              } else if (doc.data().type == "depress") {
                 assessmentList.push({
                   assessmentID: doc.data().assessmentID,
                   type: doc.data().type,
@@ -640,9 +637,9 @@ router.get("/:userID/assessment", async (req, res, next) => {
                   score: doc.data().score,
                 });
               }
-            });
+            }
           });
-        }
+        });
       }
     } else {
       await assessmentListRef.get().then((snapshot) => {
