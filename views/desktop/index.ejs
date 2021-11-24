@@ -132,7 +132,7 @@
                   <div class="col-md-2 text-danger" style="font-weight: 600"><%= riskUserLists[x].score %> <%= riskUserLists[x].scoreTotal %></div>
                 </div>
               </div>
-              <% countRisk-- %> <% } %> <% } %> <% if(countRisk == 0){ %>
+              <% countRisk-- %> <% } %> <% } %> <% if(countRisk > 2){ %>
               <div class="card shadow-sm risk_card">
                 <div class="row" style="font-size: 20px">
                   <div class="col-md-10 appoint_user">No Danger User Now</div>
