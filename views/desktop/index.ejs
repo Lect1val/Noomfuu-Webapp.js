@@ -120,7 +120,6 @@
               <h2>Risk assessment result</h2>
               <% var countRisk = 3 %> <% if(riskUserLists.length > 3) { %> <% for(let x = 0;x< 3;x++) { %>
               <div class="card shadow-sm risk_card">
-                <% console.log(riskUserLists[x].scoreTotal) %> <% console.log(riskUserLists[x].score) %>
                 <div class="row" style="font-size: 20px">
                   <div class="col-md-10 appoint_user"><%= riskUserLists[x].lineName %></div>
                   <% if(riskUserLists[x].score != null && riskUserLists[x].scoreTotal != null){ %> <% if(riskUserLists[x].score >= riskUserLists[x].scoreTotal) { %>
