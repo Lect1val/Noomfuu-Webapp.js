@@ -144,6 +144,20 @@ router.get("/:userID", async (req, res, next) => {
       });
     });
 
+    // ดึงข้อมูลมาหา line name ของ
+    const headerUserListRef = db.collection("User");
+    const headerUserList = [];
+    await headerUserListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().lineName != null && doc.data().lineName != "") {
+          headerUserList.push({
+            userID: doc.data().userID,
+            lineName: doc.data().lineName,
+          });
+        }
+      });
+    });
+
     //ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
@@ -188,6 +202,7 @@ router.get("/:userID", async (req, res, next) => {
         urlPic,
         appointmentOngoingLists,
         moment: moment,
+        headerUserList,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -211,6 +226,7 @@ router.get("/:userID", async (req, res, next) => {
         urlPic,
         appointmentOngoingLists,
         moment: moment,
+        headerUserList,
       });
     }
   } catch (error) {
@@ -290,6 +306,20 @@ router.post("/:userID", async (req, res, next) => {
         }
       }
     }
+
+    // ดึงข้อมูลมาหา line name ของ
+    const headerUserListRef = db.collection("User");
+    const headerUserList = [];
+    await headerUserListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().lineName != null && doc.data().lineName != "") {
+          headerUserList.push({
+            userID: doc.data().userID,
+            lineName: doc.data().lineName,
+          });
+        }
+      });
+    });
 
     //ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
@@ -428,6 +458,20 @@ router.get("/:userID/analytic", async (req, res, next) => {
       });
     });
 
+    // ดึงข้อมูลมาหา line name ของ
+    const headerUserListRef = db.collection("User");
+    const headerUserList = [];
+    await headerUserListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().lineName != null && doc.data().lineName != "") {
+          headerUserList.push({
+            userID: doc.data().userID,
+            lineName: doc.data().lineName,
+          });
+        }
+      });
+    });
+
     //ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
@@ -470,6 +514,7 @@ router.get("/:userID/analytic", async (req, res, next) => {
         chartList,
         timeList,
         emotionList,
+        headerUserList,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -491,6 +536,7 @@ router.get("/:userID/analytic", async (req, res, next) => {
         chartList,
         timeList,
         emotionList,
+        headerUserList,
       });
     }
   } catch (error) {
@@ -511,38 +557,38 @@ router.get("/:userID/assessment", async (req, res, next) => {
     const assessmentList_temp = [];
     const assessmentList = [];
 
-    if (search_assessment_name != null && filter != null) {
-      if (filter == "state") {
-        await assessmentListRef.get().then((snapshot) => {
-          snapshot.forEach((doc) => {
-            if (doc.data().type == "dass") {
-              assessmentList_temp.push({
-                assessmentID: doc.data().assessmentID,
-                type: doc.data().type,
-                timestamp: doc.data().timestamp,
-                status: doc.data().status,
-                Ascore: doc.data().Ascore,
-                Dscore: doc.data().Dscore,
-                Sscore: doc.data().Sscore,
-              });
-            } else if (doc.data().type == "depress") {
-              assessmentList_temp.push({
-                assessmentID: doc.data().assessmentID,
-                type: doc.data().type,
-                timestamp: doc.data().timestamp,
-                status: doc.data().status,
-                score: doc.data().score,
-              });
-            }
-          });
+    console.log(search_assessment_name);
+    if (search_assessment_name != null && filter != null && search_assessment_name != "" && filter != "") {
+      await assessmentListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().type == "dass") {
+            assessmentList_temp.push({
+              assessmentID: doc.data().assessmentID,
+              type: doc.data().type,
+              timestamp: doc.data().timestamp,
+              status: doc.data().status,
+              Ascore: doc.data().Ascore,
+              Dscore: doc.data().Dscore,
+              Sscore: doc.data().Sscore,
+            });
+          } else if (doc.data().type == "depress") {
+            assessmentList_temp.push({
+              assessmentID: doc.data().assessmentID,
+              type: doc.data().type,
+              timestamp: doc.data().timestamp,
+              status: doc.data().status,
+              score: doc.data().score,
+            });
+          }
         });
-
+      });
+      if (filter == "state") {
         let i = 0;
 
         await assessmentListRef.get().then((snapshot) => {
           snapshot.forEach((doc) => {
             i++;
-            if (assessmentList_temp[i - 1].status.toLowerCase() == search_assessment_name) {
+            if (assessmentList_temp[i - 1].status.toLowerCase().includes(search_assessment_name.toLocaleLowerCase())) {
               if (doc.data().type == "dass") {
                 assessmentList.push({
                   assessmentID: doc.data().assessmentID,
@@ -566,9 +612,12 @@ router.get("/:userID/assessment", async (req, res, next) => {
           });
         });
       } else if (filter == "type") {
-        if (search_assessment_name == "dass") {
-          await assessmentListRef.get().then((snapshot) => {
-            snapshot.forEach((doc) => {
+        let i = 0;
+
+        await assessmentListRef.get().then((snapshot) => {
+          snapshot.forEach((doc) => {
+            i++;
+            if (assessmentList_temp[i - 1].type.toLowerCase().includes(search_assessment_name.toLocaleLowerCase())) {
               if (doc.data().type == "dass") {
                 assessmentList.push({
                   assessmentID: doc.data().assessmentID,
@@ -579,13 +628,7 @@ router.get("/:userID/assessment", async (req, res, next) => {
                   Dscore: doc.data().Dscore,
                   Sscore: doc.data().Sscore,
                 });
-              }
-            });
-          });
-        } else if (search_assessment_name == "depress" || "ซึมเศร้า") {
-          await assessmentListRef.get().then((snapshot) => {
-            snapshot.forEach((doc) => {
-              if (doc.data().type == "depress") {
+              } else if (doc.data().type == "depress") {
                 assessmentList.push({
                   assessmentID: doc.data().assessmentID,
                   type: doc.data().type,
@@ -594,9 +637,9 @@ router.get("/:userID/assessment", async (req, res, next) => {
                   score: doc.data().score,
                 });
               }
-            });
+            }
           });
-        }
+        });
       }
     } else {
       await assessmentListRef.get().then((snapshot) => {
@@ -624,6 +667,20 @@ router.get("/:userID/assessment", async (req, res, next) => {
       });
     }
 
+    // ดึงข้อมูลมาหา line name ของ
+    const headerUserListRef = db.collection("User");
+    const headerUserList = [];
+    await headerUserListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().lineName != null && doc.data().lineName != "") {
+          headerUserList.push({
+            userID: doc.data().userID,
+            lineName: doc.data().lineName,
+          });
+        }
+      });
+    });
+
     // ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
@@ -662,6 +719,7 @@ router.get("/:userID/assessment", async (req, res, next) => {
         contactlists,
         getUserID,
         assessmentList,
+        headerUserList,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -679,6 +737,7 @@ router.get("/:userID/assessment", async (req, res, next) => {
         contactlists,
         getUserID,
         assessmentList,
+        headerUserList,
       });
     }
   } catch (error) {
@@ -699,18 +758,18 @@ router.get("/:userID/chat", async (req, res, next) => {
     const chatList_temp = [];
     const chatList = [];
 
-    if (search_chat_name != null && filter != null) {
-      if (filter == "chat") {
-        await chatListRef.get().then((snapshot) => {
-          snapshot.forEach((doc) => {
-            chatList_temp.push({
-              messageID: doc.data().messageID,
-              emotion: doc.data().emotion,
-              timestamp: doc.data().timestamp,
-              content: doc.data().content,
-            });
+    if (search_chat_name != null && filter != null && search_chat_name != "" && filter != "") {
+      await chatListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          chatList_temp.push({
+            messageID: doc.data().messageID,
+            emotion: doc.data().emotion,
+            timestamp: doc.data().timestamp,
+            content: doc.data().content,
           });
         });
+      });
+      if (filter == "chat") {
         let i = 0;
 
         await chatListRef.get().then((snapshot) => {
@@ -727,31 +786,23 @@ router.get("/:userID/chat", async (req, res, next) => {
           });
         });
       } else {
-        let emotion = "";
-        if (search_chat_name.includes("neg")) {
-          emotion = "-1";
-        } else if (search_chat_name.includes("pos")) {
-          emotion = "1";
-        } else {
-          emotion = "0";
+        let neg = "negative";
+        let pos = "positive";
+        let emotionNeg = "";
+        let emotionPos = "";
+        if (neg.includes(search_chat_name.toLocaleLowerCase())) {
+          emotionNeg = "-1";
         }
 
-        await chatListRef.get().then((snapshot) => {
-          snapshot.forEach((doc) => {
-            chatList_temp.push({
-              messageID: doc.data().messageID,
-              emotion: doc.data().emotion,
-              timestamp: doc.data().timestamp,
-              content: doc.data().content,
-            });
-          });
-        });
+        if (pos.includes(search_chat_name.toLocaleLowerCase())) {
+          emotionPos = "1";
+        }
         let i = 0;
 
         await chatListRef.get().then((snapshot) => {
           snapshot.forEach((doc) => {
             i++;
-            if (chatList_temp[i - 1].emotion.toLowerCase().toLowerCase() == emotion) {
+            if (chatList_temp[i - 1].emotion.toLowerCase() == emotionNeg || chatList_temp[i - 1].emotion.toLowerCase() == emotionPos) {
               chatList.push({
                 messageID: doc.data().messageID,
                 emotion: doc.data().emotion,
@@ -775,6 +826,20 @@ router.get("/:userID/chat", async (req, res, next) => {
       });
     }
 
+    // ดึงข้อมูลมาหา line name ของ
+    const headerUserListRef = db.collection("User");
+    const headerUserList = [];
+    await headerUserListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().lineName != null && doc.data().lineName != "") {
+          headerUserList.push({
+            userID: doc.data().userID,
+            lineName: doc.data().lineName,
+          });
+        }
+      });
+    });
+
     // ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
@@ -813,6 +878,7 @@ router.get("/:userID/chat", async (req, res, next) => {
         contactlists,
         getUserID,
         chatList,
+        headerUserList,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -830,6 +896,7 @@ router.get("/:userID/chat", async (req, res, next) => {
         contactlists,
         getUserID,
         chatList,
+        headerUserList,
       });
     }
   } catch (error) {
@@ -912,6 +979,20 @@ router.get("/:userID/appointment", async (req, res, next) => {
       });
     });
 
+    // ดึงข้อมูลมาหา line name ของ
+    const headerUserListRef = db.collection("User");
+    const headerUserList = [];
+    await headerUserListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().lineName != null && doc.data().lineName != "") {
+          headerUserList.push({
+            userID: doc.data().userID,
+            lineName: doc.data().lineName,
+          });
+        }
+      });
+    });
+
     // ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
@@ -952,6 +1033,7 @@ router.get("/:userID/appointment", async (req, res, next) => {
         appointmentLists,
         appointmentOngoingLists,
         moment: moment,
+        headerUserList,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -970,6 +1052,7 @@ router.get("/:userID/appointment", async (req, res, next) => {
         appointmentLists,
         appointmentOngoingLists,
         moment: moment,
+        headerUserList,
       });
     }
   } catch (error) {
@@ -1003,6 +1086,20 @@ router.get("/:userID/appointment/:appointID/edit", async (req, res, next) => {
           status: doc.data().status,
           meetingurl: doc.data().meetingurl,
         });
+      });
+    });
+
+    // ดึงข้อมูลมาหา line name ของ
+    const headerUserListRef = db.collection("User");
+    const headerUserList = [];
+    await headerUserListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().lineName != null && doc.data().lineName != "") {
+          headerUserList.push({
+            userID: doc.data().userID,
+            lineName: doc.data().lineName,
+          });
+        }
       });
     });
 
@@ -1047,6 +1144,7 @@ router.get("/:userID/appointment/:appointID/edit", async (req, res, next) => {
         appointLists,
         moment: moment,
         errorMessage,
+        headerUserList,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -1067,6 +1165,7 @@ router.get("/:userID/appointment/:appointID/edit", async (req, res, next) => {
         appointLists,
         moment: moment,
         errorMessage,
+        headerUserList,
       });
     }
   } catch (error) {
@@ -1172,6 +1271,20 @@ router.post("/:userID/appointment/:appointID", async (req, res, next) => {
         });
       });
 
+      // ดึงข้อมูลมาหา line name ของ
+      const headerUserListRef = db.collection("User");
+      const headerUserList = [];
+      await headerUserListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            headerUserList.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
+        });
+      });
+
       // ดึงข้อมุล contactlist และ serach contactlist
       const contactListRef = db.collection("User");
       const contactlists_temp = [];
@@ -1213,6 +1326,7 @@ router.post("/:userID/appointment/:appointID", async (req, res, next) => {
           appointmentLists,
           moment: moment,
           appointmentOngoingLists,
+          headerUserList,
         });
       } else {
         await contactListRef.get().then((snapshot) => {
@@ -1233,6 +1347,7 @@ router.post("/:userID/appointment/:appointID", async (req, res, next) => {
           appointmentLists,
           moment: moment,
           appointmentOngoingLists,
+          headerUserList,
         });
       }
     } else {
@@ -1255,6 +1370,20 @@ router.post("/:userID/appointment/:appointID", async (req, res, next) => {
             status: doc.data().status,
             meetingurl: doc.data().meetingurl,
           });
+        });
+      });
+
+      // ดึงข้อมูลมาหา line name ของ
+      const headerUserListRef = db.collection("User");
+      const headerUserList = [];
+      await headerUserListRef.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().lineName != null && doc.data().lineName != "") {
+            headerUserList.push({
+              userID: doc.data().userID,
+              lineName: doc.data().lineName,
+            });
+          }
         });
       });
 
@@ -1299,6 +1428,7 @@ router.post("/:userID/appointment/:appointID", async (req, res, next) => {
           appointLists,
           moment: moment,
           errorMessage,
+          headerUserList,
         });
       } else {
         await contactListRef.get().then((snapshot) => {
@@ -1319,6 +1449,7 @@ router.post("/:userID/appointment/:appointID", async (req, res, next) => {
           appointLists,
           moment: moment,
           errorMessage,
+          headerUserList,
         });
       }
     }
@@ -1402,6 +1533,20 @@ router.get("/:userID/appointment/:appointID", async (req, res, next) => {
       });
     });
 
+    // ดึงข้อมูลมาหา line name ของ
+    const headerUserListRef = db.collection("User");
+    const headerUserList = [];
+    await headerUserListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().lineName != null && doc.data().lineName != "") {
+          headerUserList.push({
+            userID: doc.data().userID,
+            lineName: doc.data().lineName,
+          });
+        }
+      });
+    });
+
     // ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
@@ -1442,6 +1587,7 @@ router.get("/:userID/appointment/:appointID", async (req, res, next) => {
         appointmentLists,
         appointmentOngoingLists,
         moment: moment,
+        headerUserList,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -1460,6 +1606,7 @@ router.get("/:userID/appointment/:appointID", async (req, res, next) => {
         appointmentLists,
         appointmentOngoingLists,
         moment: moment,
+        headerUserList,
       });
     }
   } catch (error) {
@@ -1483,6 +1630,20 @@ router.get("/:userID/note", async (req, res, next) => {
           header: doc.data().header,
           noteID: doc.data().noteID,
         });
+      });
+    });
+
+    // ดึงข้อมูลมาหา line name ของ
+    const headerUserListRef = db.collection("User");
+    const headerUserList = [];
+    await headerUserListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().lineName != null && doc.data().lineName != "") {
+          headerUserList.push({
+            userID: doc.data().userID,
+            lineName: doc.data().lineName,
+          });
+        }
       });
     });
 
@@ -1524,6 +1685,7 @@ router.get("/:userID/note", async (req, res, next) => {
         contactlists,
         noteLists,
         getUserID,
+        headerUserList,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -1541,6 +1703,7 @@ router.get("/:userID/note", async (req, res, next) => {
         contactlists,
         noteLists,
         getUserID,
+        headerUserList,
       });
     }
   } catch (error) {
@@ -1566,6 +1729,20 @@ router.get("/:userID/note/:noteID/content", async (req, res, next) => {
           noteID: doc.data().noteID,
           timestamp: doc.data().timestamp,
         });
+      });
+    });
+
+    // ดึงข้อมูลมาหา line name ของ
+    const headerUserListRef = db.collection("User");
+    const headerUserList = [];
+    await headerUserListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().lineName != null && doc.data().lineName != "") {
+          headerUserList.push({
+            userID: doc.data().userID,
+            lineName: doc.data().lineName,
+          });
+        }
       });
     });
 
@@ -1613,6 +1790,7 @@ router.get("/:userID/note/:noteID/content", async (req, res, next) => {
         getUserID,
         getNoteID,
         moment: moment,
+        headerUserList,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -1634,6 +1812,7 @@ router.get("/:userID/note/:noteID/content", async (req, res, next) => {
         getUserID,
         getNoteID,
         moment: moment,
+        headerUserList,
       });
     }
   } catch (error) {
@@ -1659,6 +1838,20 @@ router.get("/:userID/note/:noteID/content/edit", async (req, res, next) => {
           noteID: doc.data().noteID,
           timestamp: doc.data().timestamp,
         });
+      });
+    });
+
+    // ดึงข้อมูลมาหา line name ของ
+    const headerUserListRef = db.collection("User");
+    const headerUserList = [];
+    await headerUserListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().lineName != null && doc.data().lineName != "") {
+          headerUserList.push({
+            userID: doc.data().userID,
+            lineName: doc.data().lineName,
+          });
+        }
       });
     });
 
@@ -1701,6 +1894,7 @@ router.get("/:userID/note/:noteID/content/edit", async (req, res, next) => {
         noteLists,
         getUserID,
         getNoteID,
+        headerUserList,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -1719,6 +1913,7 @@ router.get("/:userID/note/:noteID/content/edit", async (req, res, next) => {
         noteLists,
         getUserID,
         getNoteID,
+        headerUserList,
       });
     }
   } catch (error) {
@@ -1761,6 +1956,20 @@ router.post("/:userID/note/:noteID/content", async (req, res, next) => {
       });
     });
 
+    // ดึงข้อมูลมาหา line name ของ
+    const headerUserListRef = db.collection("User");
+    const headerUserList = [];
+    await headerUserListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().lineName != null && doc.data().lineName != "") {
+          headerUserList.push({
+            userID: doc.data().userID,
+            lineName: doc.data().lineName,
+          });
+        }
+      });
+    });
+
     // ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
@@ -1805,6 +2014,7 @@ router.post("/:userID/note/:noteID/content", async (req, res, next) => {
         getUserID,
         getNoteID,
         moment: moment,
+        headerUserList,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -1826,6 +2036,7 @@ router.post("/:userID/note/:noteID/content", async (req, res, next) => {
         getUserID,
         getNoteID,
         moment: moment,
+        headerUserList,
       });
     }
   } catch (error) {
@@ -1855,6 +2066,20 @@ router.get("/:userID/note/:noteID/delete", async (req, res, next) => {
           noteID: doc.data().noteID,
           timestamp: doc.data().timestamp,
         });
+      });
+    });
+
+    // ดึงข้อมูลมาหา line name ของ
+    const headerUserListRef = db.collection("User");
+    const headerUserList = [];
+    await headerUserListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().lineName != null && doc.data().lineName != "") {
+          headerUserList.push({
+            userID: doc.data().userID,
+            lineName: doc.data().lineName,
+          });
+        }
       });
     });
 
@@ -1896,6 +2121,7 @@ router.get("/:userID/note/:noteID/delete", async (req, res, next) => {
         contactlists,
         noteLists,
         getUserID,
+        headerUserList,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -1913,6 +2139,7 @@ router.get("/:userID/note/:noteID/delete", async (req, res, next) => {
         contactlists,
         noteLists,
         getUserID,
+        headerUserList,
       });
     }
   } catch (error) {
@@ -1924,6 +2151,20 @@ router.get("/:userID/note/:noteID/delete", async (req, res, next) => {
 router.get("/:userID/note/add", async (req, res, next) => {
   try {
     const getUserID = req.params.userID;
+
+    // ดึงข้อมูลมาหา line name ของ
+    const headerUserListRef = db.collection("User");
+    const headerUserList = [];
+    await headerUserListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().lineName != null && doc.data().lineName != "") {
+          headerUserList.push({
+            userID: doc.data().userID,
+            lineName: doc.data().lineName,
+          });
+        }
+      });
+    });
 
     // ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
@@ -1962,6 +2203,7 @@ router.get("/:userID/note/add", async (req, res, next) => {
       res.render("desktop/note_add", {
         contactlists,
         getUserID,
+        headerUserList,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -1978,6 +2220,7 @@ router.get("/:userID/note/add", async (req, res, next) => {
       res.render("desktop/note_add", {
         contactlists,
         getUserID,
+        headerUserList,
       });
     }
   } catch (error) {
@@ -2053,6 +2296,20 @@ router.post("/:userID/note/add", async (req, res, next) => {
       });
     });
 
+    // ดึงข้อมูลมาหา line name ของ
+    const headerUserListRef = db.collection("User");
+    const headerUserList = [];
+    await headerUserListRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.data().lineName != null && doc.data().lineName != "") {
+          headerUserList.push({
+            userID: doc.data().userID,
+            lineName: doc.data().lineName,
+          });
+        }
+      });
+    });
+
     // ดึงข้อมุล contactlist และ serach contactlist
     const contactListRef = db.collection("User");
     const contactlists_temp = [];
@@ -2091,6 +2348,7 @@ router.post("/:userID/note/add", async (req, res, next) => {
         contactlists,
         noteLists,
         getUserID,
+        headerUserList,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -2108,6 +2366,7 @@ router.post("/:userID/note/add", async (req, res, next) => {
         contactlists,
         noteLists,
         getUserID,
+        headerUserList,
       });
     }
   } catch (error) {
