@@ -77,10 +77,56 @@
                   <p style="color: #3378ff"><img src="/images/Edit.png" style="height: 20px" />Edit</p>
                 </a>
               </div>
-              <div class="col-sm-2" style="text-align: right; padding-right: 3%">
-                <a href="/profile/<%= getUserID %>/note/<%= getNoteID %>/delete" style="color: #223e63">
+              <div id="myBtn" class="col-sm-2" style="text-align: right; padding-right: 3%">
                   <p style="color: red"><img src="/images/delete.png" style="height: 20px" /> Delete</p>
-                </a>
+                <div id="myModal" class="modal">
+                  <!-- Modal content -->
+                  <div class="modal-close-note">
+                    <span class="close">&times;</span>
+                    <br />
+                    <p style="text-align: center; font-size: 18px">คุณจะลบบันทึกนี้จริง ๆ ใช่ไหม</p>
+                    <!-- <a href="/profile/<%= getUserID %>/note/<%= getNoteID %>/delete" style="color: #223e63"> -->
+                    <button onclick="deleteNote()" type="submit" name="saveEdit" class="btn btn-danger sure_btn" value="ลบ">ลบ</button>
+                    <button onclick="closemodel()" type="submit" name="saveEdit" class="btn btn-light sure_btn" value="ลบ">กลับ</button>
+                  <!-- </a> -->
+                  </div>
+                </div>
+
+                <script>
+                  // Get the modal
+                  var modal = document.getElementById("myModal");
+
+                  // Get the button that opens the modal
+                  var btn = document.getElementById("myBtn");
+
+                  // Get the <span> element that closes the modal
+                  var span = document.getElementsByClassName("close");
+
+                  // When the user clicks on the button, open the modal
+                  btn.onclick = function () {
+                    modal.style.display = "block";
+                  };
+
+                  // When the user clicks on <span> (x), close the modal
+                  span.onclick = function () {
+                    modal.style.display = "none";
+                  };
+
+                  // When the user clicks anywhere outside of the modal, close it
+                  window.onclick = function (event) {
+                    if (event.target == modal) {
+                      modal.style.display = "none";
+                    }
+                  };
+
+                  function closemodel() {
+                      modal.style.display = "none";
+                  }
+
+                  function deleteNote(){
+                    window.location.href='/profile/<%= getUserID %>/note/<%= getNoteID %>/delete'
+                  }
+                </script>
               </div>
             </div>
           </div>
