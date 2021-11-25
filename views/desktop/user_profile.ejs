@@ -106,8 +106,7 @@
                               type="text"
                               class="text_field"
                               name="new_firstName"
-                              value="<%= profileList.find(el => el.userID ===
-                                                                    getUserID).firstName %>"
+                              value="<%= profileList.find(el => el.userID === getUserID).firstName %>"
                             />
                           </td>
                         </tr>
@@ -118,8 +117,7 @@
                               type="text"
                               class="text_field"
                               name="new_lastName"
-                              value="<%= profileList.find(el => el.userID ===
-                                                                    getUserID).lastName %>"
+                              value="<%= profileList.find(el => el.userID === getUserID).lastName %>"
                             />
                           </td>
                         </tr>
@@ -134,8 +132,7 @@
                               type="text"
                               name="new_tel"
                               class="text_field shadow-sm"
-                              value="<%= profileList.find(el => el.userID ===
-                                                                    getUserID).TelNo %>"
+                              value="<%= profileList.find(el => el.userID === getUserID).TelNo %>"
                             />
                           </td>
                         </tr>
@@ -146,8 +143,7 @@
                               type="text"
                               name="new_email"
                               class="text_field shadow-sm"
-                              value="<%= profileList.find(el => el.userID ===
-                                                                    getUserID).Email %>"
+                              value="<%= profileList.find(el => el.userID === getUserID).Email %>"
                             />
                           </td>
                         </tr>
@@ -158,8 +154,7 @@
                               type="text"
                               name="new_contactNote"
                               class="text_field shadow-sm"
-                              value="<%= profileList.find(el => el.userID ===
-                                                                    getUserID).contactNote %>"
+                              value="<%= profileList.find(el => el.userID === getUserID).contactNote %>"
                             />
                           </td>
                         </tr>
@@ -220,13 +215,13 @@
                     let maxIndex = 0;
                     ("<% if (timeList.length <= 7){ %>");
                     ("<% for (var maxIndex = 0; maxIndex < timeList.length ; maxIndex++){ %>");
-                    labelsList[maxIndex] = "<%= timeList[maxIndex].timestamp.toDate().toDateString() %>";
+                    labelsList[maxIndex] = "<%= moment(timeList[maxIndex].timestamp.toDate().toDateString()).format('ddd DD MMM YYYY')  %>";
                     dataList[maxIndex] = "<%= emotionList[maxIndex] %>";
                     maxIndex++;
                     ("<% } %>");
                     ("<% }else if (timeList.length > 7){ %>");
                     ("<% for (var maxIndex = timeList.length-7; maxIndex < timeList.length ; maxIndex++){ %>");
-                    labelsList[maxIndex] = "<%= timeList[maxIndex].timestamp.toDate().toDateString() %>";
+                    labelsList[maxIndex] = "<%= moment(timeList[maxIndex].timestamp.toDate().toDateString()).format('ddd DD MMM YYYY')  %>";
                     dataList[maxIndex] = "<%= emotionList[maxIndex] %>";
                     maxIndex++;
                     ("<% } %>");
@@ -265,7 +260,7 @@
                       <td class="appoint_online" style="text-align: right"><%= appointmentOngoingLists[f].type.toUpperCase() %></td>
                     </tr>
                     <tr>
-                      <td class="appoint_time"><%= moment(appointmentOngoingLists[f].appointmentStart.toDate().toUTCString()).format('kk:mm น.') %></td>
+                      <td class="appoint_time"><%= moment(appointmentOngoingLists[f].appointmentStart.toDate()).format('kk:mm น.') %></td>
                     </tr>
                     <tr>
                       <td class="appoint_ongoing">
@@ -291,7 +286,7 @@
                       <td class="appoint_online" style="text-align: right"><%= appointmentOngoingLists[f].type.toUpperCase() %></td>
                     </tr>
                     <tr>
-                      <td class="appoint_time"><%= moment(appointmentOngoingLists[f].appointmentStart.toDate().toUTCString()).format('kk:mm น.') %></td>
+                      <td class="appoint_time"><%= moment(appointmentOngoingLists[f].appointmentStart.toDate()).format('kk:mm น.') %></td>
                     </tr>
                     <tr>
                       <td class="appoint_ongoing">

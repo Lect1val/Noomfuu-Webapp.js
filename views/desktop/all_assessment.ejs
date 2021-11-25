@@ -37,7 +37,9 @@
               <!--Begining of Assessment Loop-->
               <% for(let i = 0 ; i< assessmentList.length;i++) { %> <% if(assessmentList[i].type == "dass"){ %>
               <tr>
-                <td id="assess_date"><%= assessmentList[i].timestamp.toDate().toDateString() %> <%= assessmentList[i].timestamp.toDate().toLocaleTimeString() %></td>
+                <td id="assess_date">
+                  <%= moment(assessmentList[i].timestamp.toDate().toDateString()).format('ddd DD MMM YYYY') %> <%= moment(assessmentList[i].timestamp.toDate()).format('kk:mm น.') %>
+                </td>
                 <td id="assess_type"><%= assessmentList[i].type.toUpperCase() %></td>
                 <td id="Dscore" class="chat_list">D = <%= assessmentList[i].Dscore %></td>
                 <td id="Ascore" class="chat_list">A = <%= assessmentList[i].Ascore %></td>
@@ -54,7 +56,9 @@
               </tr>
               <% }else if(assessmentList[i].type == "depress"){ %>
               <tr>
-                <td id="assess_date"><%= assessmentList[i].timestamp.toDate().toDateString() %> <%= assessmentList[i].timestamp.toDate().toLocaleTimeString() %></td>
+                <td id="assess_date">
+                  <%= moment(assessmentList[i].timestamp.toDate().toDateString()).format('ddd DD MMM YYYY') %> <%= moment(assessmentList[i].timestamp.toDate()).format('kk:mm น.') %>
+                </td>
                 <td id="chat_content"><%= assessmentList[i].type[0].toUpperCase() + assessmentList[i].type.substr(1).toLowerCase()+"ion" %></td>
                 <td id="chat_state" class="chat_list" colspan="3"><%= assessmentList[i].score %></td>
                 <td id="chat_state" class="chat_list">

@@ -64,7 +64,7 @@
             <div class="col-md-6 note_owner"></div>
             <div class="col-md-6 modify_status">
               Last Modify: <%= moment(noteLists.find(el=> el.noteID === getNoteID).timestamp.toDate().toDateString()).format('ddd DD MMM YYYY')%> <%= moment(noteLists.find(el=> el.noteID ===
-              getNoteID).timestamp.toDate().toUTCString()).format('kk:mm น.') %>
+              getNoteID).timestamp.toDate()).format('kk:mm น.') %>
             </div>
           </div>
           <div class="footer mt-auto py-3">
