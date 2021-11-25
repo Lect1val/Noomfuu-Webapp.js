@@ -99,9 +99,7 @@
                       <td class="appoint_time"><%= moment(appointmentOngoingLists[x].appointmentStart.toDate()).format('kk:mm น.') %></td>
                     </tr>
                     <tr>
-                      <td class="appoint_ongoing">
-                        <%= appointmentOngoingLists[x].status[0].toUpperCase() + appointmentOngoingLists[x].status[1] + " " +appointmentOngoingLists[x].status.substr(2).toLowerCase() %>
-                      </td>
+                      <td class="appoint_ongoing"><%= appointmentOngoingLists[x].status[0].toUpperCase() + appointmentOngoingLists[x].status.substr(1).toLowerCase() %></td>
                       <% if(appointmentOngoingLists[x].meetingurl!=""){ %>
                       <td style="text-align: right">
                         <a href="https://<%= appointmentOngoingLists[x].meetingurl %>"><button type="button" class="btn btn-light">Enter Meeting</button></a>
@@ -130,9 +128,7 @@
                         <td class="appoint_time"><%= moment(appointmentOngoingLists[x].appointmentStart.toDate()).format('kk:mm น.') %></td>
                       </tr>
                       <tr>
-                        <td class="appoint_ongoing">
-                          <%= appointmentOngoingLists[x].status[0].toUpperCase() + appointmentOngoingLists[x].status[1] + " " +appointmentOngoingLists[x].status.substr(2).toLowerCase() %>
-                        </td>
+                        <td class="appoint_ongoing"><%= appointmentOngoingLists[x].status[0].toUpperCase() + appointmentOngoingLists[x].status.substr(1).toLowerCase() %></td>
                         <td class="appoint_place" style="text-align: right">
                           ห้องพยาบาล อาคารเรียนรวม 2<br />
                           มจธ. บางมด
@@ -156,9 +152,7 @@
                       </tr>
 
                       <tr>
-                        <td class="appoint_ongoing">
-                          <%= appointmentOngoingLists[x].status[0].toUpperCase() + appointmentOngoingLists[x].status[1] + " " +appointmentOngoingLists[x].status.substr(2).toLowerCase() %>
-                        </td>
+                        <td class="appoint_ongoing"><%= appointmentOngoingLists[x].status[0].toUpperCase() + appointmentOngoingLists[x].status.substr(1).toLowerCase() %></td>
                         <% if(appointmentOngoingLists[x].meetingurl!=""){ %>
                         <td style="text-align: right">
                           <a href="https://<%= appointmentOngoingLists[x].meetingurl %>"><button type="button" class="btn btn-light">Enter Meeting</button></a>
@@ -187,9 +181,7 @@
                       <td class="appoint_time"><%= moment(appointmentOngoingLists[x].appointmentStart.toDate()).format('kk:mm น.') %></td>
                     </tr>
                     <tr>
-                      <td class="appoint_ongoing">
-                        <%= appointmentOngoingLists[x].status[0].toUpperCase() + appointmentOngoingLists[x].status[1] + " " +appointmentOngoingLists[x].status.substr(2).toLowerCase() %>
-                      </td>
+                      <td class="appoint_ongoing"><%= appointmentOngoingLists[x].status[0].toUpperCase() + appointmentOngoingLists[x].status.substr(1).toLowerCase() %></td>
                       <td class="appoint_place" style="text-align: right">
                         ห้องพยาบาล อาคารเรียนรวม 2<br />
                         มจธ. บางมด
