@@ -515,6 +515,7 @@ router.get("/:userID/analytic", async (req, res, next) => {
         timeList,
         emotionList,
         headerUserList,
+        moment: moment,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -537,6 +538,7 @@ router.get("/:userID/analytic", async (req, res, next) => {
         timeList,
         emotionList,
         headerUserList,
+        moment: moment,
       });
     }
   } catch (error) {
@@ -720,6 +722,7 @@ router.get("/:userID/assessment", async (req, res, next) => {
         getUserID,
         assessmentList,
         headerUserList,
+        moment: moment,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -738,6 +741,7 @@ router.get("/:userID/assessment", async (req, res, next) => {
         getUserID,
         assessmentList,
         headerUserList,
+        moment: moment,
       });
     }
   } catch (error) {
@@ -879,6 +883,7 @@ router.get("/:userID/chat", async (req, res, next) => {
         getUserID,
         chatList,
         headerUserList,
+        moment: moment,
       });
     } else {
       await contactListRef.get().then((snapshot) => {
@@ -897,6 +902,7 @@ router.get("/:userID/chat", async (req, res, next) => {
         getUserID,
         chatList,
         headerUserList,
+        moment: moment,
       });
     }
   } catch (error) {

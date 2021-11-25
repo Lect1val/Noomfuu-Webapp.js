@@ -42,9 +42,9 @@
 
               <tr>
                 <% if(i==0) { %>
-                <td id="chat_date"><%= chatList[i].timestamp.toDate().toDateString() %></td>
+                <td id="chat_date"><%= moment(chatList[i].timestamp.toDate().toDateString()).format('ddd DD MMM YYYY')  %></td>
                 <% } else if(chatList[i].timestamp.toDate().toDateString() !=chatList[i-1].timestamp.toDate().toDateString()) { %>
-                <td id="chat_date"><%= chatList[i].timestamp.toDate().toDateString() %></td>
+                <td id="chat_date"><%= moment(chatList[i].timestamp.toDate().toDateString()).format('ddd DD MMM YYYY')  %></td>
                 <% }else if(chatList[i].timestamp.toDate().toDateString()==chatList[i-1].timestamp.toDate().toDateString()) { %>
                 <td id="chat_date"></td>
                 <% } %>

@@ -102,25 +102,13 @@
                         <tr>
                           <td class="data_head">First Name</td>
                           <td style="width: 75%">
-                            <input
-                              type="text"
-                              class="text_field"
-                              name="new_firstName"
-                              value="<%= profileList.find(el => el.userID ===
-                                                                    getUserID).firstName %>"
-                            />
+                            <input type="text" class="text_field" name="new_firstName" value="<%= profileList.find(el => el.userID === getUserID).firstName %>" />
                           </td>
                         </tr>
                         <tr>
                           <td class="data_head">Last Name</td>
                           <td style="width: 75%">
-                            <input
-                              type="text"
-                              class="text_field"
-                              name="new_lastName"
-                              value="<%= profileList.find(el => el.userID ===
-                                                                    getUserID).lastName %>"
-                            />
+                            <input type="text" class="text_field" name="new_lastName" value="<%= profileList.find(el => el.userID === getUserID).lastName %>" />
                           </td>
                         </tr>
                         <tr>
@@ -130,37 +118,19 @@
                         <tr>
                           <td class="data_head">Tel</td>
                           <td style="width: 75%">
-                            <input
-                              type="text"
-                              name="new_tel"
-                              class="text_field shadow-sm"
-                              value="<%= profileList.find(el => el.userID ===
-                                                                    getUserID).TelNo %>"
-                            />
+                            <input type="text" name="new_tel" class="text_field shadow-sm" value="<%= profileList.find(el => el.userID === getUserID).TelNo %>" />
                           </td>
                         </tr>
                         <tr>
                           <td class="data_head">Email</td>
                           <td style="width: 75%">
-                            <input
-                              type="text"
-                              name="new_email"
-                              class="text_field shadow-sm"
-                              value="<%= profileList.find(el => el.userID ===
-                                                                    getUserID).Email %>"
-                            />
+                            <input type="text" name="new_email" class="text_field shadow-sm" value="<%= profileList.find(el => el.userID === getUserID).Email %>" />
                           </td>
                         </tr>
                         <tr>
                           <td class="data_head">Additional Information</td>
                           <td style="width: 75%">
-                            <input
-                              type="text"
-                              name="new_contactNote"
-                              class="text_field shadow-sm"
-                              value="<%= profileList.find(el => el.userID ===
-                                                                    getUserID).contactNote %>"
-                            />
+                            <input type="text" name="new_contactNote" class="text_field shadow-sm" value="<%= profileList.find(el => el.userID === getUserID).contactNote %>" />
                           </td>
                         </tr>
                       </table>
@@ -220,13 +190,13 @@
                     let maxIndex = 0;
                     ("<% if (timeList.length <= 7){ %>");
                     ("<% for (var maxIndex = 0; maxIndex < timeList.length ; maxIndex++){ %>");
-                    labelsList[maxIndex] = "<%= timeList[maxIndex].timestamp.toDate().toDateString() %>";
+                    labelsList[maxIndex] = "<%= moment(timeList[maxIndex].timestamp.toDate().toDateString()).format('ddd DD MMM YYYY')  %>";
                     dataList[maxIndex] = "<%= emotionList[maxIndex] %>";
                     maxIndex++;
                     ("<% } %>");
                     ("<% }else if (timeList.length > 7){ %>");
                     ("<% for (var maxIndex = timeList.length-7; maxIndex < timeList.length ; maxIndex++){ %>");
-                    labelsList[maxIndex] = "<%= timeList[maxIndex].timestamp.toDate().toDateString() %>";
+                    labelsList[maxIndex] = "<%= moment(timeList[maxIndex].timestamp.toDate().toDateString()).format('ddd DD MMM YYYY')  %>";
                     dataList[maxIndex] = "<%= emotionList[maxIndex] %>";
                     maxIndex++;
                     ("<% } %>");
@@ -265,12 +235,10 @@
                       <td class="appoint_online" style="text-align: right"><%= appointmentOngoingLists[f].type.toUpperCase() %></td>
                     </tr>
                     <tr>
-                      <td class="appoint_time"><%= moment(appointmentOngoingLists[f].appointmentStart.toDate().toUTCString()).format('kk:mm น.') %></td>
+                      <td class="appoint_time"><%= moment(appointmentOngoingLists[f].appointmentStart.toDate()).format('kk:mm น.') %></td>
                     </tr>
                     <tr>
-                      <td class="appoint_ongoing">
-                        <%= appointmentOngoingLists[f].status[0].toUpperCase() + appointmentOngoingLists[f].status[1] + " " +appointmentOngoingLists[f].status.substr(2).toLowerCase() %>
-                      </td>
+                      <td class="appoint_ongoing"><%= appointmentOngoingLists[f].status[0].toUpperCase() + appointmentOngoingLists[f].status.substr(1).toLowerCase() %></td>
                       <% if(appointmentOngoingLists[f].meetingurl!=""){ %>
                       <td style="text-align: right">
                         <a href="https:/<%= appointmentOngoingLists[f].meetingurl %>/"><button type="button" class="btn btn-light">Enter Meeting</button></a>
@@ -291,12 +259,10 @@
                       <td class="appoint_online" style="text-align: right"><%= appointmentOngoingLists[f].type.toUpperCase() %></td>
                     </tr>
                     <tr>
-                      <td class="appoint_time"><%= moment(appointmentOngoingLists[f].appointmentStart.toDate().toUTCString()).format('kk:mm น.') %></td>
+                      <td class="appoint_time"><%= moment(appointmentOngoingLists[f].appointmentStart.toDate()).format('kk:mm น.') %></td>
                     </tr>
                     <tr>
-                      <td class="appoint_ongoing">
-                        <%= appointmentOngoingLists[f].status[0].toUpperCase() + appointmentOngoingLists[f].status[1] + " " +appointmentOngoingLists[f].status.substr(2).toLowerCase() %>
-                      </td>
+                      <td class="appoint_ongoing"><%= appointmentOngoingLists[f].status[0].toUpperCase() + appointmentOngoingLists[f].status.substr(1).toLowerCase() %></td>
                       <% if(appointmentOngoingLists[f].meetingurl!=""){ %>
                       <td style="text-align: right">
                         <a href="https://<%= appointmentOngoingLists[f].meetingurl %>"><button type="button" class="btn btn-light">Enter Meeting</button></a>
